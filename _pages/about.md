@@ -2,14 +2,13 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+# subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
 
 profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   address: >
-    # <p>555 your office number</p>
     <p>Pittsburgh</p>
     <p>Pennsylvania</p>
 
@@ -21,7 +20,7 @@ social: true  # includes social icons at the bottom of the page
 
 Hello! I started on my academic journey in Computer Science at the University of Wisconsin-Madison, where I graduated with honors. Currently, I am enriching my knowledge in the field of Information Networking at Carnegie Mellon University.
 
-While at UW-Madison, I had the honor of being advised by Professor [Ming Liu](https://pages.cs.wisc.edu/~mgliu/index.html), whose guidance greatly influenced my research interests in computer networks. During my undergraduate studies, I also had the invaluable opportunity to conduct research in collaboration with Dr. [Amrita Mazumdar](https://research.nvidia.com/person/amrita-mazumdar) from NVIDIA Research. These experiences allowed me to apply my academic knowledge to practical challenges in research and advanced my understanding of the field.
+While at UW-Madison, I had the honor of being advised by Professor [Ming Liu](https://pages.cs.wisc.edu/~mgliu/index.html), whose guidance greatly influenced my research interests in computer networks. During my undergraduate studies, I also had the invaluable opportunity to conduct research in collaboration with [Dr. Amrita Mazumdar](https://research.nvidia.com/person/amrita-mazumdar) from NVIDIA Research. These experiences allowed me to apply my academic knowledge to practical challenges in research and advanced my understanding of the field.
 
 
 My technical ambitions lie in building innovative and efficient full-stack applications aimed at making people's lives happier and easier. 
