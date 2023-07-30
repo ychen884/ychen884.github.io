@@ -10,12 +10,12 @@ category: work
 
 ## What is this course?
 
-This course is an advanced, senior-level offering for undergraduate students and an introductory course for graduate students. It dives deep into the system design of computer networks, covering a majority of topics from the book <a href= https://book.systemsapproach.org/index.html>Computer Networks: A Systems Approach</a>.
+This course is an advanced, senior-level offering for undergraduate students and an introductory course for graduate students. It dives deep into the system design of computer networks, covering a majority of topics from the book <a href= "https://book.systemsapproach.org/index.html">Computer Networks: A Systems Approach</a>.
 
 
-## Course website: <a href="https://getbootstrap.com/docs/4.4/layout/grid/">CS 640, Fall 2022: Introduction to Computer Networks</a>
+# Course website: <a href="https://getbootstrap.com/docs/4.4/layout/grid/">CS 640, Fall 2022: Introduction to Computer Networks</a>
 
-## What did I do to work as a TA in this course:
+## My Role as a Teaching Assistant in this Course:
 
 1. I delivered short lectures to introduce and review each assignment project, which helped students gain a more in-depth understanding.
 2. Conducted office hours to assist students with queries pertaining to the lectures and projects.
@@ -24,6 +24,12 @@ This course is an advanced, senior-level offering for undergraduate students and
 5. Engaged in active discussions and resolved queries on Piazza.
 
 
+## Skills:
+
+1. Teaching, Presenting, Public Speaking
+2. Computer Netorks
+3. Bash/Python Scripts
+4. Collaboration, Communication
 
 
 
@@ -99,4 +105,4 @@ Here's the code for the last row of images above:
     </div>
 </div>
 ``` -->
-{% endraw %}
+<!-- {% endraw %} -->
