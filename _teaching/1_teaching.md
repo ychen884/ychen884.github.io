@@ -1,18 +1,39 @@
 ---
 layout: page
-title: teaching 1
-description: a teaching with a background image
+title: Teaching Assistant in CS 640
+description: Introduction to Computer Networks, UW-Madison
 img: assets/img/12.jpg
 importance: 1
 category: work
-related_publications: einstein1956investigations, einstein1950meaning
 ---
+<!-- https://pages.cs.wisc.edu/~mgliu/CS640/F22/index.html -->
 
-Every teaching has a beautiful feature showcase page.
+## What is this course?
+
+This course is an advanced, senior-level offering for undergraduate students and an introductory course for graduate students. It dives deep into the system design of computer networks, covering a majority of topics from the book <a href= https://book.systemsapproach.org/index.html>Computer Networks: A Systems Approach</a>.
+
+
+## Course website: <a href="https://getbootstrap.com/docs/4.4/layout/grid/">CS 640, Fall 2022: Introduction to Computer Networks</a>
+
+## What did I do to work as a TA in this course:
+
+1. I delivered short lectures to introduce and review each assignment project, which helped students gain a more in-depth understanding.
+2. Conducted office hours to assist students with queries pertaining to the lectures and projects.
+3. Collaborated with other TAs to modify and write test scripts for assignment projects.
+4. Provided support to the professor by printing, collecting, and grading weekly quizzes and exams.
+5. Engaged in active discussions and resolved queries on Piazza.
+
+
+
+
+
+
+
+<!-- Every teaching has a beautiful feature showcase page.
 It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+Make your photos 1/3, 2/3, or full width. -->
 
-To give your teaching a background in the portfolio page, just add the img tag to the front matter like so:
+<!-- To give your teaching a background in the portfolio page, just add the img tag to the front matter like so:
 
     ---
     layout: page
@@ -59,10 +80,10 @@ You describe how you toiled, sweated, *bled* for your teaching, and then... you 
 </div>
 <div class="caption">
     You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+</div> -->
 
 
-The code is simple.
+<!-- The code is simple.
 Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
 To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
 Here's the code for the last row of images above:
@@ -77,5 +98,5 @@ Here's the code for the last row of images above:
         {% include figure.html path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
-```
+``` -->
 {% endraw %}
