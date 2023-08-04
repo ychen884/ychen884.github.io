@@ -1,80 +1,45 @@
 ---
 layout: page
-title: teaching 2
-description: a teaching with a background image
-img: assets/img/3.jpg
-importance: 2
+title: Grader & Mentor in CS 642
+description: Introduction to Computer Security, UW-Madison
+img: assets/img/642.png
+importance: 1
 category: work
 ---
+<!-- https://pages.cs.wisc.edu/~mgliu/CS640/F22/index.html -->
 
-Every teaching has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+### What is this course?
 
-To give your teaching a background in the portfolio page, just add the img tag to the front matter like so:
-
-    ---
-    layout: page
-    title: teaching
-    description: a teaching with a background image
-    img: /assets/img/12.jpg
-    ---
-
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
-
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your teaching before you posted the rest of the images.
-You describe how you toiled, sweated, *bled* for your teaching, and then... you reveal its glory in the next row of images.
+This course is an advanced, senior-level offering for undergraduate students and an introductory course for graduate students. It covers a wide range of topics including operating systems security, low-level software security, network security, cryptography, and the web security.
 
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+<!-- #### Course website: <a href="https://getbootstrap.com/docs/4.4/layout/grid/">CS 640, Fall 2022: Introduction to Computer Networks</a> -->
 
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
 
-{% raw %}
-```html
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-```
-{% endraw %}
+### My Role as a Grader & Mentor in this Course
+
+1. Conducted office hours to assist students with queries pertaining to the lectures and projects.
+2. Collaborated with other TAs to do grading and Q&A for assignment projects.
+3. Provided support to the professor by collecting and grading exams.
+4. Engaged in active discussions and resolved queries on Piazza.
+
+
+### Related Skills
+
+1. Teaching
+2. Understanding of concepts in Computer Security
+4. Collaboration, Communication
+
+### My Reflections
+This course provides a comprehensive study of various topics in computer security, complemented by intriguing hands-on projects focused on attack strategies and their mitigation. The project I found particularly engaging was the one involving stack, integer, and heap overflow attacks. Besides, the comprehensive examinations in this course can be quite challenging and thought-provoking.
+It is one of the most challenging courses I have taken in UW-Madison.
+
+#### Why should you consider this course?
+I highly recommend this course for those curious about password security, protection of information across networks, and understanding potential threats by adopting an attacker's perspective. This course serves as an excellent foundation for anyone planning to delve into security research in the future.
+
+
+#### What about the workload?
+This course encompasses hands-on projects that involve identifying and exploiting vulnerabilities in C programs and web applications. Techniques explored include Cross-Site Request Forgery (CSRF), cracking passwords encrypted through insecure pipelines, extracting information from traceroute files, and executing SQL injections. An intriguing project, emulating real-life scenarios, focuses on a cascading compromise of an Internet of Things (IoT) device.
+
+
