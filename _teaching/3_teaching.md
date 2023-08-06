@@ -19,17 +19,16 @@ This course is an advanced, senior-level offering for undergraduate students and
 
 ### My Role as a Grader & Mentor in this Course
 
-<!-- 1. Conducted office hours to assist students with queries pertaining to the lectures and projects.
-2. Collaborated with other TAs to do grading and Q&A for assignment projects.
-3. Provided support to the professor by collecting and grading exams.
-4. Engaged in active discussions and resolved queries on Piazza. -->
+1. Conducted office hours to assist students with queries related to the lectures and homeworks.
+2. Collaborated with other mentors to do grading.
+4. Engaged in active discussions and resolved queries on Piazza.
 
 
 ### Related Skills
 
-<!-- 1. Teaching
-2. Understanding of concepts in Computer Security
-4. Collaboration, Communication -->
+1. Teaching
+2. Understanding of concepts in basic concepts of AI-related topics, including Probability, ML, DL, Search, NLP and RL.
+4. Collaboration, Communication
 
 ### My Reflections
 <!-- This course provides a comprehensive study of various topics in computer security, complemented by intriguing hands-on projects focused on attack strategies and their mitigation. The project I found particularly engaging was the one involving stack, integer, and heap overflow attacks. Besides, the comprehensive examinations in this course can be quite challenging and thought-provoking.
