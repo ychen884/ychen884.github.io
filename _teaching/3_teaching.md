@@ -27,18 +27,21 @@ This course is an advanced, senior-level offering for undergraduate students and
 ### Related Skills
 
 1. Teaching
-2. Understanding of concepts in basic concepts of AI-related topics, including Probability, ML, DL, Search, NLP and RL.
-4. Collaboration, Communication
+2. Collaboration, Communication
+3. Understanding of basic concepts in AI-related topics, including Probability, ML, DL, Search, NLP and RL.
+
 
 ### My Reflections
-<!-- This course provides a comprehensive study of various topics in computer security, complemented by intriguing hands-on projects focused on attack strategies and their mitigation. The project I found particularly engaging was the one involving stack, integer, and heap overflow attacks. Besides, the comprehensive examinations in this course can be quite challenging and thought-provoking.
-It is one of the most challenging courses I have taken in UW-Madison. -->
+For two semesters, I served as a mentor for CS 540, an experience I found enriching as I assisted students in their projects and elucidated topics in a manner that's easily understood. One particular project stood out, where students designed an AI opponent using the Minimax algorithm to compete in Gomoku (Five in a Row) against human challengers. This was further optimized with the Alpha-Beta pruning algorithm. This project vividly showcased the prowess of AI algorithms.
+
+Overall, the course projects are engaging. When it comes to exams and projects, the general level of difficulty for this senior-level course is relatively low.
 
 #### Why should you consider this course?
-<!-- I highly recommend this course for those curious about password security, protection of information across networks, and understanding potential threats by adopting an attacker's perspective. This course serves as an excellent foundation for anyone planning to delve into security research in the future. -->
 
+I highly recommend this course for those who want to have hands-on experience with AI algorithms, but at the same time consider taking a senior-level course with middle/low workload. I advise taking CS 532: Matrix Methods in Machine Learning beforehand to solidify your grasp on mathematical proofs. Following this, CS 539: Introduction to Artificial Neural Networks can deepen your understanding of advanced neural network concepts like transformers. 
 
-#### What about the workload?
-<!-- This course encompasses hands-on projects that involve identifying and exploiting vulnerabilities in C programs and web applications. Techniques explored include Cross-Site Request Forgery (CSRF), cracking passwords encrypted through insecure pipelines, extracting information from traceroute files, and executing SQL injections. An intriguing project, emulating real-life scenarios, focuses on a cascading compromise of an Internet of Things (IoT) device. -->
+#### What about the projects/workload?
+
+The projects are primarily in Python and are both engaging and intuitive. The instructions are straightforward, quite friendly even to those unfamiliar with Python. While individual projects are of moderate difficulty, having them weekly might be challenging for those not used to such frequency.
 
 
