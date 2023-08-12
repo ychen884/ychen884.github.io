@@ -13,7 +13,7 @@ category: work
 This course is an advanced, senior-level offering for undergraduate students and an introductory course for graduate students. It dives deep into the system design of computer networks, covering a majority of topics from the book <a href= "https://book.systemsapproach.org/index.html">Computer Networks: A Systems Approach</a>.
 
 
-#### Course website: <a href="https://getbootstrap.com/docs/4.4/layout/grid/">CS 640, Fall 2022: Introduction to Computer Networks</a>
+#### Course website: <a href="https://pages.cs.wisc.edu/~mgliu/CS640/F22/index.html">CS 640, Fall 2022: Introduction to Computer Networks</a>
 
 
 
