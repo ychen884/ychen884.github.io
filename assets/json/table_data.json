@@ -11,48 +11,48 @@
     },
     {
         "Courses": "CS 642",
-        "Description": "Information Security (Senior/Grad)",
+        "Description": "Information Security (Advanced/Grad)",
         "Final Grade": "93"
     },
     {
         "Courses": "CS 640",
-        "Description": "Computer Networks (Senior/Grad)",
+        "Description": "Computer Networks (Advanced/Grad)",
         "Final Grade": ""
     },
     {
         "Courses": "CS 564",
-        "Description": "Database Management Systems (Senior/Grad)",
+        "Description": "Database Management Systems (Advanced/Grad)",
         "Final Grade": "98"
     },
     {
         "Courses": "CS 537",
-        "Description": "Intro to Operating Systems (Senior/Grad)",
+        "Description": "Intro to Operating Systems (Advanced/Grad)",
         "Final Grade": "108, I got extra credits :)"
     },
     {
         "Courses": "CS 577",
-        "Description": "",
-        "Final Grade": ""
+        "Description": "Algorithms (Advanced/Grad)",
+        "Final Grade": "99"
     },
     {
-        "Courses": "",
-        "Description": "",
-        "Final Grade": ""
+        "Courses": "CS 540",
+        "Description": "Intro to AI (Advanced)",
+        "Final Grade": "98"
     },
     {
-        "Courses": "",
-        "Description": "",
-        "Final Grade": ""
+        "Courses": "CS 542",
+        "Description": "Intro to Software Security (Advanced)",
+        "Final Grade": "100.2, I got extra credits again :)"
     },
     {
-        "Courses": "",
-        "Description": "",
-        "Final Grade": ""
+        "Courses": "CS 681",
+        "Description": "Senior Thesis Course Part 1",
+        "Final Grade": "Passed"
     },
     {
-        "Courses": "",
-        "Description": "",
-        "Final Grade": ""
+        "Courses": "CS 682",
+        "Description": "Senior Thesis Course Part 2",
+        "Final Grade": "Passed"
     },
     {
         "Courses": "",
