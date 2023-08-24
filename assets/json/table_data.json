@@ -2,11 +2,6 @@
     {
         "Courses": "CS 740",
         "Description": "Advanced Computer Networks (Grad)",
-        "Final Grade": "95.54"
-    },
-    {
-        "Courses": "CS 740",
-        "Description": "Advanced Computer Networks (Grad)",
         "Final Grade": "96"
     },
     {
@@ -46,12 +41,12 @@
     },
     {
         "Courses": "CS 681",
-        "Description": "Senior Thesis Course Part 1",
+        "Description": "Senior Honors Thesis Part 1",
         "Final Grade": "Passed"
     },
     {
         "Courses": "CS 682",
-        "Description": "Senior Thesis Course Part 2",
+        "Description": "Senior Honors Thesis Part 2",
         "Final Grade": "Passed"
     },
     {
@@ -65,8 +60,128 @@
         "Final Grade": "Passed"
     },
     {
-        "Courses": "",
-        "Description": "",
-        "Final Grade": ""
+        "Courses": "CS 532",
+        "Description": "Matrix Method in ML (Advanced)",
+        "Final Grade": "97"
+    },
+    {
+        "Courses": "CS 539",
+        "Description": "Intro to Neural Networks (Advanced)",
+        "Final Grade": "98"
+    },
+    {
+        "Courses": "STAT 451",
+        "Description": "Intro to ML & Statistical Pattern Classification(Intermediate)",
+        "Final Grade": "99"
+    },
+    {
+        "Courses": "CS 354",
+        "Description": "Machine Organization & Programming (Intermediate)",
+        "Final Grade": "101, extra credits :)"
+    },
+    {
+        "Courses": "CS 368",
+        "Description": "Intro to C++ (Intermediate)",
+        "Final Grade": "93"
+    },
+    {
+        "Courses": "CS 400",
+        "Description": "Java Programming 3rd (Advanced)",
+        "Final Grade": "101, extra credits :)"
+    },
+    {
+        "Courses": "CS 300",
+        "Description": "Java Programming 2nd (Intermediate)",
+        "Final Grade": "98"
+    },
+    {
+        "Courses": "CS 200",
+        "Description": "Java Programming 1st (Elementary)",
+        "Final Grade": "99"
+    },
+    {
+        "Courses": "Anthro 104",
+        "Description": "Cultural Anthropology & Human Diversity (Elementary)",
+        "Final Grade": "98"
+    },
+    {
+        "Courses": "Anthro 105",
+        "Description": "Principles of Biological Anthropology (Elementary)",
+        "Final Grade": "96"
+    },
+    {
+        "Courses": "Asian 371",
+        "Description": "Chinese Literature (Intermediate)",
+        "Final Grade": "96"
+    },
+    {
+        "Courses": "Asian 352",
+        "Description": "Modern Chinese Literature (Intermediate)",
+        "Final Grade": "99"
+    },
+    {
+        "Courses": "Math 341",
+        "Description": "Linear Algebra with Proofs (Intermediate)",
+        "Final Grade": "96"
+    },
+    {
+        "Courses": "CS 340",
+        "Description": "Discrete Mathematics (Intermediate)",
+        "Final Grade": "98"
+    },
+    {
+        "Courses": "Music 103",
+        "Description": "Intro to Music Cultures of the World(Elementary)",
+        "Final Grade": "97"
+    },
+    {
+        "Courses": "ECE 252",
+        "Description": "Intro to Computer Engineering (Elementary)",
+        "Final Grade": "97"
+    },
+    {
+        "Courses": "PHILOS 211",
+        "Description": "Elementary Logic (Elementary)",
+        "Final Grade": "98"
+    },
+    {
+        "Courses": "Math 222",
+        "Description": "Calculus & Analytic Geometry (Elementary)",
+        "Final Grade": "99"
+    },
+    {
+        "Courses": "Math 234",
+        "Description": "Calculus-Funcitons of Several Variables (Elementary)",
+        "Final Grade": "100"
+    },
+    {
+        "Courses": "ECON 101",
+        "Description": "Principles of Microeconomics (Elementary)",
+        "Final Grade": "99"
+    },
+    {
+        "Courses": "Music 113, the easiest course in UW-Madison :)",
+        "Description": "Music in Performance (Elementary)",
+        "Final Grade": "Passed"
+    },
+    {
+        "Courses": "CURRIC 277: yes, I wrote a paper about Stardew Valley!",
+        "Description": "Videogames & Learning (Elementary)",
+        "Final Grade": "96"
+    },
+    {
+        "Courses": "Genetics 113",
+        "Description": "Intro to genetics (Elementary)",
+        "Final Grade": "99"
+    },
+    {
+        "Courses": "ESL 118",
+        "Description": "Academic Writing part 2(Elementary)",
+        "Final Grade": "97"
+    },
+    {
+        "Courses": "ESL 117, the start of my journey~",
+        "Description": "Academic Writing part 1(Elementary)",
+        "Final Grade": "Passed"
     }
 ]
