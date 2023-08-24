@@ -3,7 +3,7 @@ layout: page
 title: Grader & Mentor in CS 540
 description: Introduction to Artificial Intelligence, UW-Madison
 img: assets/img/540.png
-importance: 1
+importance: 3
 category: work
 ---
 <!-- https://pages.cs.wisc.edu/~mgliu/CS640/F22/index.html -->
