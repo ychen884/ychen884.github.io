@@ -1,128 +1,67 @@
 [
     {
-        "id": 0,
-        "name": "Item 0",
-        "price": "$0",
-        "amount": 3
+        "Courses": "CS 740",
+        "Description": "Advanced Computer Networks (Grad)",
+        "Final Grade": "95.54"
     },
     {
-        "id": 1,
-        "name": "Item 1",
-        "price": "$1",
-        "amount": 4
+        "Courses": "CS 740",
+        "Description": "Advanced Computer Networks (Grad)",
+        "Final Grade": "96"
     },
     {
-        "id": 2,
-        "name": "Item 2",
-        "price": "$2",
-        "amount": 8
+        "Courses": "CS 642",
+        "Description": "Information Security (Senior/Grad)",
+        "Final Grade": "93"
     },
     {
-        "id": 3,
-        "name": "Item 3",
-        "price": "$3",
-        "amount": 2
+        "Courses": "CS 640",
+        "Description": "Computer Networks (Senior/Grad)",
+        "Final Grade": ""
     },
     {
-        "id": 4,
-        "name": "Item 4",
-        "price": "$4",
-        "amount": 90
+        "Courses": "CS 564",
+        "Description": "Database Management Systems (Senior/Grad)",
+        "Final Grade": "98"
     },
     {
-        "id": 5,
-        "name": "Item 5",
-        "price": "$5",
-        "amount": 2
+        "Courses": "CS 537",
+        "Description": "Intro to Operating Systems (Senior/Grad)",
+        "Final Grade": "108, I got extra credits :)"
     },
     {
-        "id": 6,
-        "name": "Item 6",
-        "price": "$6",
-        "amount": 3
+        "Courses": "CS 577",
+        "Description": "",
+        "Final Grade": ""
     },
     {
-        "id": 7,
-        "name": "Item 7",
-        "price": "$7",
-        "amount": 7
+        "Courses": "",
+        "Description": "",
+        "Final Grade": ""
     },
     {
-        "id": 8,
-        "name": "Item 8",
-        "price": "$8",
-        "amount": 39
+        "Courses": "",
+        "Description": "",
+        "Final Grade": ""
     },
     {
-        "id": 9,
-        "name": "Item 9",
-        "price": "$9",
-        "amount": 78
+        "Courses": "",
+        "Description": "",
+        "Final Grade": ""
     },
     {
-        "id": 10,
-        "name": "Item 10",
-        "price": "$10",
-        "amount": 30
+        "Courses": "",
+        "Description": "",
+        "Final Grade": ""
     },
     {
-        "id": 11,
-        "name": "Item 11",
-        "price": "$11",
-        "amount": 32
+        "Courses": "",
+        "Description": "",
+        "Final Grade": ""
     },
     {
-        "id": 12,
-        "name": "Item 12",
-        "price": "$12",
-        "amount": 12
-    },
-    {
-        "id": 13,
-        "name": "Item 13",
-        "price": "$13",
-        "amount": 76
-    },
-    {
-        "id": 14,
-        "name": "Item 14",
-        "price": "$14",
-        "amount": 10
-    },
-    {
-        "id": 15,
-        "name": "Item 15",
-        "price": "$15",
-        "amount": 9
-    },
-    {
-        "id": 16,
-        "name": "Item 16",
-        "price": "$16",
-        "amount": 8
-    },
-    {
-        "id": 17,
-        "name": "Item 17",
-        "price": "$17",
-        "amount": 1
-    },
-    {
-        "id": 18,
-        "name": "Item 18",
-        "price": "$18",
-        "amount": 99
-    },
-    {
-        "id": 19,
-        "name": "Item 19",
-        "price": "$19",
-        "amount": 100
-    },
-    {
-        "id": 20,
-        "name": "Item 20",
-        "price": "$20",
-        "amount": 109
+        "Courses": "",
+        "Description": "",
+        "Final Grade": ""
     }
 ]
