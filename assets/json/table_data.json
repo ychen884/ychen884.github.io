@@ -55,9 +55,14 @@
         "Final Grade": "Passed"
     },
     {
-        "Courses": "",
-        "Description": "",
-        "Final Grade": ""
+        "Courses": "CS 412",
+        "Description": "Numerical Methods (Intermediate)",
+        "Final Grade": "Highest Score, I know it cuz Prof Amos broadcasts an email :)"
+    },
+    {
+        "Courses": "CIVENGR 699 * 2",
+        "Description": "Independent Study for CIVENGR",
+        "Final Grade": "Passed"
     },
     {
         "Courses": "",
