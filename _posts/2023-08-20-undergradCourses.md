@@ -60,6 +60,7 @@ Intermediate (I): These courses are aimed at students in their sophomore to juni
 Advanced (A): Targeted at students in their junior to senior years, these courses focus on more specialized and complex topics.
 The education I received at UW-Madison has not only broadened my knowledge but also laid a solid foundation for my future pursuits in the field of Computer Science.
 
+Above 100%: Extra credits given in that course
 <table
   data-toggle="table"
   data-url="{{ '/assets/json/table_data.json' | relative_url }}">

@@ -22,7 +22,7 @@
     {
         "Courses": "CS 537",
         "Description": "Intro to Operating Systems (Advanced/Grad)",
-        "Final Grade": "108, I got extra credits :)"
+        "Final Grade": "108"
     },
     {
         "Courses": "CS 577",
@@ -37,7 +37,7 @@
     {
         "Courses": "CS 542",
         "Description": "Intro to Software Security (Advanced)",
-        "Final Grade": "100.2, I got extra credits again :)"
+        "Final Grade": "100.2"
     },
     {
         "Courses": "CS 681",
@@ -52,7 +52,7 @@
     {
         "Courses": "CS 412",
         "Description": "Numerical Methods (Intermediate)",
-        "Final Grade": "Highest Score, I know it cuz Prof Amos broadcasts an email :)"
+        "Final Grade": "Highest Score, Prof Amos broadcasts an email :)"
     },
     {
         "Courses": "CIVENGR 699 * 2",
@@ -77,7 +77,7 @@
     {
         "Courses": "CS 354",
         "Description": "Machine Organization & Programming (Intermediate)",
-        "Final Grade": "101, extra credits :)"
+        "Final Grade": "101"
     },
     {
         "Courses": "CS 368",
@@ -87,7 +87,7 @@
     {
         "Courses": "CS 400",
         "Description": "Java Programming 3rd (Advanced)",
-        "Final Grade": "101, extra credits :)"
+        "Final Grade": "101"
     },
     {
         "Courses": "CS 300",
@@ -165,7 +165,7 @@
         "Final Grade": "Passed"
     },
     {
-        "Courses": "CURRIC 277: yes, I wrote a paper about Stardew Valley!",
+        "Courses": "CURRIC 277: I wrote a paper about Stardew Valley!",
         "Description": "Videogames & Learning (Elementary)",
         "Final Grade": "96"
     },
