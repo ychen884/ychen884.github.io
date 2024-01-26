@@ -12,4 +12,83 @@
 
 ##### Failure independence of clients &amp; servers adds complexity
 1. Outsourcing (for example, relying on TCP). TCP guarantees reliable, in-order, unlimited delivery.
-</code></pre></div></div> <p>Pain:</p> <ul> <li>no preservation of write() boundaries</li> <li>data is re-framed in transit</li> <li>read may return fewer than number of bytes requested</li> </ul> <p>```</p> <ol> <li>The buck has to stop somewhere. Do it yourself. <ul> <li>Retransmission</li> <li>duplicate delivery/execution violates RPC semantics, sequence numbering to eliminate</li> <li>based on UDP</li> </ul> </li> </ol> <h5 id="timeout-values-in-distributed-systems">Timeout values in distributed systems</h5> <ul> <li>statistics -&gt; reasonable</li> <li>no matter what, could be too soon</li> </ul> <h5 id="what-does-server-do-when-receiving-duplication-happens">What does server do when receiving duplication happens?</h5> <ul> <li>indicates one of these happening: <ol> <li>reply lost</li> <li>reply crossed retransmitted request</li> <li>compute time was excessive</li> <li>client too impatient.</li> <li>…</li> </ol> </li> </ul> <h5 id="knowlege-at-server-is-always-stale-relative-to-client-and-vice-versa">Knowlege at server is always stale relative to client, and vice versa</h5> <ul> <li>processing time/network transmit time, indifferent to client..</li> <li>best for server to do is retrans</li> <li>should preserve reply, not re-compute, because computation can be substantial</li> <li>*my question: what if replies too large? maybe best effort</li> </ul> <h5 id="exactly-once-semantics">Exactly-once semantics</h5> <ul> <li>How long to keep old replies and sequence numbers</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15719/">Advanced Cloud Computing Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
+</code></pre></div></div> <p>Pain:</p> <ul> <li>no preservation of write() boundaries</li> <li>data is re-framed in transit</li> <li>read may return fewer than number of bytes requested</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2. The buck has to stop somewhere. Do it yourself.
+- Retransmission
+- duplicate delivery/execution violates RPC semantics, sequence numbering to eliminate
+- based on UDP
+
+
+
+##### Timeout values in distributed systems
+- statistics -&gt; reasonable
+- no matter what, could be too soon
+
+##### What does server do when receiving duplication happens?
+- indicates one of these happening: 
+1. reply lost
+2. reply crossed retransmitted request
+3. compute time was excessive
+4. client too impatient.
+5. ...
+
+
+##### Knowlege at server is always stale relative to client, and vice versa
+- processing time/network transmit time, indifferent to client..
+- best for server to do is retrans
+- should preserve reply, not re-compute, because computation can be substantial
+- *my question: what if replies too large? maybe best effort
+
+##### Exactly-once semantics
+- How long to keep old replies and sequence numbers
+- Rigorous interpretation of "RPC" -&gt; forever
+- Server crashes: 
+- - saved in non-volatile
+- - server response has to be after non-volatile write
+- - disk/flash latency per RPC
+- - clean undo of partial computations before crash
+- exactly-once RPC: 
+- - success return -&gt; call exected exactly once
+- - call blocks indefinitely, no failure return
+
+
+
+##### In practice for RPC package: At-most-once semantics 
+</code></pre></div></div> <p>Avoid indefinite blocking Declare timeout beyond certain delay: success or not? many timeout reasons…</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+##### Slow Servers &amp; Long-Running Calls
+</code></pre></div></div> <p>Solution: probes to check server health during long calls server responds busy while working essentially a keepalive mechanism</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+##### Orphaned Computations
+</code></pre></div></div> <p>network failure, then server continues, unaware its work is useless Orphan detection and extermination are difficult - but important</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+##### At-least-once semantics (strongest)
+</code></pre></div></div> <p>Even simpler to implement Requires operation idempotency Idempotency is a property of certain operations or API requests, which guarantees that performing the operation multiple times will yield the same result as if it was executed only once.</p> <ul> <li>for example, read request on locked object or read-only object, current_stock_price(MSFT) ```</li> </ul> <h6 id="choice-of-semantics-less-strong">Choice of semantics (less strong)</h6> <ol> <li>Achieving exactly-once semantics <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>not provided in any real RPC package
+requrie application-level dup elim
+built on top of at-most-once RPC
+- have to write on disk before replying
+</code></pre></div> </div> </li> <li>At-most-once (mostly provided by RPC packages) ``` avoids: <ul> <li>transactional storage</li> <li>non-volatile storageo of replies and sequence #s</li> <li>indefinite storage of replies</li> </ul> </li> </ol> <p>if crashed, just crash without executing anything exactly once: have to undo, and do again using instruction in non-vol</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+##### Safety and liveness properties
+</code></pre></div></div> <p>safety: correct functionalty (“At most one entity can execute in a critical section”)</p> <ul> <li>bad things never happen</li> </ul> <p>liveness: characterizes timely execution progress (e.g., “This code is deadlock-free”)</p> <ul> <li>good things will eventually happen ```</li> <li>“Exactly-once semantics” -&gt; safety property</li> <li>Existence of timeout in at-most-once RPC -&gt; liveness property</li> </ul> <h5 id="placement-of-functionality---what-are-you-promising-vs-deliver">Placement of Functionality - what are you promising vs deliver</h5> <ul> <li>Protocol layering</li> </ul> <h5 id="tcp-for-rpc">TCP for RPC</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TCP timeout -&gt; reconnect
+- new connection is unaware of old
+- server need to do dup elim
+- orphans still possible
+- exactly-once RPC no easier with TCP
+
+TCO simplifies at-most-once RPC
+TCP hurts since it has independent acks in each direction
+
+
+User TCP rather UDP:
+- not simplify exactly-once imple
+- worse performance in best case
+- simplify at-most once impl
+
+End-to-end argument:
+For a given functionality:
+- correctness is expressed relative to two endpoints (safety)
+- implementation requires support of those two end points
+- support below end points cannot suffice (may improve performance(liveness))
+
+</code></pre></div></div> <h5 id="critical-question-where-to-place-function-in-a-distributed-system">Critical question: Where to place function in a distributed system?</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>What guarantee promising
+end point 
+package
+simplified implementation
+guarantee properties
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15719/">Advanced Cloud Computing Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
