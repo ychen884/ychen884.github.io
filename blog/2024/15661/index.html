@@ -59,45 +59,94 @@ x &lt;- t+1   ---&gt; x &lt;- 4+1
 t &lt;- 5
 ret &lt;- t   --NO--&gt; ret &lt;- 4
 return 
-</code></pre></div> </div> </li> </ul> <h5 id="copy-propagation">Copy propagation</h5> <ul> <li>goal: elim move d &lt;- t,p by replacing d with t in p</li> <li>But: step replacing if d is written or if t is written <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>t &lt;- 5+1
+</code></pre></div> </div> </li> </ul> <h5 id="copy-propagation">Copy propagation</h5> <ul> <li>goal: elim move d &lt;- t,p by replacing d with t in p, But: step replacing if d is written or if t is written</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+t &lt;- 5+1
 d &lt;- t 
 x &lt;- d+1 ----&gt; x &lt;- t+1
 t &lt;- 5+2
 ret &lt;- d+1 ---No---&gt; ret &lt;- t + 1
 ret
-</code></pre></div> </div> </li> </ul> <h5 id="static-single-assignment-form">Static Single Assignment Form</h5> <ul> <li>every temp is assigned at most once</li> <li>don’t have to check “writes” but can replace all occurances in propagations</li> <li>Conversion to SSA -&gt; user version nums ``` t &lt;- 5+1 d &lt;- t x &lt;- d+1 —-&gt; x &lt;- t+1 t &lt;- 5+2 ret &lt;- d+1 —-No—&gt; ret &lt;- t + 1 ret</li> </ul> <p>—–»</p> <p>t0 &lt;- 5+1 d0 &lt;- t0 x0 &lt;- d0+1 t1 &lt;- 5+2 …</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-[Back to Blog Chapters](#blog-chapters)
+</code></pre></div></div> <h5 id="static-single-assignment-form">Static Single Assignment Form</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- every temp is assigned at most once
+- don't have to check "writes" but can replace all occurances in propagations
+- Conversion to SSA -&gt; user version nums
 
-## **Chapter 2: Register Allocation ** &lt;a name="topic-2"&gt;&lt;/a&gt;
-- Goal: assign registers and stack locations to temps
-##### X86-64: 16 registers, no temps
-- stack locations, when keeping track of more variables than registers
-##### Strategy
-1. Store all temps on the stack (CON: inefficient, still need registers for efficiency)
+t &lt;- 5+1
+d &lt;- t 
+x &lt;- d+1 ----&gt; x &lt;- t+1
+t &lt;- 5+2
+ret &lt;- d+1 ----No---&gt; ret &lt;- t + 1
+ret
+
+-----&gt;&gt;
+
+t0 &lt;- 5+1
+d0 &lt;- t0
+x0 &lt;- d0+1
+t1 &lt;- 5+2
+...
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-2-register-allocation--">**Chapter 2: Register Allocation ** <a name="topic-2"></a> </h2> <ul> <li>Goal: assign registers and stack locations to temps <h5 id="x86-64-16-registers-no-temps">X86-64: 16 registers, no temps</h5> </li> <li>stack locations, when keeping track of more variables than registers <h5 id="strategy">Strategy</h5> <ol> <li>Store all temps on the stack (CON: inefficient, still need registers for efficiency)</li> </ol> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IR trees(simplified syntax tree) 
+--&gt; Instruction selection --&gt; ASM 
+--&gt; reg alloc --&gt; ASM
+--&gt; x86 asm
 
 
-</code></pre></div></div> <p>IR trees(simplified syntax tree) –&gt; Instruction selection –&gt; ASM –&gt; reg alloc –&gt; ASM –&gt; x86 asm</p> <p>Example: d &lt;- s1 ⊕ s2 -&gt; reg alloc</p> <p>rlld &lt;- exd * 4(rsp)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Difficulty: x86 has 15 gen purpose registers
-- Goal: assign each variable a register
-- may have to use stack locations and clever use of registers for variables
+Example: 
+d &lt;- s1 ⊕ s2
+-&gt; reg alloc
 
-##### Interference:
-</code></pre></div></div> <p>x &lt;- 14 y &lt;- 15 z &lt;- x+y</p> <p>x &lt;- 14 y &lt;- 15 + x ret &lt;- 4+y ret if x is not used again, we can use overwrite the register for y</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Rigth IR for reg alloc? 
-##### 3 addr abs asm
-</code></pre></div></div> <p>d &lt;- s1 + s2 d &lt;- s1 / s2 …</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### 2 addr abs asm
-</code></pre></div></div> <p>d &lt;- s1 d &lt;- d + s2</p> <p>d &lt;- s1 d &lt;- d / s2 …</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### abstract x86
-</code></pre></div></div> <p>MOVL S1,d ADDL S2,d … IDIVL edx:eax / s2 -&gt; eax</p> <p>MOVL s1, %eax CLTD (sign-extends eax into edx:eax.) —- https://stackoverflow.com/questions/17170388/trying-to-understand-the-assembly-instruction-cltd-on-x86 What this means in practice is that edx is filled with the most significant bit of eax (the sign bit). For example, if eax is 0x7F000000 edx would become 0x00000000 after cdq. And if eax is 0x80000000 edx would become 0xFFFFFFFF. —- IDIVL s2 (edx:eax / s2) MOVL %eax, d</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Reg Alloc at 3-Addr Assem
-- leave one register unassigned for later conversion (r11d)
+rlld &lt;- exd * 4(rsp)
+</code></pre></div></div> <h5 id="difficulty-x86-has-15-gen-purpose-registers">Difficulty: x86 has 15 gen purpose registers</h5> <ul> <li>Goal: assign each variable a register</li> <li>may have to use stack locations and clever use of registers for variables</li> </ul> <h5 id="interference">Interference:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- 14
+y &lt;- 15 
+z &lt;- x+y
 
-</code></pre></div></div> <p>For example</p> <p>d &lt;- s1 ⊕ s2 –&gt; MOVL s1, %r11d ADDL s2, %r11d MOVL %r11d, d (one of them has to be a register this will always work, but may not be the optimzied solution)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Reg Alloc at 2-Addr Assem
-</code></pre></div></div> <p>For example</p> <p>d &lt;- s1 + s2 –&gt; d &lt;- s1 d &lt;- s2 + d</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### How to allocate registers? 
-- Goal: minimize spilling to the stack
-- One method: graph-based, greedy register allocation
-1. Build interference graph
-</code></pre></div></div> <p>Vertices are registers and temps Edges indicate interference (need diff registers)</p> <p>Example: t1 – t2 – t3 – eax | | ———–</p> <p>Complexity pf deciding if two temps interfere? Undecidable Why? Reduction to the halting problem x &lt;- 5 y &lt;- 6 complex code (doesn’t use x and y) ret&lt;- x + y return</p> <p>x and y interfere iff complex code terminates</p> <p>Approximate Interference with liveness Liveness: temp t is live at line l if t might be used in the following computation</p> <p>For L1: work backwards temp t is live at l if either of them is valid:</p> <ul> <li>t is read at l</li> <li>t is live at l+1 and not written at line l</li> </ul> <p>Example: x1 &lt;- 1 - x2 &lt;- 1 x1 x3 &lt;- x1 + x2 x2,x1 x4 &lt;- x3 + x2 x3,x2 x5 &lt;- x4 + x3 x3,x4 ret &lt;- x5 x5 return ret ret register</p> <p>life range of t1: 2-3 life range of x2: 3-4 ..</p> <p>t1 &lt;- 1 - t1 &lt;- t1+1 t1 t2 &lt;- t1 t1</p> <p>Construct interf graph: Option 1: Add edge between t1 and t2 if they have overlapping live ranges Option 2: rule 1: For every instruction d &lt;- s1 ⊕ s2 add an edge {d,t} if t is live at the next instruction rule 2: For every move d &lt;- s, add an edge {d,t} that t not in {s,d}, and is live at the next instruction</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+x &lt;- 14
+y &lt;- 15 + x 
+ret &lt;- 4+y
+ret
+if x is not used again, we can use overwrite the register for y
+</code></pre></div></div> <h5 id="rigth-ir-for-reg-alloc">Rigth IR for reg alloc?</h5> <h5 id="3-addr-abs-asm">3 addr abs asm</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d &lt;- s1 + s2
+d &lt;- s1 / s2
+...
+</code></pre></div></div> <h5 id="2-addr-abs-asm">2 addr abs asm</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d &lt;- s1
+d &lt;- d + s2
+
+d &lt;- s1
+d &lt;- d / s2
+...
+
+</code></pre></div></div> <h5 id="abstract-x86">abstract x86</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MOVL S1,d
+ADDL S2,d
+...
+IDIVL
+edx:eax / s2 -&gt; eax
+
+MOVL s1, %eax
+CLTD (sign-extends eax into edx:eax.)
+----
+https://stackoverflow.com/questions/17170388/trying-to-understand-the-assembly-instruction-cltd-on-x86
+What this means in practice is that edx is filled with the most significant bit of eax (the sign bit). For example, if eax is 0x7F000000 edx would become 0x00000000 after cdq. And if eax is 0x80000000 edx would become 0xFFFFFFFF.
+----
+IDIVL s2 (edx:eax / s2)
+MOVL %eax, d
+
+</code></pre></div></div> <h5 id="reg-alloc-at-3-addr-assem">Reg Alloc at 3-Addr Assem</h5> <ul> <li>leave one register unassigned for later conversion (r11d)</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>For example
+
+d &lt;- s1 ⊕ s2
+--&gt; 
+MOVL s1, %r11d
+ADDL s2, %r11d
+MOVL %r11d, d
+(one of them has to be a register
+this will always work, but may not be the optimzied solution)
+
+</code></pre></div></div> <h5 id="reg-alloc-at-2-addr-assem">Reg Alloc at 2-Addr Assem</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>For example
+
+d &lt;- s1 + s2
+--&gt; 
+d &lt;- s1
+d &lt;- s2 + d
+</code></pre></div></div> <h5 id="how-to-allocate-registers">How to allocate registers?</h5> <ul> <li>Goal: minimize spilling to the stack</li> <li>One method: graph-based, greedy register allocation <ol> <li>Build interference graph ``` Vertices are registers and temps Edges indicate interference (need diff registers)</li> </ol> </li> </ul> <p>Example: t1 – t2 – t3 – eax | | ———–</p> <p>Complexity pf deciding if two temps interfere? Undecidable Why? Reduction to the halting problem x &lt;- 5 y &lt;- 6 complex code (doesn’t use x and y) ret&lt;- x + y return</p> <p>x and y interfere iff complex code terminates</p> <p>Approximate Interference with liveness Liveness: temp t is live at line l if t might be used in the following computation</p> <p>For L1: work backwards temp t is live at l if either of them is valid:</p> <ul> <li>t is read at l</li> <li>t is live at l+1 and not written at line l</li> </ul> <p>Example: x1 &lt;- 1 - x2 &lt;- 1 x1 x3 &lt;- x1 + x2 x2,x1 x4 &lt;- x3 + x2 x3,x2 x5 &lt;- x4 + x3 x3,x4 ret &lt;- x5 x5 return ret ret register</p> <p>life range of t1: 2-3 life range of x2: 3-4 ..</p> <p>t1 &lt;- 1 - t1 &lt;- t1+1 t1 t2 &lt;- t1 t1</p> <p>Construct interf graph: Option 1: Add edge between t1 and t2 if they have overlapping live ranges Option 2: rule 1: For every instruction d &lt;- s1 ⊕ s2 add an edge {d,t} if t is live at the next instruction rule 2: For every move d &lt;- s, add an edge {d,t} that t not in {s,d}, and is live at the next instruction</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 
 2. Find coloring with as few colors as possible: Adjacent vertices have different colors
