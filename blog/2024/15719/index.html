@@ -213,9 +213,12 @@ Scalability
 Minimal Performance Overhead
 Generality of the Interface
 Facilitation of Network-Centric Services
-</code></pre></div></div> <h2 id="-chapter-3-encapsulation--">** Chapter 3: Encapsulation ** <a name="topic-3"></a> </h2> <h5 id="options-available-for-encap">Options available for encap</h5> <ul> <li>Isolation: others can’t read/write your data</li> <li> <ul> <li>can’t impact your performance (DOS)</li> </ul> </li> <li>Processes may need memory sharing, get resource alloc, has own address space <ol> <li>Bare metal <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>+: good isolation, performance, very good software freedom
+</code></pre></div></div> <h2 id="-chapter-3-encapsulation--">** Chapter 3: Encapsulation ** <a name="topic-3"></a> </h2> <h5 id="options-available-for-encap">Options available for encap</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Isolation: others can't read/write your data
+- - can't impact your performance (DOS)
+- Processes may need memory sharing, get resource alloc, has own address space
+</code></pre></div></div> <ol> <li>Bare metal <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>+: good isolation, performance, very good software freedom
 -: granularity limitation
-</code></pre></div> </div> </li> <li>Process: just application</li> </ol> </li> </ul> <ol> <li>Containers: with applicaiton &amp; library/fs/etc that looks like an OS <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>+: performance, decent software freedom
+</code></pre></div> </div> </li> <li> <p>Process: just application</p> </li> <li>Containers: with applicaiton &amp; library/fs/etc that looks like an OS <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>+: performance, decent software freedom
 -: security issues
 </code></pre></div> </div> </li> <li>Virtual Machines: physical machine-like software container ``` HW &lt;-&gt; VMM &lt;-&gt; (OS, Library/fs/etc/, App) +: isolation properties, good software freedom -: performance overhead, imperfect performance isolation</li> </ol> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ##### Comparison
@@ -244,22 +247,17 @@ Facilitation of Network-Centric Services
 - Performance, most operations execute natively
 
 #### Ecap Principle
-- Basic: Execute VM softare in de-privileged mode
-- - prevent privileged instr from escaping containment
 
-</code></pre></div></div> <p>Privilege Level App User/Ring 3 Lib User/Ring 3 OS Supervisor/Ring-o HW</p> <p>Option 1 Privilege Level App User/Ring 3 Lib User/Ring 3 OS User/Ring-3 VMM Supervisor/Ring-0 HW Overhead - Isolation, VMM has to deal with operations from OS.. not ideal</p> <p>Option 2 Privilege Level App User/Ring 3 Lib User/Ring 3 OS Ring-1 VMM Supervisor/Ring-0 HW</p> <p>—-&gt; later Option 3 Privilege Level App User/Ring 3* Lib User/Ring 3* OS Ring-0* (don’t have all power, cannot change fundamental page tables..) VMM Supervisor/Ring-0 HW</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Priv Ops
-- Most executions run directly
-- VNM needs to handle OS attemps that execute priv ops, Non-CPU devices..
-- - popf, pushf...
 
-</code></pre></div></div> <p>Handle: Trap &amp; emulate: VMM handles Static software re-writing/paravirtualization: rewrite guest OS to leverage VMM hypercalls (performance, sacrificing transparancy) Dynamic software re-writing: VMM re-write guest’s privileged code - coalescing traps, VMM complex, good performance</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div> <ul> <li>Basic: Execute VM softare in de-privileged mode</li> <li> <ul> <li>prevent privileged instr from escaping containment Privilege Level App User/Ring 3 Lib User/Ring 3 OS Supervisor/Ring-o HW</li> </ul> </li> </ul> <p>Option 1 Privilege Level App User/Ring 3 Lib User/Ring 3 OS User/Ring-3 VMM Supervisor/Ring-0 HW Overhead - Isolation, VMM has to deal with operations from OS.. not ideal</p> <p>Option 2 Privilege Level App User/Ring 3 Lib User/Ring 3 OS Ring-1 VMM Supervisor/Ring-0 HW</p> <p>—-&gt; later Option 3 Privilege Level App User/Ring 3* Lib User/Ring 3* OS Ring-0* (don’t have all power, cannot change fundamental page tables..) VMM Supervisor/Ring-0 HW</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Priv Ops
+
+
+</code></pre></div></div> <ul> <li>Most executions run directly</li> <li>VNM needs to handle OS attemps that execute priv ops, Non-CPU devices..</li> <li> <ul> <li>popf, pushf…</li> </ul> </li> </ul> <p>Handle: Trap &amp; emulate: VMM handles Static software re-writing/paravirtualization: rewrite guest OS to leverage VMM hypercalls (performance, sacrificing transparancy) Dynamic software re-writing: VMM re-write guest’s privileged code - coalescing traps, VMM complex, good performance</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ##### Handling memory: process
-- OS: page mapping from virtual page to physical page
-- User process: typically continuous address space
-</code></pre></div></div> <p>Mutiple OS: Guest OSes manage: Mapping guest virtual to guest physical VMM manages guest physical to host physical</p> <p>other split: cores, time sharing..</p> <p>SW: Shadow page tables HW: Extended page tables(EPT)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div> <ul> <li>OS: page mapping from virtual page to physical page</li> <li>User process: typically continuous address space</li> </ul> <p>Mutiple OS: Guest OSes manage: Mapping guest virtual to guest physical VMM manages guest physical to host physical</p> <p>other split: cores, time sharing..</p> <p>SW: Shadow page tables HW: Extended page tables(EPT)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ##### Virtualization Devices
-- Could be all virtualized (trap accesses, and emulate), but worse performance
-</code></pre></div></div> <p>For performance</p> <ol> <li>Mapping, control given to a host (hw support)</li> <li>Partition, (disk..)</li> <li>Guest enhancement (special VM -&gt; VMM calls)</li> <li>Virtualized-enhanced devices (NICs with VMDq)</li> </ol> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+</code></pre></div></div> <ul> <li>Could be all virtualized (trap accesses, and emulate), but worse performance</li> </ul> <p>For performance</p> <ol> <li>Mapping, control given to a host (hw support)</li> <li>Partition, (disk..)</li> <li>Guest enhancement (special VM -&gt; VMM calls)</li> <li>Virtualized-enhanced devices (NICs with VMDq)</li> </ol> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ##### Security issues of virtualization/containerization
 - meltdown
 - bitflip(row hammer)
@@ -299,13 +297,8 @@ Facilitation of Network-Centric Services
 - Data staging and movement
 
 ##### MapReduce
-- read large data set
-- ind process the input data in chunks
-- shuffle and sort data (by key)
-- reduce(merge)
-- locality optimization for racks
-- shuffle begins after first round of map (master responsible for scheduling this)
-</code></pre></div></div> <p>Split RR(record reader) -&gt;(K,V) Map -&gt; (K’, V’) -&gt; Partitioner: hash(key) mod R -&gt; reducer Sort (may need to wait for reduce finish) Reuce</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+</code></pre></div></div> <ul> <li>read large data set</li> <li>ind process the input data in chunks</li> <li>shuffle and sort data (by key)</li> <li>reduce(merge)</li> <li>locality optimization for racks</li> <li>shuffle begins after first round of map (master responsible for scheduling this)</li> </ul> <p>Split RR(record reader) -&gt;(K,V) Map -&gt; (K’, V’) -&gt; Partitioner: hash(key) mod R -&gt; reducer Sort (may need to wait for reduce finish) Reuce</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 ##### Map data size vs shuffle data size
 - ngram(small-&gt;large)
