@@ -146,19 +146,141 @@ d &lt;- s1 + s2
 --&gt; 
 d &lt;- s1
 d &lt;- s2 + d
-</code></pre></div></div> <h5 id="how-to-allocate-registers">How to allocate registers?</h5> <ul> <li>Goal: minimize spilling to the stack</li> <li>One method: graph-based, greedy register allocation</li> <li> <ul> <li>Build interference graph ``` Vertices are registers and temps Edges indicate interference (need diff registers)</li> </ul> </li> </ul> <p>Example: t1 – t2 – t3 – eax | | ———–</p> <p>Complexity pf deciding if two temps interfere? Undecidable Why? Reduction to the halting problem x &lt;- 5 y &lt;- 6 complex code (doesn’t use x and y) ret&lt;- x + y return</p> <p>x and y interfere iff complex code terminates</p> <p>Approximate Interference with liveness Liveness: temp t is live at line l if t might be used in the following computation</p> <p>For L1: work backwards temp t is live at l if either of them is valid:</p> <ul> <li>t is read at l</li> <li>t is live at l+1 and not written at line l</li> </ul> <p>Example: x1 &lt;- 1 - x2 &lt;- 1 x1 x3 &lt;- x1 + x2 x2,x1 x4 &lt;- x3 + x2 x3,x2 x5 &lt;- x4 + x3 x3,x4 ret &lt;- x5 x5 return ret ret register</p> <p>life range of t1: 2-3 life range of x2: 3-4 ..</p> <p>t1 &lt;- 1 - t1 &lt;- t1+1 t1 t2 &lt;- t1 t1</p> <p>Construct interf graph: Option 1: Add edge between t1 and t2 if they have overlapping live ranges Option 2: rule 1: For every instruction d &lt;- s1 ⊕ s2 add an edge {d,t} if t is live at the next instruction rule 2: For every move d &lt;- s, add an edge {d,t} that t not in {s,d}, and is live at the next instruction</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div> <h5 id="how-to-allocate-registers">How to allocate registers?</h5> <h6 id="goal-minimize-spilling-to-the-stack">Goal: minimize spilling to the stack</h6> <h6 id="one-method-graph-based-greedy-register-allocation">One method: graph-based, greedy register allocation</h6> <h6 id="build-interference-graph">Build interference graph</h6> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Vertices are registers and temps
+Edges indicate interference (need diff registers)
+
+Example: 
+t1  -- t2 -- t3 -- eax
+        |           |
+         -----------
+
+Complexity pf deciding if two temps interfere? Undecidable
+Why? Reduction to the halting problem
+x &lt;- 5
+y &lt;- 6
+complex code (doesn't use x and y)
+ret&lt;- x + y
+return
+
+x and y interfere iff complex code terminates
 
 
-- Find coloring with as few colors as possible: Adjacent vertices have different colors
-</code></pre></div></div> <p>Given: Graph G = (V,E) and k colors Question: Is there a coloring of V with k colors such that adjacent verticies have different colors Complexity: NP complete for k &gt;= 3</p> <p>What folllows for reg allocation?</p> <p>For a Turing-comp lang It’s undecidable for a prog if there’s an equiv prog that uses k registers (and no tem)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-- Assign colors to registers and stack locations
-</code></pre></div></div> <p>Greedy graph coloring: get a minimal coloring for most programs</p> <p>Assume colors are number 1,2,3…</p> <p>Let N(v) be the nbs of v Input: G(V,E) and ordering V=v1,…,vn Output: Coloring of V: col:V-&gt;{1,..k}</p> <ul> <li>Order matters</li> </ul> <p>x5</p> <p>x4-x3-x2-x1</p> <p>Order 1: x5,x4,x3,x2,x1,ret</p> <p>Order 2: x1,x4,x3,x2,x5,ret</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Th: There exists an ordering that produces an optimal coloring
-</code></pre></div></div> <p>How to find optimal ordering for chordal graphs?</p> <p>Def: A graph is chordal if every cycle with &gt;= 4 vertices has a chord (edge between two verticies in the cycle that is not in the cycle)</p> <p>Example</p> <p>a - b | | c - d not chordal</p> <p>a - b | / | c - d chordal</p> <p>a - b | x | c - d chordal</p> <p>Intuition: how to get long cycle w/o chord? a over lap with b and c we want d to be not overlapping with a</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#####  Maximum cardinality search
-</code></pre></div></div> <p>Input: G, Op: ordering of v for each vertex in V, set wt(v) &lt;- 0</p> <p>For all v ∈ V set wt(v) ← 0 Let W ← V For i ← 1 to n do Let v be a node of maximal weight in W Set vi ← v For all u ∈ W ∩ N(v) set wt(u) ← wt(u) + 1 Set W ← W \ {v}</p> <p>MCS Ordering returns: simplicial elimination ordering if G is chordal Def: v is simplicial in G in N(v) is a clique A simplicial vertex is one whose neighbors form a clique: every two neighbors are adjacent.</p> <p>Def: A simpl elim ordering is an ord v1, … vn st vi is simplicial in Gv1,..vi &lt;- subgraph induced by v1, .. vi (picked)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Theorem 1: The graph is chordal iff it has an simplicial elim ordering
+Approximate Interference with liveness
+Liveness: temp t is live at line l if t might be used in the 
+following computation
 
-</code></pre></div></div> <p>Proof..</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Theorem 2: The greedy coloring alg finds an opt coloring if run with a simpl elim ordering
-</code></pre></div></div> <p>Proof: Let k be the number of colors used Observations:</p> <ul> <li> <table> <tbody> <tr> <td>k &lt;= max</td> <td>Ni(vi)</td> <td>+ 1</td> </tr> </tbody> </table> </li> <li>#min colors &gt;= max|Ni(vi)| + 1 ```</li> </ul> <h5 id="--theorem-mcs-returns-a-sompl-elem-ordering-iff-g-is-chordal">-&gt; Theorem: MCS returns a sompl elem ordering iff G is chordal</h5> <ul> <li>Spill: assign remaining colors to stack loc.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strategies: 
+For L1: work backwards
+temp t is live at l if either of them is valid:
+- t is read at l
+- t is live at l+1 and not written at line l
+
+Example: 
+x1 &lt;- 1            -
+x2 &lt;- 1           x1
+x3 &lt;- x1 + x2     x2,x1
+x4 &lt;- x3 + x2     x3,x2
+x5 &lt;- x4 + x3     x3,x4
+ret &lt;- x5         x5
+return ret        ret register
+
+life range of t1: 2-3
+life range of x2: 3-4
+..
+
+
+t1 &lt;- 1     -
+t1 &lt;- t1+1  t1
+t2 &lt;- t1    t1
+
+Construct interf graph:
+Option 1: Add edge between t1 and t2 if they have overlapping live ranges
+Option 2: rule 1: For every instruction d &lt;- s1 ⊕ s2
+                        add an edge {d,t} if t is  live at the next instruction
+          rule 2: For every move d &lt;- s, add an edge {d,t} 
+                  that t not in {s,d}, and is live at the next instruction
+
+
+</code></pre></div></div> <h5 id="find-coloring-with-as-few-colors-as-possible-adjacent-vertices-have-different-colors">Find coloring with as few colors as possible: Adjacent vertices have different colors</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given: Graph G = (V,E) and k colors
+Question: Is there a coloring of V with k colors such that adjacent verticies have different colors
+Complexity: NP complete for k &gt;= 3 
+
+What folllows for reg allocation? 
+
+For a Turing-comp lang
+It's undecidable for a prog if there's an equiv prog that uses k registers (and no tem)
+
+</code></pre></div></div> <h5 id="assign-colors-to-registers-and-stack-locations">Assign colors to registers and stack locations</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Greedy graph coloring: get a minimal coloring for most programs
+
+Assume colors are number 1,2,3...
+
+Let N(v) be the nbs of v
+Input: G(V,E) and ordering V=v1,...,vn
+Output: Coloring of V: col:V-&gt;{1,..k}
+
+- Order matters
+
+x5 
+
+x4-x3-x2-x1
+
+Order 1: x5,x4,x3,x2,x1,ret
+
+Order 2: x1,x4,x3,x2,x5,ret
+
+
+</code></pre></div></div> <h5 id="th-there-exists-an-ordering-that-produces-an-optimal-coloring">Th: There exists an ordering that produces an optimal coloring</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>How to find optimal ordering for chordal graphs?
+
+Def: A graph is chordal if every cycle with &gt;= 4 vertices has a chord 
+(edge between two verticies in the cycle that is not in the cycle)
+
+Example
+
+a - b
+|   |
+c - d
+not chordal
+
+a - b
+| / |
+c - d
+chordal
+
+a - b
+| x |
+c - d
+chordal
+
+
+Intuition: how to get long cycle w/o chord?
+a over lap with b and c
+we want d to be not overlapping with a
+
+
+</code></pre></div></div> <h5 id="maximum-cardinality-search">Maximum cardinality search</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Input: G, Op: ordering of v
+for each vertex in V, set wt(v) &lt;- 0
+
+For all v ∈ V set wt(v) ← 0
+Let W ← V
+For i ← 1 to n do
+      Let v be a node of maximal weight in W
+      Set vi ← v
+      For all u ∈ W ∩ N(v) set wt(u) ← wt(u) + 1
+      Set W ← W \ {v}
+
+
+MCS Ordering returns: simplicial elimination ordering if G is chordal
+Def: v is simplicial in G in N(v) is a clique
+A simplicial vertex is one whose neighbors form a clique: every two neighbors are adjacent. 
+
+
+Def: A simpl elim ordering is an ord v1, ... vn st vi is simplicial in
+Gv1,..vi &lt;- subgraph induced by v1, .. vi (picked)
+</code></pre></div></div> <h5 id="theorem-1-the-graph-is-chordal-iff-it-has-an-simplicial-elim-ordering">Theorem 1: The graph is chordal iff it has an simplicial elim ordering</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Proof..
+</code></pre></div></div> <h5 id="theorem-2-the-greedy-coloring-alg-finds-an-opt-coloring-if-run-with-a-simpl-elim-ordering">Theorem 2: The greedy coloring alg finds an opt coloring if run with a simpl elim ordering</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Proof: Let k be the number of colors used
+Observations: 
+- k &lt;= max|Ni(vi)| + 1
+- #min colors &gt;= max|Ni(vi)| + 1
+</code></pre></div></div> <h5 id="--theorem-mcs-returns-a-sompl-elem-ordering-iff-g-is-chordal">-&gt; Theorem: MCS returns a sompl elem ordering iff G is chordal</h5> <h5 id="spill-assign-remaining-colors-to-stack-loc">Spill: assign remaining colors to stack loc.</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strategies: 
 1. number of uses of temps in code, higher use freq get the registers
 2. incorp loop nestings
 3. highest colors (high color may be used in less time, approx for 1)

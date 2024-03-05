@@ -11,7 +11,7 @@
 
 
 ##### Failure independence of clients &amp; servers adds complexity
-- Outsourcing (for example, relying on TCP). TCP guarantees reliable, in-order, unlimited delivery.
+###### Outsourcing (for example, relying on TCP). TCP guarantees reliable, in-order, unlimited delivery.
 </code></pre></div></div> <p>Pain:</p> <ul> <li>no preservation of write() boundaries</li> <li>data is re-framed in transit</li> <li>read may return fewer than number of bytes requested</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2. The buck has to stop somewhere. Do it yourself.
 - Retransmission
 - duplicate delivery/execution violates RPC semantics, sequence numbering to eliminate
@@ -120,34 +120,258 @@ Fetch more than you need on miss
 ##### Update Propagation
 </code></pre></div></div> <p>One-copy semantics • there are no externally observable functional differences • relative to same system without caching (or replication)</p> <p>This model aims to provide the illusion that although data may be replicated across multiple servers or nodes (to improve reliability, performance, and fault tolerance), users interact with the data as if there is only one copy.</p> <p>Challenges: Physical master copy may not exist Network may break between some users and master copy Intense read- and write-sharing across sites (The benefits of caching (reducing access time, decreasing bandwidth usage) are undermined in this scenario. The caches might spend more time synchronizing than serving the actual read and write requests, making them “effectively useless”)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ##### Cache Consistency Strategies
-- Broadcast Invalidations
-</code></pre></div></div> <p>Notification to All Caching Sites:every caching site in the network is notified, regardless of whether they actually have the cached object.</p> <p>Handling at Cache Sites: Upon receiving the invalidation notice, if a cache has the invalidated object, it will mark it as invalid.</p> <p>Strengths</p> <ul> <li>Strict One-Copy Semantics:</li> <li>Race Condition Prevention: If the updating process is blocked until all caches have invalidated the item, it prevents race conditions, ensuring that no stale reads occur.</li> <li>Simplicity</li> </ul> <p>Limitations</p> <ul> <li>Wasted Traffic:</li> <li>Blocking Updating Process:</li> <li> <p>Scalability Issues: As the number of nodes in the system increases, the overhead of sending invalidations to every node and the corresponding acknowledgments becomes impractical. ```</p> </li> <li>Check on Use: ``` Reader checks master copy before each use Has to be done at coarse granularity (e.g. entire file or large block) Whole file granularity-&gt; “session semantics”</li> </ul> <p>Advantages • strict consistency at coarse granularity • easy to implement, no server state • servers don’t need to know of caching sites</p> <p>“session semantics at open-close granularity,” where changes made to a file during a session (from open to close) are not visible to other clients until the session ends (the file is closed). principled weakening of strict one-copy semantics</p> <p>Strict One-Copy Semantics With Write-Sharing any write operation performed by any client or process in a distributed system is immediately visible to all other clients or processes.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Sharing Taxonomy
+###### Broadcast Invalidations
+</code></pre></div></div> <p>Notification to All Caching Sites:every caching site in the network is notified, regardless of whether they actually have the cached object.</p> <p>Handling at Cache Sites: Upon receiving the invalidation notice, if a cache has the invalidated object, it will mark it as invalid.</p> <p>Strengths</p> <ul> <li>Strict One-Copy Semantics:</li> <li>Race Condition Prevention: If the updating process is blocked until all caches have invalidated the item, it prevents race conditions, ensuring that no stale reads occur.</li> <li>Simplicity</li> </ul> <p>Limitations</p> <ul> <li>Wasted Traffic:</li> <li>Blocking Updating Process:</li> <li>Scalability Issues: As the number of nodes in the system increases, the overhead of sending invalidations to every node and the corresponding acknowledgments becomes impractical. ```</li> </ul> <h6 id="check-on-use">Check on Use:</h6> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reader checks master copy before each use
+Has to be done at coarse granularity (e.g. entire file or large block)
+Whole file granularity-&gt; “session semantics”
 
-</code></pre></div></div> <p>Multiple concurrent read-only sessions “read sharing”</p> <p>Multiple concurrent read-only sessions + one read-write session “read-write sharing”</p> <p>Multiple concurrent read-write sessions “write-write sharing”</p> <ol> <li>“Last Close After Write Wins”: AFS</li> <li>“Raise Conflict Exception”: Coda File System</li> <li>“Live Happily and Be Blissfully Unaware”: NFS, Google Docs, DropBox, etc. None of these approaches prevents concurrent updates on server</li> </ol> <p>3: How to do?</p> <p>“Last Close After Write Wins” Mechanism: This approach resolves write-write conflicts by accepting the changes made by the process that closes the file last. All previous writes to the file during the conflict period are overwritten by the last writer’s data. Pros: Simplifies conflict resolution by enforcing a clear rule. Cons: Can lead to data loss for earlier writes, as changes made by all but the last writer are discarded. Use Case: AFS uses this method, prioritizing simplicity and predictability over the preservation of every change</p> <p>“Raise Conflict Exception” Mechanism: When a write-write conflict is detected, the system raises an exception, alerting the involved parties (applications or users) of the conflict. Pros: Prevents data loss by not automatically overwriting any data. It requires intervention to resolve the conflict, which can ensure that important data isn’t inadvertently lost or overwritten. Cons: Requires additional mechanisms for conflict resolution and may interrupt the user workflow. Use Case: The Coda File System employs this strategy to maintain high data integrity, especially in environments where data consistency is critical.</p> <p>“Live Happily and Be Blissfully Unaware” Mechanism: This approach allows concurrent writes to proceed without immediate conflict resolution. Systems employing this strategy might merge changes automatically, keep all versions of the file, or simply ignore the conflict entirely. Pros: Enhances user experience by avoiding interruptions. Systems like Google Docs merge changes in real-time, allowing seamless collaboration. Cons: Can lead to inconsistencies or unexpected results if automatic merging is not possible or if changes are incompatible. Use Case: NFS (Network File System) traditionally does not handle write-write conflicts explicitly at the file system level. Google Docs and Dropbox provide user-friendly collaboration features, allowing multiple users to edit documents simultaneously, with changes reflected in real-time or through version history.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Check-on-open diadv
-</code></pre></div></div> <p>slows read access on loaded servers &amp; high-latency networks check is almost always success: frivolous traffic load on network and server</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Callback
-</code></pre></div></div> <p>targeted notification of caching sites on update, all sites with cached data notified (“callback”)</p> <p>Advantages: excellent scalability for Unix workloads (often involve a mix of read and write operations on files) zero network traffic for read of cached-valid objects precursor to caching for disconnected operation biases read performance in favor of write-performance</p> <p>Disadvantages: sizable state on server complexity of tracking cached state on clients NAT networks with masquerading firewalls</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Clients may not be able to distinguish between a network failure that prevents 
-    callbacks from reaching them and a situation where no data changes have occurred
+Advantages
+• strict consistency at coarse granularity
+• easy to implement, no server state
+• servers don’t need to know of caching sites
+
+"session semantics at open-close granularity," where changes made to a file during a session (from open to close) are not visible to other clients until the session ends (the file is closed).
+principled weakening of strict one-copy semantics
 
 
-    Periodic “Keepalive” Probes: To mitigate some of the issues with lost callbacks and ambiguous silence, systems might implement periodic "keepalive" probes. These probes allow clients to verify their connection to the server and the validity of their cached data. However, this approach introduces additional network traffic and can only partially address the problem, as data could still become stale between probes.
-</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#####  Prevents concurrent updates on server
+Strict One-Copy Semantics With Write-Sharing
+any write operation performed by any client or process in a distributed system is immediately visible to all other clients or processes. 
+</code></pre></div></div> <h5 id="sharing-taxonomy">Sharing Taxonomy</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Multiple concurrent read-only sessions 
+ “read sharing”
 
-</code></pre></div></div> <p>Method 4: Caching site obtains finite-duration control from master copy few seconds multiple sites can obtain read lease; only one can get write lease</p> <p>lease duration = 0: Check on Use lease duration = ∞: (Targeted Notification)</p> <p>Advantages • generalizes the check on use and callback schemes • lease duration can be tuned to adapt to mutation rate Lease duration is a clean tuning knob for design flexibility For data that changes frequently, shorter leases ensure that caches are updated or invalidated promptly, maintaining data consistency. For more stable data, longer leases can reduce the overhead of lease renewals and data checks, improving system efficiency. • conceptually simple yet flexible</p> <p>Key Assumption Clocks tick at the same rate everywhere • clocks do NOT have to be synchronized • absolute time does not matter • only relative time (i.e., clock tick rate) matters Time becomes a hidden communication channel</p> <p>Disadvantages • lease-holder has total autonomy during lease; revocation? • writers delayed while read lease holders complete their leases • more traffic than callback (but less than check on use) keepalives for callback only one per server, not per lease</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### What To Do When There is Intense Write-Sharing?
+Multiple concurrent read-only sessions + one read-write session
+ “read-write sharing”
 
-</code></pre></div></div> <ol> <li>Skip Scary Parts • When write-sharing detected, turn off caching everywhere All references go directly master copy • Resume caching when write-sharing ends</li> </ol> <p>Original Use • Sprite (circa 1987) (in conjunction with check on use)</p> <p>Advantages • Precise single-copy semantics (even at byte-level consistency) • Excellent fallback position • Good adaptation of caching aggressiveness to workload Disadvantages • Server maintains state • Server aware of every use of data (open)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Even weaker safety property?
-</code></pre></div></div> <ol> <li>Faith-Based Caching Basic Idea • blindly assume cached data is valid for a while • periodically check (based on time since last check) • no communication needed during trust period Original use • Sun NFSv3 file system cached file blocks assumed current for X seconds X = 3 for files, 30 for directories • small variant is a TTL field for each object used in web caching, gives content creator modicum of control</li> </ol> <p>Imprecise and weak approximation to one-copy semantics • not just in the presence of network failures (partitions) • no clear basis for reasoning about state of system Methods 1-5 used controlled and precise approximations • e.g., session semantics at open-close granularity • offered clear basis for reasoning</p> <p>Advantages • Simple implementation • Server is stateless</p> <p>Disadvantages • User-visible inconsistencies sometimes seen (make) • Blind faith sometimes misplaced! • Not as efficient as callback-based schemes</p> <ol> <li>Pass the Buck Basic Idea • Let the user trigger cache revalidation (hit “reload”) • otherwise, all cached copies assumed valid forever • Equivalent to infinite-TTL faith-based caching • Arose in the context of the Web</li> </ol> <p>Advantages • trivial to implement, no server changes • avoids frivolous cache maintenance traffic</p> <p>Disadvantages • places burden on user user may be clueless about level of consistency needed • assumes existence of user • pain for write scripts/programs</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### What old data do you throw out to free up space?
-###### Cache replacement policy
-</code></pre></div></div> <p>Ideal victim: large object that is not needed for a long time, and cheap to refetch</p> <p>Non-Serviceable Miss: The pain of evicting an object that cannot be easily refetched due to failures or disconnected operation is also a vital factor. This aspect is particularly relevant in environments with unreliable connectivity or when dealing with unique or hard-to-replace data.</p> <p>Uniform vs. Non-Uniform Fetch Cost: While the assumption of uniform fetch cost might hold near the hardware level (e.g., when all data resides on the same disk or in the same data center), it becomes less tenable at higher system layers. At these layers, factors such as variable object sizes, the physical characteristics of storage media (like rotational and seek delays in disks), and differing network qualities to different servers introduce non-uniform fetch costs.</p> <p>Abstract Problem Formulation: The problem can be abstracted to managing a set of equal-sized data containers (frames) and a large set of equal-sized, equal-importance data objects (pages), with access patterns represented by a sequence of integers (reference string). The primary metric of interest in this model is the miss ratio.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Predict distance to next ref
-</code></pre></div></div> <p>optimal replacement algorithm predict is hard • LRU is often a good approximation to OPT (not always) assumes recent past is a good predictor of the near future</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### LRU
-</code></pre></div></div> <p>Loop (good for LRU)</p> <ul> <li>while (some test) Sequential scan (bad for LRU)</li> <li>memset (start address, 0, many bytes)</li> </ul> <p>Stack Property: “Adding cache space never hurts” LRU has this property Other cache replacement algorithms may not FIFO exhibits “Belady’s anomaly</p> <p>When is LRU Ineffective? • purely sequential access (aka “scan”) caching cannot help at all; only adds overhead</p> <p>• purely random access ratio of cache size to total data size is all that matters</p> <p>Examples: sequential scan of large files &amp; databases in data mining</p> <p>video/audio playback (“streaming data”)</p> <p>hash-based data structures cause accesses to be “spread out”</p> <p>Example: small tight loop accessing huge array sequentially • code shows high locality, but data does not • the sequential data access will “pollute” an LRU-based cache • even code (which shows locality) will be flushed out of the cache</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Working Set
+Multiple concurrent read-write sessions “write-write sharing”
+1. “Last Close After Write Wins”: AFS
+2. “Raise Conflict Exception”: Coda File System
+3. “Live Happily and Be Blissfully Unaware”:  NFS, Google Docs, DropBox, etc.
+None of these approaches prevents concurrent updates on server
 
-</code></pre></div></div> <p>Given a time interval T, WorkingSet(T) is the set of distinct data objects accessed in T This captures adequacy of cache size relative to program behavior • small working set, small cache is enough,high locality • large working set, poor locality size and pages in working set may change over time</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### queueing theory
-</code></pre></div></div> <p>It improves utilization by reducing the load on critical resources, thereby preventing bottlenecks and allowing for more efficient resource usage. Caching also directly reduces latency it provides greater flexibility in handling different arrival disciplines, ensuring the system can cope with varying patterns of demand.</p> <p>utilization vs peak</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
-##### The Curse of Uncacheability
+3: How to do?
 
-</code></pre></div></div> <p>Businesses want to know your every click Client caching hides this knowledge from the server hurts response time, network load &amp; server load</p> <p>Can businesses benefit from caching without giving up control?</p> <p>Content Distribution Networks A Weak Solution Effectively third-party caching sites trusted by businesses Late binding of parasitic content by caching site Pioneered by Akamai in the late 1990s • many examples now • e.g., CloudFront (Google), Windows Azure CDN, Streamzilla</p> <p>Not as effective as client caching But better than no caching at all, and better monetizes cached resources ``` <a href="#blog-chapters">Back to Blog Chapters</a></p> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15719/">Advanced Cloud Computing Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
+
+“Last Close After Write Wins”
+Mechanism: This approach resolves write-write conflicts by accepting the changes made by the process that closes the file last. All previous writes to the file during the conflict period are overwritten by the last writer's data.
+Pros: Simplifies conflict resolution by enforcing a clear rule.
+Cons: Can lead to data loss for earlier writes, as changes made by all but the last writer are discarded.
+Use Case: AFS uses this method, prioritizing simplicity and predictability over the preservation of every change
+
+
+“Raise Conflict Exception”
+Mechanism: When a write-write conflict is detected, the system raises an exception, alerting the involved parties (applications or users) of the conflict.
+Pros: Prevents data loss by not automatically overwriting any data. It requires intervention to resolve the conflict, which can ensure that important data isn't inadvertently lost or overwritten.
+Cons: Requires additional mechanisms for conflict resolution and may interrupt the user workflow.
+Use Case: The Coda File System employs this strategy to maintain high data integrity, especially in environments where data consistency is critical.
+
+
+“Live Happily and Be Blissfully Unaware”
+Mechanism: This approach allows concurrent writes to proceed without immediate conflict resolution. Systems employing this strategy might merge changes automatically, keep all versions of the file, or simply ignore the conflict entirely.
+Pros: Enhances user experience by avoiding interruptions. Systems like Google Docs merge changes in real-time, allowing seamless collaboration.
+Cons: Can lead to inconsistencies or unexpected results if automatic merging is not possible or if changes are incompatible.
+Use Case: NFS (Network File System) traditionally does not handle write-write conflicts explicitly at the file system level. Google Docs and Dropbox provide user-friendly collaboration features, allowing multiple users to edit documents simultaneously, with changes reflected in real-time or through version history.
+
+</code></pre></div></div> <h5 id="check-on-open-diadv">Check-on-open diadv</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>slows read access on loaded servers &amp; high-latency networks
+check is almost always success: frivolous traffic
+load on network and server
+</code></pre></div></div> <h5 id="callback">Callback</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>targeted notification of caching sites
+on update, all sites with cached data notified (“callback”)
+
+Advantages:
+        excellent scalability for Unix workloads (often involve a mix of read and write operations on files)
+        zero network traffic for read of cached-valid objects 
+        precursor to caching for disconnected operation
+        biases read performance in favor of write-performance
+
+Disadvantages:
+        sizable state on server
+        complexity of tracking cached state on clients
+        NAT networks with masquerading firewalls
+        
+        Clients may not be able to distinguish between a network failure that prevents 
+        callbacks from reaching them and a situation where no data changes have occurred
+
+
+        Periodic “Keepalive” Probes: To mitigate some of the issues with lost callbacks and ambiguous silence, systems might implement periodic "keepalive" probes. These probes allow clients to verify their connection to the server and the validity of their cached data. However, this approach introduces additional network traffic and can only partially address the problem, as data could still become stale between probes.
+
+
+</code></pre></div></div> <h5 id="prevents-concurrent-updates-on-server">Prevents concurrent updates on server</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Method 4:
+Caching site obtains finite-duration control from master copy
+few seconds
+multiple sites can obtain read lease; only one can get write lease
+
+lease duration = 0: Check on Use
+lease duration = ∞: (Targeted Notification)
+
+Advantages
+• generalizes the check on use and callback schemes
+• lease duration can be tuned to adapt to mutation rate
+Lease duration is a clean tuning knob for design flexibility
+For data that changes frequently, shorter leases ensure that caches are updated or invalidated promptly, maintaining data consistency. For more stable data, longer leases can reduce the overhead of lease renewals and data checks, improving system efficiency. 
+• conceptually simple yet flexible
+
+Key Assumption
+Clocks tick at the same rate everywhere
+• clocks do NOT have to be synchronized
+• absolute time does not matter
+• only relative time (i.e., clock tick rate) matters
+Time becomes a hidden communication channel
+
+
+
+Disadvantages
+• lease-holder has total autonomy during lease; revocation?
+• writers delayed while read lease holders complete their leases
+• more traffic than callback (but less than check on use)
+keepalives for callback only one per server, not per lease
+
+
+</code></pre></div></div> <h5 id="what-to-do-when-there-is-intense-write-sharing">What To Do When There is Intense Write-Sharing?</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5. Skip Scary Parts
+• When write-sharing detected, turn off caching everywhere
+All references go directly master copy
+• Resume caching when write-sharing ends
+
+Original Use
+• Sprite (circa 1987) (in conjunction with check on use)
+
+Advantages
+• Precise single-copy semantics (even at byte-level consistency)
+• Excellent fallback position
+• Good adaptation of caching aggressiveness to workload
+Disadvantages
+• Server maintains state
+• Server aware of every use of data (open)
+
+</code></pre></div></div> <h5 id="even-weaker-safety-property">Even weaker safety property?</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+6. Faith-Based Caching
+Basic Idea
+• blindly assume cached data is valid for a while
+• periodically check (based on time since last check)
+• no communication needed during trust period
+Original use
+• Sun NFSv3 file system
+cached file blocks assumed current for X seconds
+X = 3 for files, 30 for directories
+• small variant is a TTL field for each object
+used in web caching, gives content creator modicum of control
+
+Imprecise and weak approximation to one-copy semantics
+• not just in the presence of network failures (partitions)
+• no clear basis for reasoning about state of system
+Methods 1-5 used controlled and precise approximations
+• e.g., session semantics at open-close granularity
+• offered clear basis for reasoning
+
+Advantages
+• Simple implementation
+• Server is stateless
+
+Disadvantages
+• User-visible inconsistencies sometimes seen (make)
+• Blind faith sometimes misplaced!
+• Not as efficient as callback-based schemes
+
+
+
+7. Pass the Buck
+Basic Idea
+• Let the user trigger cache revalidation (hit “reload”)
+• otherwise, all cached copies assumed valid forever
+• Equivalent to infinite-TTL faith-based caching
+• Arose in the context of the Web
+
+Advantages
+• trivial to implement, no server changes
+• avoids frivolous cache maintenance traffic
+
+Disadvantages
+• places burden on user
+user may be clueless about level of consistency needed
+• assumes existence of user
+• pain for write scripts/programs
+
+
+
+</code></pre></div></div> <h5 id="what-old-data-do-you-throw-out-to-free-up-space">What old data do you throw out to free up space?</h5> <h6 id="cache-replacement-policy">Cache replacement policy</h6> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Ideal victim: large object that is not needed for a long time, and cheap to refetch
+
+Non-Serviceable Miss: The pain of evicting an object that cannot be easily refetched due to failures or disconnected operation is also a vital factor. This aspect is particularly relevant in environments with unreliable connectivity or when dealing with unique or hard-to-replace data.
+
+Uniform vs. Non-Uniform Fetch Cost: While the assumption of uniform fetch cost might hold near the hardware level (e.g., when all data resides on the same disk or in the same data center), it becomes less tenable at higher system layers. At these layers, factors such as variable object sizes, the physical characteristics of storage media (like rotational and seek delays in disks), and differing network qualities to different servers introduce non-uniform fetch costs.
+
+Abstract Problem Formulation: 
+The problem can be abstracted to managing a set of 
+equal-sized data containers (frames) and 
+a large set of equal-sized, equal-importance data objects (pages), 
+with access patterns represented by a sequence of integers (reference string). 
+The primary metric of interest in this model is the miss ratio.
+
+</code></pre></div></div> <h5 id="predict-distance-to-next-ref">Predict distance to next ref</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>optimal replacement algorithm
+predict is hard
+• LRU is often a good approximation to OPT (not always)
+assumes recent past is a good predictor of the near future
+
+</code></pre></div></div> <h5 id="lru">LRU</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loop (good for LRU)
+- while (some test)
+Sequential scan (bad for LRU)
+- memset (start address, 0, many bytes)
+
+
+Stack Property: “Adding cache space never hurts”
+LRU has this property
+Other cache replacement algorithms may not
+FIFO exhibits “Belady’s anomaly
+
+
+When is LRU Ineffective?
+• purely sequential access (aka “scan”)
+caching cannot help at all; only adds overhead
+
+• purely random access
+ratio of cache size to total data size is all that matters
+
+Examples:
+sequential scan of large files &amp; databases in data mining
+
+video/audio playback (“streaming data”)
+
+hash-based data structures cause accesses to be “spread out”
+
+
+Example: small tight loop accessing huge array sequentially
+• code shows high locality, but data does not
+• the sequential data access will “pollute” an LRU-based cache
+• even code (which shows locality) will be flushed out of the cache
+</code></pre></div></div> <h5 id="working-set">Working Set</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given a time interval T,
+WorkingSet(T) is the set of distinct data objects accessed in T
+This captures adequacy of cache size relative to program behavior
+• small working set, small cache is enough,high locality
+• large working set, poor locality
+size and pages in working set may change over time
+</code></pre></div></div> <h5 id="queueing-theory">queueing theory</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>It improves utilization by reducing the load on critical resources, 
+thereby preventing bottlenecks and allowing for more efficient resource usage. 
+Caching also directly reduces latency
+it provides greater flexibility in handling different arrival disciplines, 
+ensuring the system can cope with varying patterns of demand.
+
+utilization vs peak
+
+</code></pre></div></div> <h5 id="the-curse-of-uncacheability">The Curse of Uncacheability</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Businesses want to know your every click
+Client caching hides this knowledge from the server
+hurts response time, network load &amp; server load
+
+
+Can businesses benefit from caching without giving up control?
+
+Content Distribution Networks
+A Weak Solution
+Effectively third-party caching sites trusted by businesses
+Late binding of parasitic content by caching site
+Pioneered by Akamai in the late 1990s
+• many examples now
+• e.g., CloudFront (Google), Windows Azure CDN, Streamzilla
+
+Not as effective as client caching
+But better than no caching at all, and better monetizes cached resources
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15719/">Advanced Cloud Computing Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
