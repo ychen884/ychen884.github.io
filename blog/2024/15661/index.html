@@ -470,24 +470,276 @@ then elaborate the loop body.
 x++ -&gt; assign(x, x + 1)
 make sure any nested for loops in &lt;stmt2&gt;, the body of our for loop, are elaborated
 
-</code></pre></div></div> <h5 id="why-ir-tree">WHy IR tree</h5> <ul> <li>isolate potentially effectful expressions, making their order of execution explicit.simplifies instruction selection and also means that the remaining pure expressions can be optimized much more effectively.</li> <li>make the control flow explicit in the form of conditional or unconditional branches, which is closer to the assembly language target and allows us to apply standard program analyses based on an explicit control flow graph. ``` Pure Expressions p ::= n | x | p1 ⊕ p2</li> </ul> <p>Commands c ::= x ← p | x ← p1 /0 p2 | x ← f(p1, . . . , pn) | if (p1 ? p2) then lt else lf | goto l | l : | return(p) Programs r ::= c1 ; . . . ; cn</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-#####  Translating Expressions
-</code></pre></div></div> <p>tr(e) = &lt;ˇe, eˆ&gt; where eˇ is a sequence of commands r that we need to write down to compute the effects of e and eˆ is a pure expression p that we can use to compute the value of e back up.</p> <p>tr(n) = &lt;·, n&gt; tr(x) = &lt;·, x&gt; tr(e1 ⊕ e2) = &lt;(ˇe1 ; ˇe2), eˆ1 ⊕ eˆ2&gt;?</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Translating Statements
+</code></pre></div></div> <h5 id="why-ir-tree">Why IR tree</h5> <h5 id="isolate-potentially-effectful-expressions-making-their-order-of-execution-explicitsimplifies-instruction-selection-and-also-means-that-the-remaining-pure-expressions-can-be-optimized-much-more-effectively">isolate potentially effectful expressions, making their order of execution explicit.simplifies instruction selection and also means that the remaining pure expressions can be optimized much more effectively.</h5> <h5 id="make-the-control-flow-explicit-in-the-form-of-conditional-or-unconditional-branches-which-is-closer-to-the-assembly-language-target-and-allows-us-to-apply-standard-program-analyses-based-on-an-explicit-control-flow-graph">make the control flow explicit in the form of conditional or unconditional branches, which is closer to the assembly language target and allows us to apply standard program analyses based on an explicit control flow graph.</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Pure Expressions p ::= n | x | p1 ⊕ p2
 
-</code></pre></div></div> <p>tr(assign(x, e)) = ˇe ; x ← eˆ tr(return(e)) = ˇe ; return(ˆe) tr(nop) = · tr(seq(s1, s2)) = ˇs1 ; ˇs2</p> <p>tr(if(e, s1, s2)) = ˇe ; if (ˆe != 0) then l1 else l2 ; l1 : ˇs1 ; goto l3 ; l2 : ˇs2 ; l3 :</p> <p>tr(while(e, s)) = l1 : ˇe; if (ˆe != 0) then l2 else l3 ; l2 : ˇs ; goto l1; l3 :</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Commands c 
+::= 
+x ← p
+| x ← p1 /0 p2
+| x ← f(p1, . . . , pn)
+| if (p1 ? p2) then lt else lf
+| goto l
+| l :
+| return(p)
+Programs r ::= c1 ; . . . ; cn
 
-##### Translating Boolean Expressions
-</code></pre></div></div> <p>cp(e1 ? e2, l, l’) = ˇe1 ; ˇe2 ; if (ˆe1 ? eˆ2) then l else l’</p> <p>cp(!e, l, l’) = cp(e, l’, l)</p> <p>cp(e1 &amp;&amp; e2, l, l’) = cp(e1, l2, l’); l2 : cp(e2, l, l’)</p> <table> <tbody> <tr> <td>cp(e1</td> <td> </td> <td>e2, l, l’) = left to the reader</td> </tr> </tbody> </table> <p>cp(0, l, l’) = goto l’</p> <p>cp(1, l, l’) = goto l</p> <p>cp(e, l, l’) = ˇe ; if (ˆe != 0) then l else l’</p> <p>tr(if(b, s1, s2)) = cp(b, l1, l2) l1 : tr(s1) ; goto l3 l2 : tr(s2) ; goto l3 l3 :</p> <p>tr(e) = &lt;cp(e, l1, l2); l1 : t ← 1 ; goto l3 l2 : t ← 0 ; goto l3 l3 : , t&gt;</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Extended basic blocks
 
-</code></pre></div></div> <p>instead of basic blocks being sequences of commands ending in a jump, they are trees of commands that branch at conditional statements and have unconditional jumps (goto or return) as their leaves</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Chapter 4: Static Semantics &lt;a name="topic-4"&gt;&lt;/a&gt;
+</code></pre></div></div> <h5 id="translating-expressions">Translating Expressions</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tr(e) = &lt;ˇe, eˆ&gt;
+where eˇ is a sequence of commands r that we need to write down to compute the
+effects of e and eˆ is a pure expression p that we can use to compute the value of e back up. 
 
-#####  abstract syntax
-</code></pre></div></div> <p>After lexing and parsing, a compiler will usually apply elaboration to translate the parse tree to a high-level intermediate form often called abstract syntax. Then we verify that the abstract syntax satisfies the requirements of the static semantics.</p> <p>C0: • Initialization: variables must be defined before they are used. • Proper returns: functions that return a value must have an explicit return statement on every control flow path starting at the beginning of the function. • Types: the program must be well-typed.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#####  Abstract Syntax as defined in last chap
-##### Def
-</code></pre></div></div> <p>we would like to raise an error if there is a possibility that an unitialized variable may be used.</p> <p>may-property use(e1/2, x) ———– use(e1 &amp;&amp; e2, x)</p> <h2 id="usee12-x">use(e1/2, x)</h2> <p>use(e1 ⊕ e2, x)</p> <p>must-property def(s, x) if the execution of statement s will define x.</p> <hr> <p>def(assign(x, e), x)</p> <h2 id="defs1-x-defs2-x">def(s1, x) def(s2, x)</h2> <p>def(if(e, s1, s2), x)</p> <p>A conditional only defines a variable if is it defined along both branches, and a while loop does not define any variable (since the body may never be executed).</p> <h2 id="defs12-x">def(s1/2, x)</h2> <p>def(seq(s1, s2), x)</p> <h2 id="defs-x-y--x">def(s, x) y != x</h2> <p>def(decl(y, τ, s), x) x is declared at most once on a control-flow path.</p> <hr> <p>def(return(e), x) Since a return statement will never pass the control flow to the next instruction, any subsequent statements are unreachable. It is therefore permissible to claim that all variables currently in scope have been defined.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>###### Liveness
 
-</code></pre></div></div> <p>We observe that liveness is indeed a may-property, since a variable is live in a conditional if is used in the condition or live in one or more of the branches.</p> <h2 id="usee-x">use(e, x)</h2> <p>live(assign(y, e), x)</p> <h2 id="usee-x-1">use(e, x)</h2> <p>live(if(e, s1, s2), x)</p> <h2 id="uses1-x">use(s1, x)</h2> <p>live(if(e, s1, s2), x)</p> <h2 id="uses2-x">use(s2, x)</h2> <p>live(if(e, s1, s2), x)</p> <h2 id="usee-x-2">use(e, x)</h2> <p>live(while(e, s), x)</p> <h2 id="lives-x">live(s, x)</h2> <p>live(while(e, s), x)</p> <h2 id="usee-x-3">use(e, x)</h2> <p>live(return(e), x)</p> <p>no rule for live(nop, x)</p> <h2 id="livex-s-y--x">live(x, s) y != x</h2> <p>live(decl(y, τ, s), x)</p> <h2 id="lives1-x">live(s1, x)</h2> <p>live(seq(s1, s2), x)</p> <h2 id="defs1-x-lives2-x">¬def(s1, x) live(s2, x)</h2> <p>live(seq(s1, s2), x)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>###### Initialization
+tr(n) = &lt;·, n&gt;
+tr(x) = &lt;·, x&gt;
+tr(e1 ⊕ e2) = &lt;(ˇe1 ; ˇe2), eˆ1 ⊕ eˆ2&gt;?
 
-</code></pre></div></div> <p>captures the general condition.</p> <p>should be read from the premises to the conclusion. decl(x, τ, s) in p live(s, x) —————————— error</p> <p>from the conclusion to the premises</p> <hr> <p>init(nop)</p> <h2 id="inits1-inits2">init(s1) init(s2)</h2> <p>init(seq(s1, s2))</p> <h2 id="inits-lives-x">init(s) ¬live(s, x)</h2> <p>init(decl(x, τ, s))</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#####  From Judgments to Functions
-</code></pre></div></div> <p>init : stm → bool init(nop) = T init(seq(s1, s2)) = init(s1) ∧ init(s2) init(decl(x, τ, s)) = init(s) ∧ ¬live(s, x)</p> <p>live(nop, x) = ⊥ live(seq(s1, s2), x) = live(s1, x) ∨ (¬def(s1, x) ∧ live(s2, x)) live(decl(y, τ, s), x) = y != x ∧ live(x, s) . . .</p> <p>… init(δ, s, δ’): assuming all the variables in δ are defined when s is reached, no uninitialized variable will be referenced and after its execution all the variables in δ’ will be defined.</p> <p>use(δ, e): e will only reference variables defined in δ.</p> <table> <tbody> <tr> <td>δ</td> <td>- s ⇒ δ’ for init(δ, s, δ’).</td> </tr> <tr> <td>δ</td> <td>- e for use(δ, e).</td> </tr> </tbody> </table> <p>δ ⊢ s1 ⇒ δ1 δ1 ⊢ s2 ⇒ δ2 <strong>__</strong><strong>__</strong>__ δ ⊢ seq(s1, s2) ⇒ δ2</p> <p>δ ⊢ e <strong>__</strong>___ δ ⊢ assign(x, e) ⇒ δ ∪ {x}</p> <p>δ ⊢ e δ ⊢ s1 ⇒ δ1 δ ⊢ s2 ⇒ δ2 <strong>__</strong><strong>__</strong>_____ δ ⊢ if(e, s1, s2) ⇒ δ1 ∩ δ2</p> <p>δ ⊢ e δ ⊢ s ⇒ δ’ <strong>__</strong>___ δ ⊢ while(e, s) ⇒ δ</p> <p>In particular, declare(x, τ, s) means that the variable x is declared (only) within the statement s. δ ⊢ s ⇒ δ’ <strong>__</strong>_____ δ ⊢ decl(y, τ, s) ⇒ δ’ - {y}</p> <p>δ ⊢ e <strong>__</strong>___ δ ⊢ return(e) ⇒ {x | x in scope}</p> <p>Typing Judgment for Statements: The notation Γ ⊢ s : [τ] is a typing judgment for statements, where Γ is the type environment (context), s is a statement, and τ is the type. This notation signifies that the statement s is well-typed within the context Γ and ultimately returns a value of type τ ```</p> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15640/">Distributed Systems Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15719/">Advanced Cloud Computing Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
+
+</code></pre></div></div> <h5 id="translating-statements">Translating Statements</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tr(assign(x, e)) = ˇe ; x ← eˆ
+tr(return(e)) = ˇe ; return(ˆe)
+tr(nop) = ·
+tr(seq(s1, s2)) = ˇs1 ; ˇs2
+
+
+tr(if(e, s1, s2)) = ˇe ;
+if (ˆe != 0) then l1 else l2 ;
+l1 : ˇs1 ;
+goto l3 ;
+l2 : ˇs2 ;
+l3 :
+
+
+
+tr(while(e, s)) = l1 : ˇe;
+if (ˆe != 0) then l2 else l3 ;
+l2 : ˇs ; goto l1;
+l3 : 
+</code></pre></div></div> <h5 id="translating-boolean-expressions">Translating Boolean Expressions</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp(e1 ? e2, l, l') = 
+ˇe1 ; ˇe2 ;
+if (ˆe1 ? eˆ2) then l else l'
+
+
+cp(!e, l, l') = cp(e, l', l)
+
+cp(e1 &amp;&amp; e2, l, l') = 
+cp(e1, l2, l');
+l2 : cp(e2, l, l')
+
+
+cp(e1 || e2, l, l') = left to the reader
+
+cp(0, l, l') = goto l'
+
+cp(1, l, l') = goto l
+
+cp(e, l, l') = 
+ˇe ;
+if (ˆe != 0) then l else l'
+
+
+tr(if(b, s1, s2)) = cp(b, l1, l2)
+l1 : tr(s1) ; goto l3
+l2 : tr(s2) ; goto l3
+l3 :
+
+
+tr(e) = &lt;cp(e, l1, l2);
+l1 : t ← 1 ; goto l3
+l2 : t ← 0 ; goto l3
+l3 :
+, t&gt;
+</code></pre></div></div> <h5 id="extended-basic-blocks">Extended basic blocks</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> instead of basic blocks being sequences of commands ending
+in a jump, they are trees of commands that branch at conditional statements and
+have unconditional jumps (goto or return) as their leaves
+</code></pre></div></div> <h2 id="chapter-4-static-semantics-">Chapter 4: Static Semantics <a name="topic-4"></a> </h2> <h5 id="abstract-syntax">abstract syntax</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>After lexing and parsing, a compiler will usually apply elaboration to translate the parse tree to a high-level intermediate form often called abstract syntax. Then we verify that the abstract syntax satisfies the requirements of the static semantics.
+
+
+C0:
+• Initialization: variables must be defined before they are used.
+• Proper returns: functions that return a value must have an explicit return statement on every control flow path starting at the beginning of the function.
+• Types: the program must be well-typed.
+</code></pre></div></div> <h5 id="abstract-syntax-as-defined-in-last-chap">Abstract Syntax as defined in last chap</h5> <h5 id="def">Def</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>we would like to raise an error if there is a possibility that
+an unitialized variable may be used. 
+
+may-property
+use(e1/2, x)
+-----------
+use(e1 &amp;&amp; e2, x)
+
+use(e1/2, x)
+-----------
+use(e1 ⊕ e2, x)
+
+
+must-property
+def(s, x) if the execution of statement s will define x.
+
+
+--------------------
+def(assign(x, e), x)
+
+
+
+def(s1, x) def(s2, x)
+-----------------------
+def(if(e, s1, s2), x)
+
+A conditional only defines a variable if is it defined along
+ both branches, and a while loop does not define any variable 
+ (since the body may never be executed).
+
+def(s1/2, x)
+-----------------
+def(seq(s1, s2), x)
+
+def(s, x) y != x
+---------------------
+def(decl(y, τ, s), x)
+x is declared at most once on a control-flow
+path. 
+
+--------------------
+def(return(e), x)
+Since a return statement will never
+pass the control flow to the next instruction, any subsequent statements are unreachable. It is therefore permissible to claim that all variables currently in scope have been defined. 
+</code></pre></div></div> <h6 id="liveness">Liveness</h6> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+We observe that liveness is indeed a may-property, since a variable is live in a conditional if is used in the condition or live in one or more of the branches.
+
+
+use(e, x)
+----------------
+live(assign(y, e), x)
+
+
+use(e, x)
+----------------
+live(if(e, s1, s2), x)
+
+
+use(s1, x)
+----------------
+live(if(e, s1, s2), x)
+
+
+use(s2, x)
+----------------
+live(if(e, s1, s2), x)
+
+use(e, x)
+----------------
+live(while(e, s), x)
+
+live(s, x)
+----------------
+live(while(e, s), x)
+
+use(e, x)
+----------------
+live(return(e), x)
+
+no rule for
+live(nop, x)
+
+live(x, s) y != x
+----------------
+live(decl(y, τ, s), x)
+
+
+live(s1, x)
+----------------
+live(seq(s1, s2), x)
+
+¬def(s1, x) live(s2, x)
+----------------
+live(seq(s1, s2), x)
+
+</code></pre></div></div> <h6 id="initialization">Initialization</h6> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>captures the general condition.
+
+
+should be read from the premises
+to the conclusion.
+decl(x, τ, s) in p   live(s, x)
+------------------------------
+error
+
+
+from the conclusion to the premises
+
+
+------------------------------
+init(nop)
+
+
+init(s1) init(s2)
+------------------------------
+init(seq(s1, s2))
+
+
+init(s) ¬live(s, x)
+------------------------------
+init(decl(x, τ, s))
+</code></pre></div></div> <h5 id="from-judgments-to-functions">From Judgments to Functions</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>init : stm → bool
+init(nop) = T
+init(seq(s1, s2)) = init(s1) ∧ init(s2)
+init(decl(x, τ, s)) = init(s) ∧ ¬live(s, x)
+
+live(nop, x) = ⊥
+live(seq(s1, s2), x) = live(s1, x) ∨ (¬def(s1, x) ∧ live(s2, x))
+live(decl(y, τ, s), x) = y != x ∧ live(x, s)
+. . .
+
+...
+init(δ, s, δ'): 
+assuming all the variables in δ are defined when s is reached, 
+no uninitialized variable will be referenced and after its execution 
+all the variables in δ' will be defined.
+
+use(δ, e): e will only reference variables defined in δ.
+
+δ |- s ⇒ δ' for init(δ, s, δ').
+δ |- e for use(δ, e).
+
+δ ⊢ s1 ⇒ δ1
+δ1 ⊢ s2 ⇒ δ2
+______________
+δ ⊢ seq(s1, s2) ⇒ δ2
+
+
+δ ⊢ e
+_________
+δ ⊢ assign(x, e) ⇒ δ ∪ {x}
+
+
+δ ⊢ e
+δ ⊢ s1 ⇒ δ1
+δ ⊢ s2 ⇒ δ2
+_________________
+δ ⊢ if(e, s1, s2) ⇒ δ1 ∩ δ2
+
+
+δ ⊢ e
+δ ⊢ s ⇒ δ'
+_________
+δ ⊢ while(e, s) ⇒ δ
+
+
+
+In particular, declare(x, τ, s) means that the variable x is declared (only) within the statement s.
+δ ⊢ s ⇒ δ'
+___________
+δ ⊢ decl(y, τ, s) ⇒ δ' - {y}
+
+
+δ ⊢ e
+_________
+δ ⊢ return(e) ⇒ {x | x in scope}
+
+
+
+Typing Judgment for Statements:
+The notation Γ ⊢ s : [τ] is a typing judgment for statements,
+where Γ is the type environment (context), 
+s is a statement, 
+and τ is the type. 
+This notation signifies that the statement s is well-typed within the 
+context Γ and ultimately returns a value of type τ
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15640/">Distributed Systems Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15719/">Advanced Cloud Computing Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
