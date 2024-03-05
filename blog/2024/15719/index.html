@@ -216,128 +216,375 @@ Facilitation of Network-Centric Services
 </code></pre></div></div> <h2 id="-chapter-3-encapsulation--">** Chapter 3: Encapsulation ** <a name="topic-3"></a> </h2> <h5 id="options-available-for-encap">Options available for encap</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Isolation: others can't read/write your data
 - - can't impact your performance (DOS)
 - Processes may need memory sharing, get resource alloc, has own address space
-</code></pre></div></div> <ol> <li>Bare metal <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>+: good isolation, performance, very good software freedom
+</code></pre></div></div> <h5 id="1-bare-metal">1. Bare metal</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+: good isolation, performance, very good software freedom
 -: granularity limitation
-</code></pre></div> </div> </li> <li> <p>Process: just application</p> </li> <li>Containers: with applicaiton &amp; library/fs/etc that looks like an OS <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>+: performance, decent software freedom
+</code></pre></div></div> <h5 id="2-process-just-application">2. Process: just application</h5> <h5 id="3-containers-with-applicaiton--libraryfsetc-that-looks-like-an-os">3. Containers: with applicaiton &amp; library/fs/etc that looks like an OS</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+: performance, decent software freedom
 -: security issues
-</code></pre></div> </div> </li> <li>Virtual Machines: physical machine-like software container ``` HW &lt;-&gt; VMM &lt;-&gt; (OS, Library/fs/etc/, App) +: isolation properties, good software freedom -: performance overhead, imperfect performance isolation</li> </ol> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Comparison
-- Process, Container, VM, BM
-- Lower management &lt;-&gt; Better isolation/fidelity
+</code></pre></div></div> <h5 id="4-virtual-machines-physical-machine-like-software-container">4. Virtual Machines: physical machine-like software container</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HW &lt;-&gt; VMM &lt;-&gt; (OS, Library/fs/etc/, App)
++: isolation properties, good software freedom
+-: performance overhead, imperfect performance isolation
+
+</code></pre></div></div> <h5 id="comparison">Comparison</h5> <ul> <li>Process, Container, VM, BM</li> <li>Lower management &lt;-&gt; Better isolation/fidelity</li> </ul> <h5 id="interface-is-the-key">interface is the key</h5> <ul> <li>between APP/Library/OS/HW</li> </ul> <h5 id="linux-namespaces">Linux namespaces</h5> <ul> <li>pid, gid, … <h5 id="resouece-alloc-linux-groups">resouece alloc: linux groups</h5> </li> </ul> <h5 id="limitation-of-containers">Limitation of containers</h5> <ul> <li>share the same host OS, security + flexibility(have to work with this OS)</li> </ul> <h5 id="virtualization">Virtualization</h5> <ul> <li>VM: vm OS &lt;–virtual machine interface–&gt; VMM &lt;–machine interface–&gt; HW</li> <li>The interfaces can be different</li> </ul> <h5 id="hw-virtualization-principles">HW Virtualization Principles</h5> <ul> <li>Fidelity, software operation keeps identical</li> <li>Isolation, guest cannot affect other guest/VMM</li> <li>Performance, most operations execute natively</li> </ul> <h4 id="ecap-principle">Ecap Principle</h4> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Basic: Execute VM softare in de-privileged mode
+- - prevent privileged instr from escaping containment
+Privilege Level
+App User/Ring 3
+Lib User/Ring 3
+OS  Supervisor/Ring-o
+HW
 
 
-##### interface is the key
-- between APP/Library/OS/HW
+Option 1
+Privilege Level
+App User/Ring 3
+Lib User/Ring 3
+OS  User/Ring-3
+VMM Supervisor/Ring-0
+HW
+Overhead - Isolation, VMM has to deal with operations from OS.. not ideal
 
-##### Linux namespaces
-- pid, gid, ...
-##### resouece alloc: linux groups
+Option 2
+Privilege Level
+App User/Ring 3
+Lib User/Ring 3
+OS  Ring-1
+VMM Supervisor/Ring-0
+HW
 
-##### Limitation of containers
-- share the same host OS, security + flexibility(have to work with this OS)
+----&gt; later
+Option 3
+Privilege Level
+App User/Ring 3*
+Lib User/Ring 3*
+OS  Ring-0* (don't have all power, cannot change fundamental page tables..)
+VMM Supervisor/Ring-0
+HW
+</code></pre></div></div> <h5 id="priv-ops">Priv Ops</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Most executions run directly
+- VNM needs to handle OS attemps that execute priv ops, Non-CPU devices..
+- - popf, pushf...
 
+https://www.vmware.com/content/dam/digitalmarketing/vmware/en/pdf/techpaper/VMware_paravirtualization.pdf
 
-##### Virtualization
-- VM: vm OS &lt;--virtual machine interface--&gt; VMM &lt;--machine interface--&gt; HW
-- The interfaces can be different
-
-##### HW Virtualization Principles
-- Fidelity, software operation keeps identical
-- Isolation, guest cannot affect other guest/VMM
-- Performance, most operations execute natively
-
-#### Ecap Principle
-
-
-</code></pre></div></div> <ul> <li>Basic: Execute VM softare in de-privileged mode</li> <li> <ul> <li>prevent privileged instr from escaping containment Privilege Level App User/Ring 3 Lib User/Ring 3 OS Supervisor/Ring-o HW</li> </ul> </li> </ul> <p>Option 1 Privilege Level App User/Ring 3 Lib User/Ring 3 OS User/Ring-3 VMM Supervisor/Ring-0 HW Overhead - Isolation, VMM has to deal with operations from OS.. not ideal</p> <p>Option 2 Privilege Level App User/Ring 3 Lib User/Ring 3 OS Ring-1 VMM Supervisor/Ring-0 HW</p> <p>—-&gt; later Option 3 Privilege Level App User/Ring 3* Lib User/Ring 3* OS Ring-0* (don’t have all power, cannot change fundamental page tables..) VMM Supervisor/Ring-0 HW</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##### Priv Ops
-
-
-</code></pre></div></div> <ul> <li>Most executions run directly</li> <li>VNM needs to handle OS attemps that execute priv ops, Non-CPU devices..</li> <li> <ul> <li>popf, pushf…</li> </ul> </li> </ul> <p>https://www.vmware.com/content/dam/digitalmarketing/vmware/en/pdf/techpaper/VMware_paravirtualization.pdf</p> <p>Handle: Trap &amp; emulate: VMM handles Static software re-writing/paravirtualization: rewrite guest OS to leverage VMM hypercalls (performance, sacrificing transparancy) Dynamic software re-writing: VMM re-write guest’s privileged code - coalescing traps, VMM complex, good performance</p> <p>Referring to stackoverflow.com/questions/21462581 Paravirtualization is virtualization in which the guest operating system (the one being virtualized) is aware that it is a guest and accordingly has drivers that, instead of issuing hardware commands, simply issue commands directly to the host operating system. This also includes memory and thread management as well, which usually require unavailable privileged instructions in the processor.</p> <p>Full Virtualization is virtualization in which the guest operating system is unaware that it is in a virtualized environment, and therefore hardware is virtualized by the host operating system so that the guest can issue commands to what it thinks is actual hardware, but really are just simulated hardware devices created by the host.</p> <p>Hardware Assisted Virtualization is a type of Full Virtualization where the microprocessor architecture has special instructions to aid the virtualization of hardware. These instructions might allow a virtual context to be setup so that the guest can execute privileged instructions directly on the processor without affecting the host. Such a feature set is often called a Hypervisor. If said instructions do not exist, Full Virtualization is still possible, however it must be done via software techniques such as Dynamic Recompilation where the host recompiles on the fly privileged instructions in the guest to be able to run in a non-privileged way on the host.</p> <p>There is also a combination of Para Virtualization and Full Virtualization called Hybrid Virtualization where parts of the guest operating system use paravirtualization for certain hardware drivers, and the host uses full virtualization for other features. This often produces superior performance on the guest without the need for the guest to be completely paravirtualized. An example of this: The guest uses full virtualization for privileged instructions in the kernel but paravirtualization for IO requests using a special driver in the guest. This way the guest operating system does not need to be fully paravirtualized, since this is sometimes not available, but can still enjoy some paravirtualized features by implementing special drivers for the guest.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Handling memory: process
-</code></pre></div></div> <ul> <li>OS: page mapping from virtual page to physical page</li> <li>User process: typically continuous address space</li> </ul> <p>Mutiple OS: Guest OSes manage: Mapping guest virtual to guest physical VMM manages guest physical to host physical</p> <p>other split: cores, time sharing..</p> <p>SW: Shadow page tables HW: Extended page tables(EPT)</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Virtualization Devices
-
-</code></pre></div></div> <ul> <li>Could be all virtualized (trap accesses, and emulate), but worse performance</li> </ul> <p>For performance</p> <ol> <li>Mapping, control given to a host (hw support)</li> <li>Partition, (disk..)</li> <li>Guest enhancement (special VM -&gt; VMM calls)</li> <li>Virtualized-enhanced devices (NICs with VMDq)</li> </ol> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### Security issues of virtualization/containerization
-- meltdown
-- bitflip(row hammer)
-
-
-
-[Back to Blog Chapters](#blog-chapters)
-
-##### Web servers
-- Online retail stores
-- parallel programming: contention, failures, consistency(shared resources), load balancing,..
-
-##### HPC
-- scaling for N processes (lower costs, faster computation)
-- strong/weak: same process finishes faster on N processors?
-- Bulk Synchronous Processing..
-- MPI, resource allocators, schedulers, ft
-- Very manual, deep learning curve, few commercial runaway successes
-##### Grid Computing
-- easier to use
-- emphasized geographical sharing
-- jobs selected from batch queue, take over cluster
-- workload diversity
-##### Cloud Computing
-- low initial cost
-- workload diversity +
-- may cost efficiency for easier programming
-
-##### Motivation for CC programming framework
-- using many commodity* machines
-- tolerate failures
-- locality(reduce cost of communication), parallelism
-
-##### Batch processing of large datasets on a cluster: framework offers..
-- ...
-- Job orchestration
-- Data staging and movement
-
-##### MapReduce
-
-</code></pre></div></div> <ul> <li>read large data set</li> <li>ind process the input data in chunks</li> <li>shuffle and sort data (by key)</li> <li>reduce(merge)</li> <li>locality optimization for racks</li> <li>shuffle begins after first round of map (master responsible for scheduling this)</li> </ul> <p>Split RR(record reader) -&gt;(K,V) Map -&gt; (K’, V’) -&gt; Partitioner: hash(key) mod R -&gt; reducer Sort (may need to wait for reduce finish) Reuce</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-
-##### Map data size vs shuffle data size
-- ngram(small-&gt;large)
-
-##### Spark
-
-</code></pre></div></div> <p>Less disk operations for iterative apps RDD as memory storage(immutable), rerun instead of storing in persistent storage transformations create new ones, can be lazy action create value, recomputed when action comes</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-## ** Chapter 4: Programming Models and Frameworks ** &lt;a name="topic-4"&gt;&lt;/a&gt;
+Handle: 
+Trap &amp; emulate: VMM handles
+Static software re-writing/paravirtualization: rewrite guest OS to leverage VMM hypercalls (performance, sacrificing transparancy)
+Dynamic software re-writing: VMM re-write guest's privileged code - coalescing traps, VMM complex, good performance
 
 
+Referring to stackoverflow.com/questions/21462581
+Paravirtualization is virtualization in which the guest operating system (the one being virtualized) is aware that it is a guest and accordingly has drivers that, instead of issuing hardware commands, simply issue commands directly to the host operating system. This also includes memory and thread management as well, which usually require unavailable privileged instructions in the processor.
 
-##### Map Reduce
-</code></pre></div></div> <p>Core Concepts of MapReduce:</p> <p>The MapReduce model involves two primary functions: the map function and the reduce function. The map function takes key/value pairs as input and produces a set of intermediate key/value pairs. The reduce function then merges all intermediate values associated with the same intermediate key.</p> <p>Automatic Parallelization and Distribution: MapReduce abstracts the complexity of parallelization, fault-tolerance, data distribution, and load balancing</p> <p>Scalability and Ease of Use: The MapReduce implementation can process vast amounts of data (many terabytes) across thousands of machines. It has a user-friendly nature, evidenced by the extensive use within Google, with hundreds of MapReduce programs implemented and thousands of jobs executed daily.</p> <p>Motivation and Design Philosophy: The motivation behind MapReduce stemmed from the need to process large sets of raw data (like web documents, request logs) into computed forms (like inverted indices, summaries) efficiently. MapReduce was designed to simplify the computations by abstracting the complex code required for parallelization, data distribution, and fault tolerance into a library.</p> <p>Programming Model: The computation in MapReduce takes input key/value pairs and produces output key/value pairs, expressed through Map and Reduce functions defined by the user. It handles the grouping of intermediate values by keys and provides these to the Reduce function, which then merges the values per key.</p> <p>Examples and Applications: The abstract and subsequent sections provide practical examples, like counting the number of occurrences of each word in a document collection, showcasing the model’s applicability to real-world tasks. It also highlights the versatility of MapReduce in tasks such as distributed grep, counting URL access frequency, reversing web-link graphs, and computing term-vectors per host. Inverted Index: A fundamental operation in document searching where the map function processes documents, emitting word and document ID pairs, and the reduce function groups these by word, creating a list of document IDs for each word. Distributed Sort: A sorting operation where the map function extracts keys from records and the reduce function sorts these keys, relying on the system’s partitioning and ordering capabilities.</p> <p>Implementation and Execution Overview: designed for large clusters of commodity PCs, considering the typical hardware specifications and the nature of the network and storage systems. The execution process involves dividing the input data into splits, assigning map and reduce tasks to workers, processing the data through the user-defined map and reduce functions, handling intermediate data storage and retrieval, and finally producing the output after all tasks are completed.</p> <p>Fault Tolerance: Fault tolerance is a critical aspect, given the scale of operation and the likelihood of machine failures. The system handles worker failures by reassigning tasks and redoing work if necessary. The master node monitors worker status and orchestrates the reassignment of tasks as needed. The system is designed to ensure that, despite failures, the output is consistent with what would be produced by a faultless, sequential execution, as long as the map and reduce functions are deterministic.</p> <p>Master Data Structures: The master node maintains data structures to keep track of the status of each task and the locations of intermediate data. This information is crucial for coordinating the work of map and reduce workers and for ensuring that data is correctly routed through the system.</p> <p>Locality Network Bandwidth Optimization: importance of conserving network bandwidth, a relatively scarce resource in large computing environments. Data Locality: The approach involves scheduling map tasks on machines that contain a replica of the input data, or at least are network-local to the data. This strategy significantly reduces network bandwidth usage as most data is read locally.</p> <p>Granularity of Map and Reduce Phases: The map phase is subdivided into M pieces, and the reduce phase into R pieces. Ideally, M and R should be much larger than the number of worker machines. Dynamic Load Balancing and Recovery: This setup improves dynamic load balancing and expedites recovery from worker failures, as the tasks a worker has completed can be redistributed across other workers. Handling Stragglers: machines that take unusually long to complete tasks. Causes for stragglers include hardware issues, resource contention, or bugs.</p> <p>Custom Partitioning: While a default partitioning function based on hashing is provided, users have the option to specify a custom partitioning function, allowing more control over how data is partitioned across reduce tasks.</p> <p>Intermediate Key/Value Pair Ordering: The framework ensures that within a partition, intermediate key/value pairs are processed in increasing key order. This ordering guarantee is particularly beneficial when the output needs to be sorted or efficiently accessible by key.</p> <p>Data Aggregation at Mapper Nodes: The Combiner function allows for partial merging of intermediate data on the mapper nodes before sending it over the network. This feature is especially useful when there’s significant repetition in the intermediate keys, and the reduce function is commutative and associative.</p> <p>Flexible Data Formats: The MapReduce library supports various formats for input data, providing flexibility to handle different types of data sources.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Full Virtualization is virtualization in which the guest operating system is unaware that it is in a virtualized environment, and therefore hardware is virtualized by the host operating system so that the guest can issue commands to what it thinks is actual hardware, but really are just simulated hardware devices created by the host.
 
-##### Spark
+Hardware Assisted Virtualization is a type of Full Virtualization where the microprocessor architecture has special instructions to aid the virtualization of hardware. These instructions might allow a virtual context to be setup so that the guest can execute privileged instructions directly on the processor without affecting the host. Such a feature set is often called a Hypervisor. If said instructions do not exist, Full Virtualization is still possible, however it must be done via software techniques such as Dynamic Recompilation where the host recompiles on the fly privileged instructions in the guest to be able to run in a non-privileged way on the host.
 
-</code></pre></div></div> <p>Spark, a new cluster computing framework designed to address the limitations of MapReduce and its variants in handling certain types of applications, particularly those involving iterative operations and interactive data analysis.</p> <ul> <li>Limitations of MapReduce and Similar Systems: they are primarily built around an acyclic data flow model. This model is not suitable for applications that need to reuse a working set of data across multiple parallel operations.</li> </ul> <p>Iterative Jobs: Common in machine learning, these jobs require applying a function repeatedly to the same dataset. MapReduce’s need to reload data from disk for each iteration causes significant performance penalties.</p> <p>Interactive Analytics: Users often run ad-hoc queries on large datasets using SQL interfaces. With MapReduce, each query incurs high latency because it operates as a separate job and needs to read data from disk.</p> <p>Spark aims to support applications with working sets while retaining the scalability and fault tolerance characteristics of MapReduce. The key abstraction in Spark is the resilient distributed dataset (RDD), a read-only collection of objects partitioned across a set of machines. RDDs can be explicitly cached in memory and reused in multiple parallel operations, significantly improving performance for certain types of applications.</p> <p>Fault Tolerance through Lineage: RDDs are fault-tolerant, using a concept called lineage. If a partition of an RDD is lost, the system has sufficient information on how the RDD was derived from other RDDs to rebuild just the lost partition.</p> <p>Implementation and Usability of Spark: Spark is implemented in Scala, allowing for a high-level, statically typed, and functional programming interface. It can also be used interactively, which is a novel feature for a system of this kind, enabling users to process large datasets on a cluster interactively.</p> <p>Spark can significantly outperform Hadoop in iterative machine learning workloads and provide interactive querying capabilities with sub-second latency for large datasets.</p> <ul> <li>Programming Model Spark introduces two primary abstractions for parallel programming: resilient distributed datasets (RDDs) and parallel operations on these datasets, and shared variables.</li> </ul> <p>RDDs are read-only collections of objects partitioned across machines, capable of being rebuilt if a partition is lost. RDDs can be created directly from a file in a shared filesystem like HDFS, by parallelizing a collection in the driver program, or by transforming an existing RDD. RDDs are lazy and ephemeral by default, meaning they are computed on demand and not stored persistently after use. However, users can modify this behavior using two actions: The cache action suggests keeping the dataset in memory after its initial computation for future reuse. The save action evaluates and persists the dataset to a distributed filesystem, like HDFS. This approach to persistence is a design choice in Spark to ensure continued operation under memory constraints or node failures, drawing a parallel to the concept of virtual memory.</p> <p>Parallel Operations Operations on RDDs: Spark supports various parallel operations on RDDs, such as reduce (combining elements using a function), collect (sending all elements to the driver program), and foreach (applying a function to each element for its side effects).</p> <p>Shared Variables Handling Variables in Parallel Operations: When parallel operations like map and filter are performed, the closures (functions) used can refer to variables in their creation scope. By default, these variables are copied to each worker node.</p> <p>Types of Shared Variables: Spark introduces two types of shared variables for common usage patterns: Broadcast Variables: Used for distributing large, read-only pieces of data efficiently across workers. Accumulators: These are “add-only” variables for workers and readable only by the driver, suitable for implementing counters and parallel sums.</p> <p>-Text Search The first example is a simple text search to count the number of lines containing “ERROR” in a large log file. The process involves creating an RDD from the file, filtering lines containing “ERROR”, mapping each line to 1, and then reducing by summing these ones. This example illustrates Spark’s lazy evaluation and in-memory data sharing capabilities, which allows for efficient data processing without materializing intermediate datasets.</p> <ul> <li> <p>Logistic Regression This program demonstrates an iterative machine learning algorithm, logistic regression, which benefits significantly from Spark’s ability to cache data in memory across iterations. The program reads points from a file, caches them, and then iteratively updates a vector w using a gradient computed in parallel across the points. The use of accumulators for summing the gradient and the syntax of Spark make the code resemble an imperative serial program while being executed in parallel.</p> </li> <li> <p>Alternating Least Squares (ALS)</p> </li> </ul> <p>Implementation The section details Spark’s implementation, including its reliance on Mesos for cluster management, the structure of RDDs, task scheduling for parallel operations, handling of shared variables, and integration with the Scala interpreter.</p> <p>Resilient Distributed Datasets (RDDs): RDDs are implemented as a chain of objects capturing their lineage, allowing efficient recomputation in case of node failures. Different types of RDDs (e.g., for files or transformed datasets) implement a standard interface for partitioning, iteration, and task scheduling. Parallel Operations and Task Scheduling: Spark creates tasks for each RDD partition and tries to schedule them based on data locality. It uses a technique called delay scheduling for efficiency. Handling of Shared Variables: Broadcast variables and accumulators are implemented with custom serialization formats to ensure efficient distribution and fault tolerance. Interpreter Integration: Spark integrates with the Scala interpreter, allowing interactive processing of large datasets. Modifications were made to ensure that closures and state are correctly serialized and distributed to worker nodes.</p> <p>5 Results Logistic Regression Performance: Spark significantly outperforms Hadoop in iterative machine learning workloads, with up to 10x faster performance due to data caching. Alternating Least Squares (ALS) Performance: The use of broadcast variables for distributing the ratings matrix results in substantial performance improvements in the ALS job. Interactive Spark Usage: Spark enables interactive querying of a large dataset with sub-second response times after initial data loading, providing a much faster and more interactive experience than Hadoop.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-##### MR ML model training
-- it may scale great, but overhead is high: ML training just not well suited for stateless, deterministic functions
-##### Spark better
+There is also a combination of Para Virtualization and Full Virtualization called Hybrid Virtualization where parts of the guest operating system use paravirtualization for certain hardware drivers, and the host uses full virtualization for other features. This often produces superior performance on the guest without the need for the guest to be completely paravirtualized. An example of this: The guest uses full virtualization for privileged instructions in the kernel but paravirtualization for IO requests using a special driver in the guest. This way the guest operating system does not need to be fully paravirtualized, since this is sometimes not available, but can still enjoy some paravirtualized features by implementing special drivers for the guest.
 
-##### Parameter Servers
-1. Shared Memory for Parameters
-2. Atomic Operations on Parameters
-3. Efficient Communication via RPCs
-4. Avoid Repartitioning Input Data
-
-###### Sync? 
-1. MR Approach: Requires strict synchronization (barrier synchronization) at the end of each stage, ensuring consistency but potentially leading to idle time as all nodes must wait for the slowest one.
-2. Parameter Server Approach: Offers flexibility. Synchronous mode ensures consistency but might slow down the training due to waiting times. Asynchronous mode can significantly speed up training as it allows nodes to compute and update independently, but it introduces some level of noise in the updates, which the training process must tolerate.
-
-</code></pre></div></div> <p>Parameter Servers</p> <p>Sequential (BSP - Bulk Synchronous Parallel):</p> <p>Traditional distributed computing, like in Spark, utilizes synchronous communication. Each iteration requires all tasks to be completed before moving to the next. Advantages: Broad applicability and high convergence quality per iteration. Disadvantages: Each iteration waits for the slowest task, leading to longer overall task computation times. Bounded Delay (SSP - Staleness Synchronous Parallel):</p> <p>Sets a maximum delay time, known as the staleness value, allowing a certain degree of inconsistency in task progress. When staleness = 0, it equates to the Sequential consistency model; when staleness = ∞, it becomes the Eventual consistency model. Advantages: Reduces waiting time between tasks to a certain extent, offering faster computation speed and allowing developers to balance between algorithm convergence rate and system performance. Disadvantages: The convergence quality per iteration may not be as high as BSP, potentially requiring more iterations to achieve similar convergence; not as broadly applicable as BSP, with some algorithms not suitable. Eventual (ASP - Asynchronous Parallel):</p> <p>Asynchronous communication, where tasks do not need to wait for each other. Tasks that complete first can proceed to the next iteration immediately. Advantages: No waiting for other tasks, leading to fast computation speed. Disadvantages: Poor applicability, potential decrease in convergence rate, or even non-convergence. The synchronization restrictions of the three consistency models progressively relax to pursue faster computation speeds. In practice, the consistency model and related parameters should be adjusted based on the changes in metrics to balance convergence and computational speed.</p> <p>User-defined Filters:</p> <p>The system supports user-defined filters to filter out certain entries, thus reducing network bandwidth. Common filters include the significantly modified filter, which only pushes entries that have changed beyond a certain threshold, and the KKT filter, which uses conditions from optimization problems to filter out entries that have minimal impact on weights.</p> <p>Vector Clock: The parameter server uses a range vector clock to record the timestamp of each node’s parameters. This helps in tracking the state of data and avoiding the resending of data. Since parameters are pushed and pulled in ranges, parameters within the same key range can share a timestamp. This approach compresses the traditional vector clock, reducing memory and network bandwidth overhead.</p> <p>Messages: Messages sent between nodes consist of a range vector clock and (key, value) pairs. Message Compression: Due to frequent updates of model parameters, the parameter server employs two methods to compress messages to reduce network bandwidth overhead:</p> <p>Key Compression: Since training data typically doesn’t change during iterations, it’s unnecessary for workers to send the same key lists each time. The server can cache the key lists upon the first reception. Subsequently, only the hash values of the key lists need to be sent for matching.</p> <p>Value Compression: Some parameter updates are not significant for final optimization, so users can define filter rules to discard unnecessary parameters. For instance, a large number of values being 0 or very small gradients can be inefficient in gradient descent and can be filtered out.</p> <p>Consistency and Replication: The parameter server uses consistent hashing to map keys and servers onto a ring according to a certain hash algorithm. Each server manages the key range from its insertion point counter-clockwise to another server. The server closest in the clockwise direction to a key on the ring is known as the primary server for that key range. Each server also backs up key ranges counter-clockwise, and these servers are known as backup servers for that key range. A physical server is often represented as multiple virtual servers to improve load balancing and fault tolerance.</p> <p>Chain Replication vs. Replication after Aggregation: Chain Replication: As shown in the left diagram, worker 1 updates x, server 1 processes the data with a custom function f(x), and then backs up f(x) to server 2. The push is completed only after worker 1 receives an acknowledgment. This backup method can cause significant network bandwidth overhead for algorithms requiring frequent parameter updates.</p> <p>Replication after Aggregation: As shown in the right diagram, the server aggregates updates from all workers before backing up and then sends acknowledgments to workers. Waiting for aggregation can introduce latency in pulling updates, but this can be mitigated by relaxing the consistency model.</p> <p>Server Management: Adding a Server: The server manager assigns a key range to the new server, and other servers adjust their key ranges accordingly. The new server acquires the key range it will maintain as the primary server and the key ranges it will back up as a backup server. The server manager broadcasts the changes to nodes. Removing a Server: When the server manager detects a server failure through heartbeat signals, it assigns the key range of the failed server to a new server and removes the failed server. Worker Management: Adding a Worker: The task scheduler assigns data to the new worker. The new worker loads training data and then fetches parameters from the server. The task scheduler broadcasts node changes, which may cause other workers to release some training data. Removing a Worker: Losing a small portion of training data typically doesn’t affect the training results. Moreover, restoring a worker requires more overhead than restoring a server. Therefore, removing a worker is usually done by simply disregarding the node. This can be used to terminate the slowest worker, mitigating the performance impact of stragglers. However, users can also choose to replace the lost worker with a new one.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Back to Blog Chapters](#blog-chapters)
+</code></pre></div></div> <h5 id="handling-memory-process">Handling memory: process</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- OS: page mapping from virtual page to physical page
+- User process: typically continuous address space
 
 
+Mutiple OS:
+Guest OSes manage: Mapping guest virtual to guest physical
+VMM manages guest physical to host physical
 
-## ** Chapter 5: Cloud Storage ** &lt;a name="topic-1"&gt;&lt;/a&gt;
-##### Types of cs
-</code></pre></div></div> <hr> <p>blob arbitrary-sized “files” with simplified interface limited interface and semantics Example: AWS S3 Minimal promises re: sharing/concurrency, interrupted writes</p> <ul> <li>a big server</li> <li>a scalable service: aggregation of disk-equipped machines</li> </ul> <p>But with additional opportunities for simplification Object independence simplifies scaling (reduced coordination) Disallowing (or discouraging) object updates simplifies code paths, caching, use of space-saving encodings, etc.</p> <p>Non-FS interface also separates from legacy/kernel code • Standardized DFS implementations persist for a long time</p> <hr> <p>Block stores (virtual disks) separate but attachable to any VM instance Guest OS running in a VM has code for FSs on disks So, give it a “disk” to use Virtual disk looks to guest OS just like real disk Most cloud infrastructures have this option AWS Elastic Block Store (EBS), OpenStack Cinder</p> <p>VDs often implemented as files A file is a sequence of bytes can hold a sequence of fixed-sized blocks</p> <p>Thin provisioning: Promise more, Allocate based on need Performance interference – Each VM may have a virtual disk</p> <h2 id="ioflow-a-software-defined-storage-architecture">IOFlow: a Software-Defined Storage Architecture.</h2> <p>“Local disk” as part of VM instance exists for lifetime of instance Key difference from #2-style block stores: visibility – visible only to the instance it comes with • makes sense, but can’t be attached to a different VM instance – exists only as long as the VM instance • can’t be attached to a different instance later ——————————— “Traditional” distributed FS (DIY or aaS)</p> <p>set up long-running instance(s) to be the DFS server(s) with block stores (#2) or storage-enhanced instance(s) (#3) running traditional DFS server software on the instance(s) DFS services can be provided by CSP or third party charge for file service CSP can implement a scalable file service and sell access</p> <hr> <p>Provide a “union” filesystem on each client</p> <p>Make a single FS view from multiple FSs Implemented by a layer atop the individual FSs Each operation accesses “unioned” FSs as appropriate For read-only: Look in “first FS” first, then “second FS” if needed, … For creates/writes: put into “first” non-read-only FS</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+other split: cores, time sharing..
 
-##### DFS in Cloud 
+SW: Shadow page tables
+HW: Extended page tables(EPT)
+</code></pre></div></div> <h5 id="virtualization-devices">Virtualization Devices</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Could be all virtualized (trap accesses, and emulate), but worse performance
 
-</code></pre></div></div> <p>```</p> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15640/">Distributed Systems Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
+For performance
+1. Mapping, control given to a host (hw support)
+2. Partition, (disk..)
+3. Guest enhancement (special VM -&gt; VMM calls)
+4. Virtualized-enhanced devices (NICs with VMDq)
+
+</code></pre></div></div> <h5 id="security-issues-of-virtualizationcontainerization">Security issues of virtualization/containerization</h5> <ul> <li>meltdown</li> <li>bitflip(row hammer)</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h5 id="web-servers">Web servers</h5> <ul> <li>Online retail stores</li> <li>parallel programming: contention, failures, consistency(shared resources), load balancing,..</li> </ul> <h5 id="hpc">HPC</h5> <ul> <li>scaling for N processes (lower costs, faster computation)</li> <li>strong/weak: same process finishes faster on N processors?</li> <li>Bulk Synchronous Processing..</li> <li>MPI, resource allocators, schedulers, ft</li> <li>Very manual, deep learning curve, few commercial runaway successes <h5 id="grid-computing">Grid Computing</h5> </li> <li>easier to use</li> <li>emphasized geographical sharing</li> <li>jobs selected from batch queue, take over cluster</li> <li>workload diversity <h5 id="cloud-computing">Cloud Computing</h5> </li> <li>low initial cost</li> <li>workload diversity +</li> <li>may cost efficiency for easier programming</li> </ul> <h5 id="motivation-for-cc-programming-framework">Motivation for CC programming framework</h5> <ul> <li>using many commodity* machines</li> <li>tolerate failures</li> <li>locality(reduce cost of communication), parallelism</li> </ul> <h5 id="batch-processing-of-large-datasets-on-a-cluster-framework-offers">Batch processing of large datasets on a cluster: framework offers..</h5> <ul> <li>…</li> <li>Job orchestration</li> <li>Data staging and movement</li> </ul> <h5 id="mapreduce">MapReduce</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- read large data set
+- ind process the input data in chunks
+- shuffle and sort data (by key)
+- reduce(merge)
+- locality optimization for racks
+- shuffle begins after first round of map (master responsible for scheduling this)
+
+Split
+RR(record reader) -&gt;(K,V) Map -&gt; (K', V') -&gt; 
+Partitioner: hash(key) mod R -&gt; reducer
+Sort (may need to wait for reduce finish)
+Reuce
+
+</code></pre></div></div> <h5 id="map-data-size-vs-shuffle-data-size">Map data size vs shuffle data size</h5> <ul> <li>ngram(small-&gt;large)</li> </ul> <h5 id="spark">Spark</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Less disk operations for iterative apps
+RDD as memory storage(immutable), rerun instead of storing in persistent storage
+transformations create new ones, can be lazy
+action create value, recomputed when action comes
+
+</code></pre></div></div> <h2 id="-chapter-4-programming-models-and-frameworks--">** Chapter 4: Programming Models and Frameworks ** <a name="topic-4"></a> </h2> <h5 id="map-reduce">Map Reduce</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Core Concepts of MapReduce:
+
+The MapReduce model involves two primary functions: the map function and the reduce function.
+The map function takes key/value pairs as input and produces a set of intermediate key/value pairs.
+The reduce function then merges all intermediate values associated with the same intermediate key.
+
+Automatic Parallelization and Distribution:
+MapReduce abstracts the complexity of parallelization, fault-tolerance, data distribution, and load balancing
+
+Scalability and Ease of Use:
+The MapReduce implementation can process vast amounts of data (many terabytes) across thousands of machines.
+It has a user-friendly nature, evidenced by the extensive use within Google, with hundreds of MapReduce programs implemented and thousands of jobs executed daily.
+
+Motivation and Design Philosophy:
+The motivation behind MapReduce stemmed from the need to process large sets of raw data (like web documents, request logs) into computed forms (like inverted indices, summaries) efficiently.
+MapReduce was designed to simplify the computations by abstracting the complex code required for parallelization, data distribution, and fault tolerance into a library.
+
+Programming Model:
+The computation in MapReduce takes input key/value pairs and produces output key/value pairs, expressed through Map and Reduce functions defined by the user.
+It handles the grouping of intermediate values by keys and provides these to the Reduce function, which then merges the values per key.
+
+Examples and Applications:
+The abstract and subsequent sections provide practical examples, like counting the number of occurrences of each word in a document collection, showcasing the model's applicability to real-world tasks.
+It also highlights the versatility of MapReduce in tasks such as distributed grep, counting URL access frequency, reversing web-link graphs, and computing term-vectors per host.
+Inverted Index: A fundamental operation in document searching where the map function processes documents, emitting word and document ID pairs, and the reduce function groups these by word, creating a list of document IDs for each word.
+Distributed Sort: A sorting operation where the map function extracts keys from records and the reduce function sorts these keys, relying on the system's partitioning and ordering capabilities.
+
+Implementation and Execution Overview:
+designed for large clusters of commodity PCs, considering the typical hardware specifications and the nature of the network and storage systems.
+The execution process involves dividing the input data into splits, assigning map and reduce tasks to workers, processing the data through the user-defined map and reduce functions, handling intermediate data storage and retrieval, and finally producing the output after all tasks are completed.
+
+Fault Tolerance:
+Fault tolerance is a critical aspect, given the scale of operation and the likelihood of machine failures. The system handles worker failures by reassigning tasks and redoing work if necessary. The master node monitors worker status and orchestrates the reassignment of tasks as needed.
+The system is designed to ensure that, despite failures, the output is consistent with what would be produced by a faultless, sequential execution, as long as the map and reduce functions are deterministic.
+
+Master Data Structures:
+The master node maintains data structures to keep track of the status of each task and the locations of intermediate data. This information is crucial for coordinating the work of map and reduce workers and for ensuring that data is correctly routed through the system.
+
+
+Locality
+Network Bandwidth Optimization:  importance of 
+conserving network bandwidth, a relatively scarce resource in large computing environments.
+Data Locality: The approach involves scheduling map tasks on machines that contain a replica of the input data, or at least are network-local to the data. This strategy significantly reduces network bandwidth usage as most data is read locally.
+
+Granularity of Map and Reduce Phases: The map phase is subdivided into M pieces, and the reduce phase into R pieces. Ideally, M and R should be much larger than the number of worker machines.
+Dynamic Load Balancing and Recovery: This setup improves dynamic load balancing and expedites recovery from worker failures, as the tasks a worker has completed can be redistributed across other workers.
+Handling Stragglers: machines that take unusually long to complete tasks. Causes for stragglers include hardware issues, resource contention, or bugs.
+
+Custom Partitioning: While a default partitioning function based on hashing is provided, users have the option to specify a custom partitioning function, allowing more control over how data is partitioned across reduce tasks.
+
+Intermediate Key/Value Pair Ordering: The framework ensures that within a partition, intermediate key/value pairs are processed in increasing key order. This ordering guarantee is particularly beneficial when the output needs to be sorted or efficiently accessible by key.
+
+Data Aggregation at Mapper Nodes: The Combiner function allows for partial merging of intermediate data on the mapper nodes before sending it over the network. This feature is especially useful when there's significant repetition in the intermediate keys, and the reduce function is commutative and associative.
+
+Flexible Data Formats: The MapReduce library supports various formats for input data, providing flexibility to handle different types of data sources.
+</code></pre></div></div> <h5 id="spark-1">Spark</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Spark, a new cluster computing framework designed to address the limitations of MapReduce and its variants in handling certain types of applications, particularly those involving iterative operations and interactive data analysis. 
+
+- Limitations of MapReduce and Similar Systems:
+they are primarily built around an acyclic data flow model. This model is not suitable for applications that need to reuse a working set of data across multiple parallel operations.
+
+Iterative Jobs: Common in machine learning, these jobs require applying a function repeatedly to the same dataset. MapReduce's need to reload data from disk for each iteration causes significant performance penalties.
+
+Interactive Analytics: Users often run ad-hoc queries on large datasets using SQL interfaces. With MapReduce, each query incurs high latency because it operates as a separate job and needs to read data from disk.
+
+Spark aims to support applications with working sets while retaining the scalability and fault tolerance characteristics of MapReduce.
+The key abstraction in Spark is the resilient distributed dataset (RDD), a read-only collection of objects partitioned across a set of machines. RDDs can be explicitly cached in memory and reused in multiple parallel operations, significantly improving performance for certain types of applications.
+
+
+Fault Tolerance through Lineage:
+RDDs are fault-tolerant, using a concept called lineage. If a partition of an RDD is lost, the system has sufficient information on how the RDD was derived from other RDDs to rebuild just the lost partition.
+
+Implementation and Usability of Spark:
+Spark is implemented in Scala, allowing for a high-level, statically typed, and functional programming interface. It can also be used interactively, which is a novel feature for a system of this kind, enabling users to process large datasets on a cluster interactively.
+
+Spark can significantly outperform Hadoop in iterative machine learning workloads and provide interactive querying capabilities with sub-second latency for large datasets.
+
+
+
+- Programming Model
+Spark introduces two primary abstractions for parallel programming: resilient distributed datasets (RDDs) and parallel operations on these datasets, and shared variables.
+
+RDDs are read-only collections of objects partitioned across machines, capable of being rebuilt if a partition is lost.
+RDDs can be created directly from a file in a shared filesystem like HDFS, by parallelizing a collection in the driver program, or by transforming an existing RDD.
+RDDs are lazy and ephemeral by default, meaning they are computed on demand and not stored persistently after use.
+However, users can modify this behavior using two actions:
+The cache action suggests keeping the dataset in memory after its initial computation for future reuse.
+The save action evaluates and persists the dataset to a distributed filesystem, like HDFS.
+This approach to persistence is a design choice in Spark to ensure continued operation under memory constraints or node failures, drawing a parallel to the concept of virtual memory.
+
+Parallel Operations
+Operations on RDDs:
+Spark supports various parallel operations on RDDs, such as reduce (combining elements using a function), collect (sending all elements to the driver program), and foreach (applying a function to each element for its side effects).
+
+Shared Variables
+Handling Variables in Parallel Operations:
+When parallel operations like map and filter are performed, the closures (functions) used can refer to variables in their creation scope. By default, these variables are copied to each worker node.
+
+Types of Shared Variables:
+Spark introduces two types of shared variables for common usage patterns:
+Broadcast Variables: Used for distributing large, read-only pieces of data efficiently across workers.
+Accumulators: These are "add-only" variables for workers and readable only by the driver, suitable for implementing counters and parallel sums.
+
+
+-Text Search
+The first example is a simple text search to count the number of lines containing "ERROR" in a large log file.
+The process involves creating an RDD from the file, filtering lines containing "ERROR", mapping each line to 1, and then reducing by summing these ones.
+This example illustrates Spark's lazy evaluation and in-memory data sharing capabilities, which allows for efficient data processing without materializing intermediate datasets.
+
+
+- Logistic Regression
+This program demonstrates an iterative machine learning algorithm, logistic regression, which benefits significantly from Spark's ability to cache data in memory across iterations.
+The program reads points from a file, caches them, and then iteratively updates a vector w using a gradient computed in parallel across the points.
+The use of accumulators for summing the gradient and the syntax of Spark make the code resemble an imperative serial program while being executed in parallel.
+
+- Alternating Least Squares (ALS)
+
+Implementation
+The section details Spark's implementation, including its reliance on Mesos for cluster management, the structure of RDDs, task scheduling for parallel operations, handling of shared variables, and integration with the Scala interpreter.
+
+Resilient Distributed Datasets (RDDs): RDDs are implemented as a chain of objects capturing their lineage, allowing efficient recomputation in case of node failures. Different types of RDDs (e.g., for files or transformed datasets) implement a standard interface for partitioning, iteration, and task scheduling.
+Parallel Operations and Task Scheduling: Spark creates tasks for each RDD partition and tries to schedule them based on data locality. It uses a technique called delay scheduling for efficiency.
+Handling of Shared Variables: Broadcast variables and accumulators are implemented with custom serialization formats to ensure efficient distribution and fault tolerance.
+Interpreter Integration: Spark integrates with the Scala interpreter, allowing interactive processing of large datasets. Modifications were made to ensure that closures and state are correctly serialized and distributed to worker nodes.
+
+5 Results
+Logistic Regression Performance: Spark significantly outperforms Hadoop in iterative machine learning workloads, with up to 10x faster performance due to data caching.
+Alternating Least Squares (ALS) Performance: The use of broadcast variables for distributing the ratings matrix results in substantial performance improvements in the ALS job.
+Interactive Spark Usage: Spark enables interactive querying of a large dataset with sub-second response times after initial data loading, providing a much faster and more interactive experience than Hadoop.
+
+
+</code></pre></div></div> <h5 id="mr-ml-model-training">MR ML model training</h5> <ul> <li>it may scale great, but overhead is high: ML training just not well suited for stateless, deterministic functions <h5 id="spark-better">Spark better</h5> </li> </ul> <h5 id="parameter-servers">Parameter Servers</h5> <ol> <li>Shared Memory for Parameters</li> <li>Atomic Operations on Parameters</li> <li>Efficient Communication via RPCs</li> <li>Avoid Repartitioning Input Data</li> </ol> <h6 id="sync">Sync?</h6> <ol> <li>MR Approach: Requires strict synchronization (barrier synchronization) at the end of each stage, ensuring consistency but potentially leading to idle time as all nodes must wait for the slowest one.</li> <li>Parameter Server Approach: Offers flexibility. Synchronous mode ensures consistency but might slow down the training due to waiting times. Asynchronous mode can significantly speed up training as it allows nodes to compute and update independently, but it introduces some level of noise in the updates, which the training process must tolerate.</li> </ol> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Parameter Servers
+
+Sequential (BSP - Bulk Synchronous Parallel):
+
+Traditional distributed computing, like in Spark, utilizes synchronous communication. Each iteration requires all tasks to be completed before moving to the next.
+Advantages: Broad applicability and high convergence quality per iteration.
+Disadvantages: Each iteration waits for the slowest task, leading to longer overall task computation times.
+Bounded Delay (SSP - Staleness Synchronous Parallel):
+
+Sets a maximum delay time, known as the staleness value, allowing a certain degree of inconsistency in task progress. When staleness = 0, it equates to the Sequential consistency model; when staleness = ∞, it becomes the Eventual consistency model.
+Advantages: Reduces waiting time between tasks to a certain extent, offering faster computation speed and allowing developers to balance between algorithm convergence rate and system performance.
+Disadvantages: The convergence quality per iteration may not be as high as BSP, potentially requiring more iterations to achieve similar convergence; not as broadly applicable as BSP, with some algorithms not suitable.
+Eventual (ASP - Asynchronous Parallel):
+
+Asynchronous communication, where tasks do not need to wait for each other. Tasks that complete first can proceed to the next iteration immediately.
+Advantages: No waiting for other tasks, leading to fast computation speed.
+Disadvantages: Poor applicability, potential decrease in convergence rate, or even non-convergence.
+The synchronization restrictions of the three consistency models progressively relax to pursue faster computation speeds. In practice, the consistency model and related parameters should be adjusted based on the changes in metrics to balance convergence and computational speed.
+
+User-defined Filters:
+
+The system supports user-defined filters to filter out certain entries, thus reducing network bandwidth. Common filters include the significantly modified filter, which only pushes entries that have changed beyond a certain threshold, and the KKT filter, which uses conditions from optimization problems to filter out entries that have minimal impact on weights.
+
+Vector Clock:
+The parameter server uses a range vector clock to record the timestamp of each node's parameters. 
+This helps in tracking the state of data and avoiding the resending of data. Since parameters are pushed and pulled in ranges, parameters within the same key range can share a timestamp. 
+This approach compresses the traditional vector clock, reducing memory and network bandwidth overhead.
+
+Messages:
+Messages sent between nodes consist of a range vector clock and (key, value) pairs.
+Message Compression:
+Due to frequent updates of model parameters, the parameter server employs two methods to compress messages to reduce network bandwidth overhead:
+
+Key Compression:
+Since training data typically doesn't change during iterations, it's unnecessary for workers to send the same key lists each time. 
+The server can cache the key lists upon the first reception. Subsequently, only the hash values of the key lists need to be sent for matching.
+
+Value Compression:
+Some parameter updates are not significant for final optimization, so users can define filter rules to discard unnecessary parameters. 
+For instance, a large number of values being 0 or very small gradients can be inefficient in gradient descent and can be filtered out.
+
+Consistency and Replication:
+The parameter server uses consistent hashing to map keys and servers onto a ring according to a certain hash algorithm. 
+Each server manages the key range from its insertion point counter-clockwise to another server. The server closest in the clockwise direction to a key on the ring is known as the primary server for that key range. 
+Each server also backs up key ranges counter-clockwise, and these servers are known as backup servers for that key range. 
+A physical server is often represented as multiple virtual servers to improve load balancing and fault tolerance.
+
+Chain Replication vs. Replication after Aggregation:
+Chain Replication:
+As shown in the left diagram, worker 1 updates x, server 1 processes the data with a custom function f(x), and then backs up f(x) to server 2. 
+The push is completed only after worker 1 receives an acknowledgment. This backup method can cause significant network bandwidth overhead for algorithms requiring frequent parameter updates.
+
+Replication after Aggregation:
+As shown in the right diagram, the server aggregates updates from all workers before backing up and then sends acknowledgments to workers. 
+Waiting for aggregation can introduce latency in pulling updates, but this can be mitigated by relaxing the consistency model.
+
+Server Management:
+Adding a Server:
+The server manager assigns a key range to the new server, and other servers adjust their key ranges accordingly.
+The new server acquires the key range it will maintain as the primary server and the key ranges it will back up as a backup server.
+The server manager broadcasts the changes to nodes.
+Removing a Server:
+When the server manager detects a server failure through heartbeat signals, it assigns the key range of the failed server to a new server and removes the failed server.
+Worker Management:
+Adding a Worker:
+The task scheduler assigns data to the new worker.
+The new worker loads training data and then fetches parameters from the server.
+The task scheduler broadcasts node changes, which may cause other workers to release some training data.
+Removing a Worker:
+Losing a small portion of training data typically doesn't affect the training results. Moreover, restoring a worker requires more overhead than restoring a server. 
+Therefore, removing a worker is usually done by simply disregarding the node. This can be used to terminate the slowest worker, mitigating the performance impact of stragglers. 
+However, users can also choose to replace the lost worker with a new one.
+
+
+
+
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="-chapter-5-cloud-storage--">** Chapter 5: Cloud Storage ** <a name="topic-1"></a> </h2> <h5 id="types-of-cs">Types of cs</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---------------------------------
+blob
+arbitrary-sized “files” with simplified interface
+limited interface and semantics
+Example: AWS S3
+Minimal promises re: sharing/concurrency, interrupted writes
+- a big server
+- a scalable service: aggregation of disk-equipped machines
+
+But with additional opportunities for simplification
+Object independence simplifies scaling (reduced coordination)
+Disallowing (or discouraging) object updates simplifies code
+paths, caching, use of space-saving encodings, etc.
+
+
+Non-FS interface also separates from legacy/kernel code
+• Standardized DFS implementations persist for a long time
+
+---------------------------------
+Block stores (virtual disks)
+separate but attachable to any VM instance
+Guest OS running in a VM has code for FSs on disks
+So, give it a “disk” to use
+Virtual disk looks to guest OS just like real disk
+Most cloud infrastructures have this option
+AWS Elastic Block Store (EBS), OpenStack Cinder
+
+VDs often implemented as files
+A file is a sequence of bytes
+ can hold a sequence of fixed-sized blocks
+
+Thin provisioning: Promise more, Allocate based on need
+Performance interference
+– Each VM may have a virtual disk
+
+IOFlow: a Software-Defined Storage Architecture.
+---------------------------------
+“Local disk” as part of VM instance
+exists for lifetime of instance
+Key difference from #2-style block stores: visibility
+– visible only to the instance it comes with
+• makes sense, but can’t be attached to a different VM instance
+– exists only as long as the VM instance
+• can’t be attached to a different instance later
+---------------------------------
+“Traditional” distributed FS (DIY or aaS)
+
+set up long-running instance(s) to be the DFS server(s)
+with block stores (#2) or storage-enhanced instance(s) (#3)
+running traditional DFS server software on the instance(s)
+DFS services can be provided by CSP or third party
+    charge for file service
+CSP can implement a scalable file service and sell access
+
+---------------------------------
+Provide a “union” filesystem on each client
+
+Make a single FS view from multiple FSs
+Implemented by a layer atop the individual FSs
+Each operation accesses “unioned” FSs as appropriate
+    For read-only: Look in “first FS” first, then “second FS” if needed, …
+    For creates/writes: put into “first” non-read-only FS
+</code></pre></div></div> <h5 id="dfs-in-cloud">DFS in Cloud</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15640/">Distributed Systems Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
