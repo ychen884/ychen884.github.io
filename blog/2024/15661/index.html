@@ -794,20 +794,17 @@ w1 : γ1 ... wn : γn
 w1 ... wn : X
 
 
-
 Certainly! Let's put the explanation of the rules for deductive shift-reduce parsing in plain text form:
 
 Deductive parsing involves two primary rules originally used in the CYK parsing algorithm, but when we interpret these for shift-reduce parsing, we make some modifications.
 
 Rule D1: This is an assertion rule where for any terminal symbol 'a' found in the input string, we can deduce that 'a' derives itself. This is represented as:
 
-css
-Copy code
+
 a : a
 Rule D2: This is a combination rule that states if you have a production in the grammar where a non-terminal X leads to a sequence of symbols (γ1 ... γn), and you have established that for substrings w1 through wn of your input string w0, each wi derives γi, then you can conclude that the concatenated string w1...wn is derived from X. This rule is written as:
 
-markdown
-Copy code
+
 [r] X → γ1 ... γn
 w1 : γ1 ... wn : γn
 ------------------------
