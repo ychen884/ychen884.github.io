@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://ychen884.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://ychen884.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2024-03-09T22:50:07+00:00</updated><id>https://ychen884.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Compiler Design Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15661/" rel="alternate" type="text/html" title="Compiler Design Notes - Currently Upating…"/><published>2024-01-30T11:00:00+00:00</published><updated>2024-01-30T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15661</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15661/"><![CDATA[ <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 0: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 1: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 2: Register Allocation</a></li> <li><a href="#topic-3">Chapter 3: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 4: Static Semantics</a></li> <li><a href="#topic-5">Chapter 5: Grammars</a></li> <li><a href="#topic-6">Chapter 6: Lexical Analysis</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a></h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a></h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://ychen884.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://ychen884.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2024-03-10T08:35:11+00:00</updated><id>https://ychen884.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Compiler Design Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15661/" rel="alternate" type="text/html" title="Compiler Design Notes - Currently Upating…"/><published>2024-01-30T11:00:00+00:00</published><updated>2024-01-30T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15661</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15661/"><![CDATA[ <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a></h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a></h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
 return x+x+x*2
 
 -&gt;&gt;&gt; Instruction selection
@@ -757,21 +757,27 @@ We can usually rewrite grammars to remove ambiguity, but sometimes we extend the
 
 </code></pre></div></div> <h5 id="cyk-parsing">CYK Parsing</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CYK Parsing
 
-The Cocke-Younger-Kasami (CYK) parsing algorithm is a method used to check if a given string can be generated by a context-free grammar (CFG). It's especially useful in computational linguistics and computer science for parsing strings. The algorithm requires the CFG to be in Chomsky Normal Form (CNF), where production rules are either a non-terminal producing two non-terminals, or a non-terminal producing a terminal.
+The Cocke-Younger-Kasami (CYK) parsing algorithm is a method used to check if a given string can be generated by a context-free grammar (CFG). 
+It's especially useful in computational linguistics and computer science for parsing strings. The algorithm requires the CFG to be in Chomsky Normal Form (CNF), 
+where production rules are either a non-terminal producing two non-terminals, or a non-terminal producing a terminal.
 
 How CYK Works
 Input and Initialization: The algorithm takes a string w of length n and a CFG G in CNF. It initializes a table to store which grammar symbols can generate which substrings of w.
 
-Filling the Table: The algorithm fills a table P, where P[i,j] holds non-terminal symbols that can generate the substring w[i,j]. It starts with the smallest substrings (single characters) and combines them to form larger substrings.
+Filling the Table: The algorithm fills a table P, where P[i,j] holds non-terminal symbols that can generate the substring w[i,j]. It starts with the smallest substrings 
+(single characters) and combines them to form larger substrings.
 
 For each terminal in w, it adds corresponding non-terminals to P as per the grammar rules.
 For each possible split of substrings, it checks if their combination can be generated by any non-terminals as per the grammar rules.
-Iterating Over Substrings: It considers all possible substrings of w by their length, from shortest to longest, and checks all possible splits for each substring, looking for non-terminals that could generate these parts.
+Iterating Over Substrings: It considers all possible substrings of w by their length, from shortest to longest, and checks all possible splits for each substring, looking 
+for non-terminals that could generate these parts.
 
-Checking for Acceptance: After filling the table, it checks if the start symbol S is in the top-right cell of the table (P[1,n]). If S is present, the string w is accepted by the grammar.
+Checking for Acceptance: After filling the table, it checks if the start symbol S is in the top-right cell of the table (P[1,n]). 
+If S is present, the string w is accepted by the grammar.
 
 Complexity
-The CYK algorithm has a time complexity of O(n^3 * |G|), where n is the length of the string and |G| is the size of the grammar. This complexity comes from considering all substrings, all possible splits of each substring, and the grammar size.
+The CYK algorithm has a time complexity of O(n^3 * |G|), where n is the length of the string and |G| is the size of the grammar. This complexity comes from considering all substrings, 
+all possible splits of each substring, and the grammar size.
 
 Applications
 The CYK algorithm is used in syntax checking, natural language processing, and compiler design, where it's important to determine if strings follow specific grammatical rules.
@@ -779,14 +785,17 @@ The CYK algorithm is used in syntax checking, natural language processing, and c
 By using dynamic programming, the CYK algorithm efficiently parses strings and determines their grammatical structure under a given CFG.
 
 https://www.youtube.com/watch?v=VTH1k-xiswM
-</code></pre></div></div> <h5 id="shift-reduce-parsing">Shift-reduce parsing</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deductive parsing involves two primary rules originally used in the CYK parsing algorithm, but when we interpret these for shift-reduce parsing, we make some modifications.
+</code></pre></div></div> <h5 id="shift-reduce-parsing">Shift-reduce parsing</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deductive parsing involves two primary rules originally used in the CYK parsing algorithm, but when we interpret these for shift-reduce parsing, 
+we make some modifications.
 
 Rule D1: This is an assertion rule where for any terminal symbol 'a' found in the input string, we can deduce that 'a' derives itself. This is represented as:
 
 a : a
 
 
-Rule D2: This is a combination rule that states if you have a production in the grammar where a non-terminal X leads to a sequence of symbols (γ1 ... γn), and you have established that for substrings w1 through wn of your input string w0, each wi derives γi, then you can conclude that the concatenated string w1...wn is derived from X. This rule is written as:
+Rule D2: This is a combination rule that states if you have a production in the grammar where a non-terminal X leads to a sequence of symbols (γ1 ... γn), 
+and you have established that for substrings w1 through wn of your input string w0, each wi derives γi, 
+then you can conclude that the concatenated string w1...wn is derived from X. This rule is written as:
 
 [r] X → γ1 ... γn
 w1 : γ1 ... wn : γn
@@ -802,7 +811,9 @@ Rule D1: This is an assertion rule where for any terminal symbol 'a' found in th
 
 
 a : a
-Rule D2: This is a combination rule that states if you have a production in the grammar where a non-terminal X leads to a sequence of symbols (γ1 ... γn), and you have established that for substrings w1 through wn of your input string w0, each wi derives γi, then you can conclude that the concatenated string w1...wn is derived from X. This rule is written as:
+Rule D2: This is a combination rule that states if you have a production in the grammar where a non-terminal X leads to a sequence of symbols (γ1 ... γn), 
+and you have established that for substrings w1 through wn of your input string w0, each wi derives γi, 
+then you can conclude that the concatenated string w1...wn is derived from X. This rule is written as:
 
 
 [r] X → γ1 ... γn
@@ -812,7 +823,8 @@ w1 ... wn : X
 
 When we adapt these rules for shift-reduce parsing, we modify the form of the facts used:
 
-Instead of w : γ, where γ is a sequence of terminals and non-terminals, we look to conclude facts of the form w : β, where β is a possibly empty series of terminals and non-terminals.
+Instead of w : γ, where γ is a sequence of terminals and non-terminals, we look to conclude facts of the form w : β, 
+where β is a possibly empty series of terminals and non-terminals.
 
 We then have two operations: shift and reduce, focusing on the rightmost elements of w or β. The rules are:
 
@@ -834,12 +846,14 @@ w : β α
 ------------
 w : β X
 
-The reduce rule is the key to recognizing higher-level structures. Each time you apply it, you replace a sequence of symbols (which matches the right-hand side of a production rule) with the non-terminal symbol from the left-hand side of that production rule.
+The reduce rule is the key to recognizing higher-level structures. Each time you apply it, you replace a sequence of symbols 
+(which matches the right-hand side of a production rule) with the non-terminal symbol from the left-hand side of that production rule.
 
 If a grammar is unambiguous, this means
 that, as we apply a series of rules to try to derive w : S from ε : ε, there is at most one rule we can apply that will lead us to success.
 
-If we can successfully predict what the next step should be at every point, then we can implement this proof search with a stack holding the terminals and nonterminals (on the left) and a queue or array index tracking the unprocessed tokens (on the right).
+If we can successfully predict what the next step should be at every point, then we can implement this proof search with a stack 
+holding the terminals and nonterminals (on the left) and a queue or array index tracking the unprocessed tokens (on the right).
 
 What would we need to know how to always make the right decision for the grammar above?
 
@@ -847,7 +861,7 @@ What would we need to know how to always make the right decision for the grammar
 
 We will begin constructing a parse table, where the columns
 correspond to the next unshifted token and the rows correspond to patterns that we match against the stack β.
-</code></pre></div></div> <h5 id="parse-table">Parse Table</h5> <p><img src="image.png" alt="alt text"/></p> <h5 id="conflicts">Conflicts</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cases where we can make different decisions and still successfully parse the string are called conflicts.
+</code></pre></div></div> <h5 id="parse-table">Parse Table</h5> <h5 id="conflicts">Conflicts</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cases where we can make different decisions and still successfully parse the string are called conflicts.
 
 Example:
 we have decided to resolve the conflicts by giving a precedence to the operators and declaring both of them to be left-associative
@@ -856,10 +870,12 @@ It is also possible to have reduce/reduce conflicts
 
 For many parser generators, the default behavior of a shift/reduce conflict is to shift, and for a reduce/reduce conflict to apply the textually first production in the grammar.
 </code></pre></div></div> <h5 id="lr1-and-more">LR(1) and more?</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-The set of languages that we can parse with shift-reduce parsers that have lookahead 1 is called LR(1). But even though a language may be describable with an LR(1) grammar, it’s not necessarily the case that every grammar for an LR(1) language can be parsed with a shift-reduce parser. 
+The set of languages that we can parse with shift-reduce parsers that have lookahead 1 is called LR(1). But even though a language may be 
+describable with an LR(1) grammar, it’s not necessarily the case that every grammar for an LR(1) language can be parsed with a shift-reduce parser. 
 
 
-Even though the grammar is unambiguous, to parse it correctly, we’d need arbitrary lookahead – we’d need to look over an arbitrary number of b tokens to find whether they were followed by a c or a d.
+Even though the grammar is unambiguous, to parse it correctly, we’d need arbitrary lookahead – we’d need to look over an arbitrary 
+number of b tokens to find whether they were followed by a c or a d.
 </code></pre></div></div> <h2 id="chapter-6-lexical-analysis--">**Chapter 6: Lexical Analysis ** <a name="topic-6"></a></h2> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>turn a raw byte or character input stream coming from the source file into a token stream by chopping the input into pieces and skipping over irrelevant details.
 
 classify input tokens into types like INTEGER or IDENTIFIER or WHILE-keyword or OPENINGBRACKET...
@@ -870,7 +886,8 @@ Lexers are specified by regular expressions. Classically, however, they are impl
 deterministic finite automaton (DFA). At every state and every input there is at most one edge enabling a transition.
 
 
-But in general, finite automata can be nondeterministic finite automata (NFA). That is, for the same input, one path may lead to an accepting state while another attempt fails.
+But in general, finite automata can be nondeterministic finite automata (NFA). That is, for the same input, one path may lead to
+an accepting state while another attempt fails.
 
 
 </code></pre></div></div> <h5 id="regular-expressions---nondeterministic-finite-automata">Regular Expressions -&gt; Nondeterministic Finite Automata</h5> <h5 id="nondeterministic-finite-automata---deterministic-finite-automata">Nondeterministic Finite Automata -&gt; Deterministic Finite Automata</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> instead of a single state, we now consider the set of states in which we could be.
@@ -901,6 +918,309 @@ The steps for generating a lexer are
 8. Implement the DFA for a recognizer. Respect the longest possible match rule by storing the last accepted token and 
 backtracking the input to this one if the DFA run cannot otherwise complete.
 
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-8-function-calls--">**Chapter 8: Function Calls ** <a name="topic-7"></a></h2> <h5 id="ir">IR</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>two lower-level forms of intermediate representation for function calls. 
+1. d ← f(s1, . . . , sn)
+2. call f
+
+</code></pre></div></div> <h5 id="calling-conventions">calling conventions</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Parameters
+first six arguments are passed in registers, the remaining arguments
+are passed on the stack
+all arguments take 8 bytes of space on the stack, even if the type of
+argument would indicate that only 4 bytes need to be passed
+
+callee, should set up its stack frame, reserving space for local variables, spilled temps that could not be assigned to registers, 
+and arguments passed to functions it calls in turn
+
+It is recommended to calculate the total space needed statically and then decrementing the stack pointer %rsp by the appropriate amount only one time within the function
+
+%rsp should be aligned 0 mod 16 before another function is called,
+and may be assumed to be aligned 8 mod 16 on function entry.
+
+
+Return
+The result is returned in a specific return register %rax.
+
+
+
+
+
+...
+n + 16(%rsp) argument 8
+n + 8(%rsp) argument 7
+n + (%rsp) return address
+local variables         Callee
+(%rsp) end of frame     Callee
+
+
+</code></pre></div></div> <h5 id="registers-convention">Registers convention</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Abstract x86-64 
+form Register Usage function Preserved accross calls
+res0 %rax return value∗ No
+arg1 %rdi argument 1 No
+arg2 %rsi argument 2 No
+arg3 %rdx argument 3 No
+arg4 %rcx argument 4 No
+arg5 %r8 argument 5 No
+arg6 %r9 argument 6 No
+ler 7 %r10 caller-saved No
+ler 8 %r11 caller-saved No
+
+lee9 %rbx callee-saved Yes
+lee10 %rbp callee-saved∗ Yes
+lee11 %r12 callee-saved Yes
+lee12 %r13 callee-saved Yes
+lee13 %r14 callee-saved Yes
+lee14 %r15 callee-saved Yes
+%rsp stack pointer Yes
+
+
+</code></pre></div></div> <h5 id="typical-calling-sequence">Typical Calling Sequence</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d ← f(s1, s2, s3):
+
+arg3 ← s3
+arg2 ← s2
+arg1 ← s1
+call f
+d ← res0
+
+
+l : call f
+caller-save(r)
+---------------- J'8
+def(l, r)
+
+caller-save(r) is true of register r among %rax, %rdi, %rsi, %rdx, %rcx, %r8, %r9, %r10, and %r11.
+
+Now if a temp t is live after a function call, we have to add an infererence edge connecting t with any of the fixed registers 
+
+
+Callee-saved Registers
+%rbx, %rbp, %r12, %r13, %r14 and %r15
+The standard approach is to save those that are needed onto the stack in the function prologue and restore them from the stack in the function epilogue, just before returning.
+**: saving and restoring them all is safe, but may be overkill
+for small functions
+
+If we need more than the available number of caller-saved registers, we assign callee-save registers before we resort to spilling,
+but make sure the save them at the beginning of a function and restore them at the end. 
+
+
+f :
+t1 ← lee9
+t2 ← lee10
+· · ·
+function body
+· · ·
+lee10 ← t2
+lee9 ← t1
+ret
+
+
+</code></pre></div></div> <h5 id="liveness-about-calling-convention">Liveness about calling convention</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. During a call, res0, arg1-6 and ler7, ler8 are defined.
+2. For each line l and each temp t defined at l, we create an edge between t and any variable live in the successor.
+
+
+
+All precolored registers implicitly interfere with each other, so we don’t include that in the interference graph.
+
+
+</code></pre></div></div> <h2 id="chapter-9-ssa--">**Chapter 9: SSA ** <a name="topic-8"></a></h2> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>relabel variables in the code so that each variable is defined
+only once in the program text. If the program has this form, called static single assignment (SSA),
+
+
+then we can perform constant propagation immediately
+There are other program analyses and optimizations for which it is convenient to have this property..
+
+
+
+</code></pre></div></div> <h5 id="basic-blocks">Basic blocks</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int dist(int x, int y) {
+x = x * x;
+y = y * y;
+return isqrt(x+y);
+}
+
+dist(x0,y0):
+x1 &lt;- x0 * x0
+y1 &lt;- y0 * y0
+t0 &lt;- x1 + y1
+t1 &lt;- isqrt(t0)
+return t1
+
+
+
+</code></pre></div></div> <h5 id="loops">Loops</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int pow(int b, int e)
+//@requires e &gt;= 0;
+{
+int r = 1;
+while (e &gt; 0)
+//@loop_invariant e &gt;= 0;
+// r*b^e remains invariant
+{
+r = r * b;
+e = e - 1;
+}
+return r;
+}
+
+pow(b0,e0):
+      r0 &lt;- 1
+      goto loop(b0,e0,r0)
+loop(b1,e1,r1):
+      if (e1 &gt; 0)
+            then body(b1,e1,r1)
+            else done(b1,e1,r1)
+body(b2,e2,r2):
+      r3 &lt;- r2 * b2
+      e3 &lt;- e2 - 1
+      goto loop(b2,e3,r3)
+done(b3,e4,r4):
+      return r4
+
+</code></pre></div></div> <h5 id="minimize-ssa-form">Minimize SSA Form</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>φ Function form to minimized form.
+It’s quite simple: repeatedly remove φ-functions of the form
+ti = φ(tx1, tx2, . . . txk)
+
+
+pow(b0,e0):
+r0 &lt;- 1
+      goto loop
+loop:
+      b1 &lt;- phi(b0,b2)
+      e1 &lt;- phi(e0,e3)
+      r1 &lt;- phi(r0,r3)
+      if (e1 &gt; 0) then body else done
+body:
+      b2 &lt;- phi(b1)
+      e2 &lt;- phi(e1)
+      r2 &lt;- phi(r1)
+      r3 &lt;- r2 * b2
+      e3 &lt;- e2 - 1
+      goto loop
+
+done:
+      b3 &lt;- phi(b1)
+      e4 &lt;- phi(e1)
+      r4 &lt;- phi(e1)
+      return r4
+
+-------------------------------------------
+pow(b0,e0):
+      r0 &lt;- 1
+      goto loop
+loop:
+      e1 &lt;- phi(e0,e3)
+      r1 &lt;- phi(r0,r3)
+      if (e1 &gt; 0) then body else done
+body:
+      r3 &lt;- r1 * b0
+      e3 &lt;- e1 - 1
+      goto loop
+done:
+      return r1
+
+
+The new form on the right is, of course, no longer in SSA form. Therefore one cannot apply any SSA-based optimization. Conversion out of SSA should therefore be one of the last steps before code emission. 
+
+At this point register allocation, possibly with register coalescing, can do a good job of eliminating redundant moves.
+
+
+
+</code></pre></div></div> <h2 id="chapter-10-dynamics--">**Chapter 10: Dynamics ** <a name="topic-9"></a></h2> <h5 id="denotational-semantics">Denotational Semantics</h5> <ul> <li>Each part of a program is associated with a denotation</li> </ul> <h5 id="axiomatic-semantics">Axiomatic Semantics</h5> <ul> <li>Strongly related to program logic</li> <li>Gives meaning to phrases using logical axioms <h5 id="operational-semantics">Operational Semantics</h5> </li> <li>Related to interpreters and abstract machines</li> <li>Most popular and flexible form of semantics</li> </ul> <h5 id="expressions">Expressions</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>• Many different styles
+- Natural semantics (or big-step semantics or evaluation dynamics)
+- Structural operational semantics
+- Substructural operational semantics
+- Abstract machine (or small-step with continuation)
+
+abstract machine:
+Very general
+Low-level and elaborate
+
+e &gt; K
+valuate expression e and pass the result to the K
+
+Binary operations
+With effects
+
+Constant and the empty continuation, stop
+
+Boolean, short cutting
+
+Variable: env that maps variables to values
+Never changes when evaluating expressions
+
+
+
+
+</code></pre></div></div> <h5 id="executing-statements">Executing Statements</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Don't pass values to the continuation
+Usually have effects on the env
+</code></pre></div></div> <h5 id="function-calls">Function Calls</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>What needs to happen at a function call?
+• Evaluate the arguments in left-to-right order
+• Save the environment of the caller to continue the execution after the function call
+• Save the continuation of the caller
+• Execute the body of the callee in a new environment that maps the
+formal parameters to the argument values
+• Pass the return value to the environment of the caller
+
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-mutable--">**Chapter 11: Mutable ** <a name="topic-10"></a></h2> <h5 id="pointers-and-arrays">Pointers and Arrays</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>• Static semantics of pointers
+Extend:
+types with pointer types
+expressions with alloc, deref, and null ptr
+use an indefinite (polymorphic) type any* for synthesis for NULL
+We can compare two pointers using p==q if the have the same type
+
+
+• Dynamic semantics of pointers
+value of a type ptr* is an address that stores a value of type
+(or a special address 0)
+Allocations return fresh (unused) addresses
+Dereferencing retrieves a stored value
+Need heap that maps addresses to values
+
+
+• Static semantics of arrays
+type[]
+expression has: alloc_array(type, e) | e1[e2]
+destination: d[e]
+
+• Dynamic semantics of arrays
+Array Evaluation: Access
+
+H ; S ; η ⊢ e1[e2] ▷ K
+   ⟶ H ; S ; η ⊢ e1 ▷ (_[e2], K)
+
+H ; S ; η ⊢ a ▷ (_[e2], K)
+   ⟶ H ; S ; η ⊢ e2 ▷ (a[_], K)
+   // Need types.
+
+H ; S ; η ⊢ i ▷ (a[_], K)
+   ⟶ H ; S ; η ⊢ H(a + i*τ|τ) ▷ K
+   // a ≠ 0, 0 ≤ i &lt; length(a), a : τ[]
+   // Need array sizes.
+
+H ; S ; η ⊢ i ▷ (a[_], K)
+   ⟶ exception(mem)
+   // a = 0 or i &lt; 0 or i ≥ length(a)
+
+
+Default Values of Array Type
+We also need a default value for array types
+• We will just use 0 as the default value again
+• It represents an array of length 0
+• We can never legally access an array element in the default array
+• Warning: Arrays can be compared with equality
+• Make sure that alloc_array(t,0) returns a fresh address different from 0
+• If arrays have address a=0 then you should not access M[a-8]
+
+* We cannot translate d1[e2] += e3 to d1[e2] = d1[e2] + e3
+Effects of e2 and d1 would be evaluated twice
+
+</code></pre></div></div> <h5 id="heap">Heap</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>H : (N U {next}) -&gt; Val
+
+
+Memory exceptions -&gt; SIGUSR2
+better for debugging
+
+</code></pre></div></div> <h5 id="array-len">Array len</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Alternative 1: Add length at the front, array address points to the start
+Alternative 2: Array address points to the first element
+Simplifies address arithmetic
+Allows to pass pointers to C
 </code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Compiler Design Notes - SCS]]></summary></entry><entry><title type="html">Distributed Systems Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15640/" rel="alternate" type="text/html" title="Distributed Systems Notes - Currently Upating…"/><published>2024-01-18T11:00:00+00:00</published><updated>2024-01-18T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15640</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15640/"><![CDATA[<h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Remote Procedure Call (RPC)</a></li> <li><a href="#topic-2">Chapter 2: Caching</a></li> <li><a href="#topic-3">Chapter 3: Scalability</a></li> <li><a href="#topic-4">Chapter 4: </a></li> <li><a href="#topic-5">Chapter 5: </a></li> <li><a href="#topic-6">Chapter 6: </a></li> <li><a href="#topic-7">Chapter 7: </a></li> </ol> <h2 id="-chapter-1-remote-procedure-call-rpc--">** Chapter 1: Remote Procedure Call (RPC) ** <a name="topic-1"></a></h2> <ul> <li>Try to fake procedure call to local programming</li> <li>Why? bring down programming complexity for distributed systems</li> <li>client-server model, per interface</li> <li>two aspects: control flow, invocation syntax</li> <li>with network delays (theoretically best at speed of light)</li> </ul> <h5 id="limitations-of-rpc">limitations of RPC</h5> <ul> <li>No address space sharing between client and server, can’t sharing pointers(call by reference), can’t share global data..</li> <li>Delayed binding in RPC</li> </ul> <h5 id="failure-independence">Failure independence</h5> <ul> <li>caller and callee live and die together in local setup</li> <li>we can witness failure case but hard to do in local</li> <li>failure handling consider visibility of failure</li> <li>Security: different domains</li> </ul> <h5 id="typical-rpc">Typical RPC</h5> <ul> <li>client: makerpc(request_packet, &amp;reply_packet): blocks until reply or failure</li> <li>server: getrequest(&amp;request_packet) blocks until receives request, sendresponse(reply_packet)</li> </ul> <h5 id="stub-routines">Stub routines</h5> <ul> <li>generated by stub generator</li> <li>sit between high level purpose and low level network packing/unpacking send/recv..</li> </ul> <h5 id="procedure">procedure:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 --: network communication
 
