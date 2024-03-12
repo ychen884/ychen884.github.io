@@ -1,4 +1,4 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Compiler Design Notes - Currently Upating... | Yizhou Chen</title> <meta name="author" content="Yizhou Chen"> <meta name="description" content="Compiler Design Notes - SCS"> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css"> <link rel="canonical" href="https://ychen884.github.io/blog/2024/15661/"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Yizhou </span>Chen</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about</a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog<span class="sr-only">(current)</span></a> </li> <li class="nav-item "> <a class="nav-link" href="/teaching/">teaching</a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5"> <div class="post"> <header class="post-header"> <h1 class="post-title">Compiler Design Notes - Currently Upating...</h1> <p class="post-meta">January 30, 2024</p> <p class="post-tags"> <a href="/blog/2024"> <i class="fas fa-calendar fa-sm"></i> 2024 </a>   ·   <a href="/blog/tag/cmu"> <i class="fas fa-hashtag fa-sm"></i> CMU</a>     ·   <a href="/blog/category/study"> <i class="fas fa-tag fa-sm"></i> Study</a>   </p> </header> <article class="post-content"> <div id="markdown-content"> <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a> </h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a> </h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Compiler Design Notes - Currently Upating... | Yizhou Chen</title> <meta name="author" content="Yizhou Chen"> <meta name="description" content="Compiler Design Notes - SCS"> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css"> <link rel="canonical" href="https://ychen884.github.io/blog/2024/15661/"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Yizhou </span>Chen</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about</a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog<span class="sr-only">(current)</span></a> </li> <li class="nav-item "> <a class="nav-link" href="/teaching/">teaching</a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5"> <div class="post"> <header class="post-header"> <h1 class="post-title">Compiler Design Notes - Currently Upating...</h1> <p class="post-meta">January 30, 2024</p> <p class="post-tags"> <a href="/blog/2024"> <i class="fas fa-calendar fa-sm"></i> 2024 </a>   ·   <a href="/blog/tag/cmu"> <i class="fas fa-hashtag fa-sm"></i> CMU</a>     ·   <a href="/blog/category/study"> <i class="fas fa-tag fa-sm"></i> Study</a>   </p> </header> <article class="post-content"> <div id="markdown-content"> <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> <li><a href="#topic-11">Chapter 12: Dataflow Analysis</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a> </h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a> </h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
 return x+x+x*2
 
 -&gt;&gt;&gt; Instruction selection
@@ -1293,5 +1293,207 @@ Struct aligned by most restrictive fields
 explicit
 zeroextend s^32
 signextend s^32
+
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-12-dataflow-analysis--">**Chapter 12: Dataflow analysis ** <a name="topic-11"></a> </h2> <ol> <li>Liveness analysis -&gt; interfere?</li> <li>Neededness analysis -&gt; dead code?</li> <li>reaching definitions -&gt; const/copy prop</li> </ol> <h5 id="recap-liveness">Recap liveness</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>use(l,x) =&gt; instr at line l uses x 
+def(l,x) =&gt; instr at line l defines x
+succ(l,l') =&gt; line l' is a successor of l
+live(l,x) =&gt; temp x is live at line l
+
+use(l,x)
+----------
+live(l,x)
+
+propagate backwards
+only if not defined in l' 
+use(l',u), succ(l,l'), -def(l', u)
+----------------------------------
+live(l,u)
+
+</code></pre></div></div> <h5 id="memory-instr-in-ir">Memory instr in IR</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M[y] &lt;- x =&gt; store x at addr y
+x &lt;- M[y] =&gt; load addr y'
+
+
+we use the src and dest
+l: M[y] &lt;- x
+-------------
+use(l,x)
+use(l,y)
+succ(l, l+1)
+
+
+we define dst as x
+l: x &lt;- M[y]
+-------------
+def(l,x)
+use(l,y)
+succ(l, l+1)
+</code></pre></div></div> <h5 id="dead-code-elimination">Dead code elimination</h5> <h5 id="dead-code-operations-that-dont-influence-the-result-of-progrfunction">Dead code: operations that don’t influence the result of progr/function</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Result of progr
+- mem effects
+- return val
+- errors
+- non-terminate ? 
+Can exist in either source code
+or translated ASM,... 
+Usually we run it multiple times 
+
+
+
+
+</code></pre></div></div> <h5 id="example-remove-dead-code-in-code-factorial-using-liveness-info">Example: Remove dead code in code Factorial using liveness info</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>l1: p &lt;- 1
+l2: p &lt;- p * x
+l3: z &lt;- p + 1 ----------- dead
+l4: x &lt;- x-1
+l5: if(x &gt; 0) then l2 else l6
+l6: return p
+
+Liv anal
+
+
+l1: p &lt;- 1                          x
+l2: p &lt;- p * x                      p,x
+l3: z &lt;- p + 1                      p,x
+l4: x &lt;- x-1                        p,x   
+l5: if(x &gt; 0) then l2 else l6       p
+l6: return p                        p      
+
+z is not live at l4 --&gt; can replace l3 with nop
+- only if op at l3 has no effects
+- like memory operations, division
+
+but if we change that line:
+because we propagate liveness of z, we can't use this rule to remove though 
+z &lt;- z + 1 is dead code
+l1: p &lt;- 1                          x,z
+l2: p &lt;- p * x                      p,x,z
+l3: z &lt;- z + 1                      p,x,z
+l4: x &lt;- x-1                        p,x,z
+l5: if(x &gt; 0) then l2 else l6       p,x,z
+l6: return p                        p
+
+
+Conclusion: Liveness does not help much in some cases for removing dead codes.
+</code></pre></div></div> <h5 id="neededness-analysis">Neededness Analysis</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>----Goal: remove ops that----
+(a) have no effect and 
+(b) don't have a "needed" result
+
+nec(l,x) =&gt; x is necessary at l 
+
+l: x&lt;- y effect ops z
+-----------------------
+nec(l,y)
+nec(l,z)
+
+
+l: return x
+-----------------------
+nec(l,x)
+
+
+l: M[y] &lt;- x
+-----------------------
+nec(l,y)
+nec(l,z)
+
+
+c0 no need to worry about this:
+l: x &lt;- M[y]
+-----------------------
+nec(l,y)
+
+
+l: if (x?c) then l' else l"
+---------------------------
+nec(l,x)
+
+
+~~~~~~~~~~ Like liveness ~~~~~~~~~~
+
+nec(l,x)
+----------
+needed(l,x)
+
+
+needed(l',x), -def(l,x), succ(l,l')
+-------------------------------
+needed(l,x)
+
+
+
+A more complex rule: 
+l: x &lt;- y
+.
+.
+l': return x 
+
+needed(l',x), succ(l, l'), def(x, l)
+--------------------------------------
+needed(l,x)
+
+
+
+We would not accidentally end non-termination:
+For infinite loop:
+
+f:
+l1: goto f
+l2: ret 0
+
+</code></pre></div></div> <h5 id="complexity-ovars--lines">Complexity O(#vars * #lines)</h5> <h5 id="look-at-this-problematic-version-again-using-neededness">Look at this problematic version again using neededness:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>z &lt;- z + 1 is dead code
+
+First pass, we start at l6, propagate
+                                    Needed
+l0L z &lt;- 1                          
+l1: p &lt;- 1                          x,
+l2: p &lt;- p * x                      p,x (the added complex rule)
+l3: z &lt;- z + 1                      p
+l4: x &lt;- x-1                        p
+l5: if(x &gt; 0) then l2 else l6       p
+l6: return p                        p
+
+
+Second pass, we start at l5, propagate
+                                    Needed
+l0L z &lt;- 1                          
+l1: p &lt;- 1                          x,
+l2: p &lt;- p * x                      p,x (the added complex rule)
+l3: z &lt;- z + 1                      p,x
+l4: x &lt;- x-1                        p,x
+l5: if(x &gt; 0) then l2 else l6       p,x
+l6: return p                        p
+
+
+?? TODO: Maybe merge in one pass? 
+
+</code></pre></div></div> <h5 id="example-for-optimization">Example for optimization</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s =&gt; elem size
+a =&gt; addr of array
+n =&gt; length of array
+
+Step 1:
+l1: i &lt;- 0
+l2: if ( 0 &lt;0) then error else l3 -------&gt; const propagation ----&gt; const folding---&gt; jump l3 ----&gt; one more pass ---&gt; (nop)
+l3: if ( 0 &gt;=n) then error else l4
+l4: t &lt;- 0 * s ----------------------&gt; t &lt;- 0 --------&gt; then maybe t is not needed, so removed
+l5: u &lt;- a + t ----------------------&gt; copy propagation, u &lt;- a
+l6: x &lt;- M[u]
+
+what if 
+l7: i &lt;- i+1
+l7: if (i&lt;n) then l2 else l9
+l9: return x 
+
+Then problem is this is not in SSA form, that i is defined twice
+defs in l1 and l7 each l2
+Cannot do constant propagation, so we are not sure i is 0
+
+predicate we want to define: 
+
+reach(l,x,l') 
+complexity: O(#line * #line), much larger than O(#var * #line)
+
+
+
+
+
+
 
 </code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15640/">Distributed Systems Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15719/">Advanced Cloud Computing Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>

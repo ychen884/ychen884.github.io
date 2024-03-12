@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://ychen884.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://ychen884.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2024-03-10T18:15:41+00:00</updated><id>https://ychen884.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Compiler Design Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15661/" rel="alternate" type="text/html" title="Compiler Design Notes - Currently Upating…"/><published>2024-01-30T11:00:00+00:00</published><updated>2024-01-30T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15661</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15661/"><![CDATA[ <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a></h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a></h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://ychen884.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://ychen884.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2024-03-12T14:53:33+00:00</updated><id>https://ychen884.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Compiler Design Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15661/" rel="alternate" type="text/html" title="Compiler Design Notes - Currently Upating…"/><published>2024-01-30T11:00:00+00:00</published><updated>2024-01-30T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15661</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15661/"><![CDATA[ <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> <li><a href="#topic-11">Chapter 12: Dataflow Analysis</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a></h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a></h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
 return x+x+x*2
 
 -&gt;&gt;&gt; Instruction selection
@@ -1293,6 +1293,208 @@ Struct aligned by most restrictive fields
 explicit
 zeroextend s^32
 signextend s^32
+
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-12-dataflow-analysis--">**Chapter 12: Dataflow analysis ** <a name="topic-11"></a></h2> <ol> <li>Liveness analysis -&gt; interfere?</li> <li>Neededness analysis -&gt; dead code?</li> <li>reaching definitions -&gt; const/copy prop</li> </ol> <h5 id="recap-liveness">Recap liveness</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>use(l,x) =&gt; instr at line l uses x 
+def(l,x) =&gt; instr at line l defines x
+succ(l,l') =&gt; line l' is a successor of l
+live(l,x) =&gt; temp x is live at line l
+
+use(l,x)
+----------
+live(l,x)
+
+propagate backwards
+only if not defined in l' 
+use(l',u), succ(l,l'), -def(l', u)
+----------------------------------
+live(l,u)
+
+</code></pre></div></div> <h5 id="memory-instr-in-ir">Memory instr in IR</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M[y] &lt;- x =&gt; store x at addr y
+x &lt;- M[y] =&gt; load addr y'
+
+
+we use the src and dest
+l: M[y] &lt;- x
+-------------
+use(l,x)
+use(l,y)
+succ(l, l+1)
+
+
+we define dst as x
+l: x &lt;- M[y]
+-------------
+def(l,x)
+use(l,y)
+succ(l, l+1)
+</code></pre></div></div> <h5 id="dead-code-elimination">Dead code elimination</h5> <h5 id="dead-code-operations-that-dont-influence-the-result-of-progrfunction">Dead code: operations that don’t influence the result of progr/function</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Result of progr
+- mem effects
+- return val
+- errors
+- non-terminate ? 
+Can exist in either source code
+or translated ASM,... 
+Usually we run it multiple times 
+
+
+
+
+</code></pre></div></div> <h5 id="example-remove-dead-code-in-code-factorial-using-liveness-info">Example: Remove dead code in code Factorial using liveness info</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>l1: p &lt;- 1
+l2: p &lt;- p * x
+l3: z &lt;- p + 1 ----------- dead
+l4: x &lt;- x-1
+l5: if(x &gt; 0) then l2 else l6
+l6: return p
+
+Liv anal
+
+
+l1: p &lt;- 1                          x
+l2: p &lt;- p * x                      p,x
+l3: z &lt;- p + 1                      p,x
+l4: x &lt;- x-1                        p,x   
+l5: if(x &gt; 0) then l2 else l6       p
+l6: return p                        p      
+
+z is not live at l4 --&gt; can replace l3 with nop
+- only if op at l3 has no effects
+- like memory operations, division
+
+but if we change that line:
+because we propagate liveness of z, we can't use this rule to remove though 
+z &lt;- z + 1 is dead code
+l1: p &lt;- 1                          x,z
+l2: p &lt;- p * x                      p,x,z
+l3: z &lt;- z + 1                      p,x,z
+l4: x &lt;- x-1                        p,x,z
+l5: if(x &gt; 0) then l2 else l6       p,x,z
+l6: return p                        p
+
+
+Conclusion: Liveness does not help much in some cases for removing dead codes.
+</code></pre></div></div> <h5 id="neededness-analysis">Neededness Analysis</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>----Goal: remove ops that----
+(a) have no effect and 
+(b) don't have a "needed" result
+
+nec(l,x) =&gt; x is necessary at l 
+
+l: x&lt;- y effect ops z
+-----------------------
+nec(l,y)
+nec(l,z)
+
+
+l: return x
+-----------------------
+nec(l,x)
+
+
+l: M[y] &lt;- x
+-----------------------
+nec(l,y)
+nec(l,z)
+
+
+c0 no need to worry about this:
+l: x &lt;- M[y]
+-----------------------
+nec(l,y)
+
+
+l: if (x?c) then l' else l"
+---------------------------
+nec(l,x)
+
+
+~~~~~~~~~~ Like liveness ~~~~~~~~~~
+
+nec(l,x)
+----------
+needed(l,x)
+
+
+needed(l',x), -def(l,x), succ(l,l')
+-------------------------------
+needed(l,x)
+
+
+
+A more complex rule: 
+l: x &lt;- y
+.
+.
+l': return x 
+
+needed(l',x), succ(l, l'), def(x, l)
+--------------------------------------
+needed(l,x)
+
+
+
+We would not accidentally end non-termination:
+For infinite loop:
+
+f:
+l1: goto f
+l2: ret 0
+
+</code></pre></div></div> <h5 id="complexity-ovars--lines">Complexity O(#vars * #lines)</h5> <h5 id="look-at-this-problematic-version-again-using-neededness">Look at this problematic version again using neededness:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>z &lt;- z + 1 is dead code
+
+First pass, we start at l6, propagate
+                                    Needed
+l0L z &lt;- 1                          
+l1: p &lt;- 1                          x,
+l2: p &lt;- p * x                      p,x (the added complex rule)
+l3: z &lt;- z + 1                      p
+l4: x &lt;- x-1                        p
+l5: if(x &gt; 0) then l2 else l6       p
+l6: return p                        p
+
+
+Second pass, we start at l5, propagate
+                                    Needed
+l0L z &lt;- 1                          
+l1: p &lt;- 1                          x,
+l2: p &lt;- p * x                      p,x (the added complex rule)
+l3: z &lt;- z + 1                      p,x
+l4: x &lt;- x-1                        p,x
+l5: if(x &gt; 0) then l2 else l6       p,x
+l6: return p                        p
+
+
+?? TODO: Maybe merge in one pass? 
+
+</code></pre></div></div> <h5 id="example-for-optimization">Example for optimization</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s =&gt; elem size
+a =&gt; addr of array
+n =&gt; length of array
+
+Step 1:
+l1: i &lt;- 0
+l2: if ( 0 &lt;0) then error else l3 -------&gt; const propagation ----&gt; const folding---&gt; jump l3 ----&gt; one more pass ---&gt; (nop)
+l3: if ( 0 &gt;=n) then error else l4
+l4: t &lt;- 0 * s ----------------------&gt; t &lt;- 0 --------&gt; then maybe t is not needed, so removed
+l5: u &lt;- a + t ----------------------&gt; copy propagation, u &lt;- a
+l6: x &lt;- M[u]
+
+what if 
+l7: i &lt;- i+1
+l7: if (i&lt;n) then l2 else l9
+l9: return x 
+
+Then problem is this is not in SSA form, that i is defined twice
+defs in l1 and l7 each l2
+Cannot do constant propagation, so we are not sure i is 0
+
+predicate we want to define: 
+
+reach(l,x,l') 
+complexity: O(#line * #line), much larger than O(#var * #line)
+
+
+
+
+
+
 
 </code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Compiler Design Notes - SCS]]></summary></entry><entry><title type="html">Distributed Systems Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15640/" rel="alternate" type="text/html" title="Distributed Systems Notes - Currently Upating…"/><published>2024-01-18T11:00:00+00:00</published><updated>2024-01-18T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15640</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15640/"><![CDATA[<h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Remote Procedure Call (RPC)</a></li> <li><a href="#topic-2">Chapter 2: Caching</a></li> <li><a href="#topic-3">Chapter 3: Scalability</a></li> <li><a href="#topic-4">Chapter 4: </a></li> <li><a href="#topic-5">Chapter 5: </a></li> <li><a href="#topic-6">Chapter 6: </a></li> <li><a href="#topic-7">Chapter 7: </a></li> </ol> <h2 id="-chapter-1-remote-procedure-call-rpc--">** Chapter 1: Remote Procedure Call (RPC) ** <a name="topic-1"></a></h2> <ul> <li>Try to fake procedure call to local programming</li> <li>Why? bring down programming complexity for distributed systems</li> <li>client-server model, per interface</li> <li>two aspects: control flow, invocation syntax</li> <li>with network delays (theoretically best at speed of light)</li> </ul> <h5 id="limitations-of-rpc">limitations of RPC</h5> <ul> <li>No address space sharing between client and server, can’t sharing pointers(call by reference), can’t share global data..</li> <li>Delayed binding in RPC</li> </ul> <h5 id="failure-independence">Failure independence</h5> <ul> <li>caller and callee live and die together in local setup</li> <li>we can witness failure case but hard to do in local</li> <li>failure handling consider visibility of failure</li> <li>Security: different domains</li> </ul> <h5 id="typical-rpc">Typical RPC</h5> <ul> <li>client: makerpc(request_packet, &amp;reply_packet): blocks until reply or failure</li> <li>server: getrequest(&amp;request_packet) blocks until receives request, sendresponse(reply_packet)</li> </ul> <h5 id="stub-routines">Stub routines</h5> <ul> <li>generated by stub generator</li> <li>sit between high level purpose and low level network packing/unpacking send/recv..</li> </ul> <h5 id="procedure">procedure:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 --: network communication
