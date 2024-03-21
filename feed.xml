@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://ychen884.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://ychen884.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2024-03-21T00:42:20+00:00</updated><id>https://ychen884.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Compiler Design Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15661/" rel="alternate" type="text/html" title="Compiler Design Notes - Currently Upating…"/><published>2024-01-30T11:00:00+00:00</published><updated>2024-01-30T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15661</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15661/"><![CDATA[ <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> <li><a href="#topic-11">Chapter 12: Dataflow Analysis</a></li> <li><a href="#topic-12">Chapter 13: Register allocation optimization</a></li> <li><a href="#topic-13">Chapter 14: Peephole optimization</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a></h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a></h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://ychen884.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://ychen884.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2024-03-21T14:52:59+00:00</updated><id>https://ychen884.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Compiler Design Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15661/" rel="alternate" type="text/html" title="Compiler Design Notes - Currently Upating…"/><published>2024-01-30T11:00:00+00:00</published><updated>2024-01-30T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15661</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15661/"><![CDATA[ <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> <li><a href="#topic-11">Chapter 12: Dataflow Analysis</a></li> <li><a href="#topic-12">Chapter 13: Register allocation optimization</a></li> <li><a href="#topic-13">Chapter 14: Peephole optimization</a></li> <li><a href="#topic-14">Chapter 15: Peephole optimization</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a></h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a></h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
 return x+x+x*2
 
 -&gt;&gt;&gt; Instruction selection
@@ -1689,7 +1689,140 @@ n &lt;- a + b ? can we replace a + b? appear three times
 2. replace u &lt;- a + b with u &lt;- x
 
 
-</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Compiler Design Notes - SCS]]></summary></entry><entry><title type="html">Distributed Systems Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15640/" rel="alternate" type="text/html" title="Distributed Systems Notes - Currently Upating…"/><published>2024-01-18T11:00:00+00:00</published><updated>2024-01-18T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15640</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15640/"><![CDATA[<h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Remote Procedure Call (RPC)</a></li> <li><a href="#topic-2">Chapter 2: Caching</a></li> <li><a href="#topic-3">Chapter 3: Scalability</a></li> <li><a href="#topic-4">Chapter 4: Failure Resiliency</a></li> <li><a href="#topic-5">Chapter 5: </a></li> <li><a href="#topic-6">Chapter 6: </a></li> <li><a href="#topic-7">Chapter 7: </a></li> </ol> <h2 id="-chapter-1-remote-procedure-call-rpc--">** Chapter 1: Remote Procedure Call (RPC) ** <a name="topic-1"></a></h2> <ul> <li>Try to fake procedure call to local programming</li> <li>Why? bring down programming complexity for distributed systems</li> <li>client-server model, per interface</li> <li>two aspects: control flow, invocation syntax</li> <li>with network delays (theoretically best at speed of light)</li> </ul> <h5 id="limitations-of-rpc">limitations of RPC</h5> <ul> <li>No address space sharing between client and server, can’t sharing pointers(call by reference), can’t share global data..</li> <li>Delayed binding in RPC</li> </ul> <h5 id="failure-independence">Failure independence</h5> <ul> <li>caller and callee live and die together in local setup</li> <li>we can witness failure case but hard to do in local</li> <li>failure handling consider visibility of failure</li> <li>Security: different domains</li> </ul> <h5 id="typical-rpc">Typical RPC</h5> <ul> <li>client: makerpc(request_packet, &amp;reply_packet): blocks until reply or failure</li> <li>server: getrequest(&amp;request_packet) blocks until receives request, sendresponse(reply_packet)</li> </ul> <h5 id="stub-routines">Stub routines</h5> <ul> <li>generated by stub generator</li> <li>sit between high level purpose and low level network packing/unpacking send/recv..</li> </ul> <h5 id="procedure">procedure:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-15-memory-optimizations--">**Chapter 15: Memory Optimizations ** <a name="topic-14"></a></h2> <h5 id="dominator-graph">Dominator Graph</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>l &gt; l' = l dominates l' = every path to l' goes through l
+
+(1) compute l &gt; l' on the CFG
+- Lengauer-Tarjau (Asympt Faster)
+- Cooper et al (Simpler &amp; Faster in practice) &lt;- Idea: construct dominator tree
+
+Dominator tree: 
+- Nodes are lines
+- Edge beween each line and its immidiate dominator
+
+decide l &gt; l' by
+- start at l' in dom tree
+- traverse tree until
+      - we find l -&gt; l &gt; l'
+      - we arrive at function entry -&gt; l not larger l'
+
+Example: 
+loops
+
+while(e,s)
+
+l0: instr(e)
+l0': if (res(e)==0) then l2 else l1
+l1: insts(s)
+l1': goto l0
+l2: 
+
+control flow graph
+                                            ------------ l2
+                                           |
+k(before loop) -----&gt; l0 - --e- - -&gt; l0'  -| 
+                        ^                   ------ l1 - s -&gt; l1'
+                        |                                      |
+                         --------------------------------------
+
+l0' has predecessor of K
+l1,l2 has predecessor of l0'
+
+
+
+</code></pre></div></div> <h5 id="high-level-view">High-level view:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>algs solve data flow equation: 
+
+Dom(l) = 
+ {l0} if l = l0 (func entry)
+ {l1} union U(all dominators of l') otherwise
+
+
+Naive alg:
+1. Dom(l0) = {l0}
+   Dom(l!=l0) = L (all lines)
+2. use 2nd part of eq until no dom
+
+
+</code></pre></div></div> <h5 id="construct-dom-tree-during-code-gen">Construct dom tree during code gen</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Example: conditional if(e,s1,s2)
+l0: instr(e)
+l'0: if(res(e)!=0) then l1 else l2
+l1: instr(s1); goto l3
+l2: instr(s2); goto l3
+l3: 
+
+
+l3 -&gt; l0'
+l1 -&gt; l0'
+l2 -&gt; l0'
+
+</code></pre></div></div> <h5 id="memory-optimization">Memory Optimization</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- can give significant speedups
+- difficult to impl
+
+Example: 
+M[q] &lt;- 4
+M[p] &lt;- 8128
+x &lt;- M[q] ---&gt; X &lt;- 4
+
+p and q don't alias (q!=p ?)
+Alias analysis!
+</code></pre></div></div> <h5 id="alias-analysis-one-approach">Alias analysis: One approach..</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Assume we already have 
+may-alias (a,b) = temps a and b can contain the same address
+
+l: t &lt;- M[a]
+.
+.
+.
+l': t' &lt;- M[a]
+
+
+=&gt;
+
+l: t &lt;- M[a]
+.
+.
+.
+l': t' &lt;- t 
+
+
+What are the conditions that need to hold for us to do this? 
+- No other def of t reaches l' (SSA, good)
+- a has the same value in l and l' (SSA, good)
+- M[a] is still "available" &lt;- not overwrtitten
+- t is defiend at l'
+
+copy propagation applies at basic blocks
+
+
+if avail(l, l') and l &gt; l'
+Easier: def unavail(l,l')
+
+unavail(l,l') = l: t &lt;- M[a]
+M[a] is potentially defined on a path from l to l' and l &gt; l'(for efficiency only)
+
+
+
+l: t&lt;- M[a]
+l &gt; l'
+l': M[b] &lt;- S
+may-alias(a,S)
+succ(l',k)
+-----------------------
+unavailable(l,k)
+l &gt; k
+
+
+unavail(l,k)
+succ(k,k')
+l &gt; k'
+--------------
+unavail(l,k')
+
+
+Function call can be similar
+if not used pointer not use memory, easier
+
+
+
+</code></pre></div></div>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Compiler Design Notes - SCS]]></summary></entry><entry><title type="html">Distributed Systems Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15640/" rel="alternate" type="text/html" title="Distributed Systems Notes - Currently Upating…"/><published>2024-01-18T11:00:00+00:00</published><updated>2024-01-18T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15640</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15640/"><![CDATA[<h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Remote Procedure Call (RPC)</a></li> <li><a href="#topic-2">Chapter 2: Caching</a></li> <li><a href="#topic-3">Chapter 3: Scalability</a></li> <li><a href="#topic-4">Chapter 4: Failure Resiliency</a></li> <li><a href="#topic-5">Chapter 5: </a></li> <li><a href="#topic-6">Chapter 6: </a></li> <li><a href="#topic-7">Chapter 7: </a></li> </ol> <h2 id="-chapter-1-remote-procedure-call-rpc--">** Chapter 1: Remote Procedure Call (RPC) ** <a name="topic-1"></a></h2> <ul> <li>Try to fake procedure call to local programming</li> <li>Why? bring down programming complexity for distributed systems</li> <li>client-server model, per interface</li> <li>two aspects: control flow, invocation syntax</li> <li>with network delays (theoretically best at speed of light)</li> </ul> <h5 id="limitations-of-rpc">limitations of RPC</h5> <ul> <li>No address space sharing between client and server, can’t sharing pointers(call by reference), can’t share global data..</li> <li>Delayed binding in RPC</li> </ul> <h5 id="failure-independence">Failure independence</h5> <ul> <li>caller and callee live and die together in local setup</li> <li>we can witness failure case but hard to do in local</li> <li>failure handling consider visibility of failure</li> <li>Security: different domains</li> </ul> <h5 id="typical-rpc">Typical RPC</h5> <ul> <li>client: makerpc(request_packet, &amp;reply_packet): blocks until reply or failure</li> <li>server: getrequest(&amp;request_packet) blocks until receives request, sendresponse(reply_packet)</li> </ul> <h5 id="stub-routines">Stub routines</h5> <ul> <li>generated by stub generator</li> <li>sit between high level purpose and low level network packing/unpacking send/recv..</li> </ul> <h5 id="procedure">procedure:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 --: network communication
 
         Client                                             Server
