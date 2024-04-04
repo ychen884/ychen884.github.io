@@ -838,4 +838,86 @@ RM -&gt; Start AM, a view of the cluster
 NM: from heartb, notify all AMs(tasks dead!), AMs request new resources
 AM: RM restarts AM, sync with nodes and task, rerun the parts required
 Task Failure: AM responsibility
-</code></pre></div></div> <h5 id="guest-lecture-macaron---multi-cloudregion-aware-cache-auto-reconfiguration">Guest lecture: MACARON - Multi-cloud/region Aware Cache Auto-ReconfiguratiON</h5> <ul> <li>Autoscale intermediate “Caching”, using mini-scale sampling of miss vs cache size</li> <li>Decaying factors to diminish the impact of statistics</li> <li>Simulator: trace based, discrete event-driven to reduce cost of evaluating on a cloud</li> <li>Belady alg to reduce miss ratios(compare values of cached objs)</li> <li>Decide which item to cache in object storage cache based on cost of storing data and cost of re-transferring data <a href="#blog-chapters">Back to Blog Chapters</a> </li> </ul> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15640/">Distributed Systems Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
+</code></pre></div></div> <h5 id="guest-lecture-macaron---multi-cloudregion-aware-cache-auto-reconfiguration">Guest lecture: MACARON - Multi-cloud/region Aware Cache Auto-ReconfiguratiON</h5> <ul> <li>Autoscale intermediate “Caching”, using mini-scale sampling of miss vs cache size</li> <li>Decaying factors to diminish the impact of statistics</li> <li>Simulator: trace based, discrete event-driven to reduce cost of evaluating on a cloud</li> <li>Belady alg to reduce miss ratios(compare values of cached objs)</li> <li>Decide which item to cache in object storage cache based on cost of storing data and cost of re-transferring data</li> </ul> <h2 id="-chapter-7-diagnosis-via-monitoring--">** Chapter 7: Diagnosis via monitoring ** <a name="topic-7"></a> </h2> <h5 id="diagnosis-via-monitoring">Diagnosis via monitoring</h5> <ul> <li>why difficult? hard to find the sources of bottleneck</li> <li>users</li> <li>apps</li> <li>VMs</li> <li>…</li> </ul> <h5 id="three-primary-data-gathering-methods">Three primary data gathering methods</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Gathering information from performance counters
+Example: AWS CloudWatch, Ganglia
++ Lightweight, commonly available
+- Black-box, aggregates, per node
+
+
+2. Logging events of interest
+detailed texts about system's behaviors
+very available for most systems
++ White-box approach 
+- High overhead, per-node
+
+
+3. End-to-end activity tracing
+Similar to logging, but workflow-based
+Example: Dapper, Star-dust
++: white box, distinguishes workflows
+-: requires software modifications
+
+Gives more information with specific structure
+</code></pre></div></div> <h5 id="a-key-cloud-specific-issue">A key cloud-specific issue</h5> <ul> <li>cloud providers and users do not want to share detailed information with each other</li> <li>provider logs often not visible to users</li> <li>users do not want to share algorithms to cloud providers</li> </ul> <h5 id="example-ganglia">Example: Ganglia</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Massie04
+
+Designed for HPC env, bare-metal hardwares
+Collects and aggregates coutners
+Within cluster, counters visible everywhere
+Counters form multiple cluster is aggregated
+
+
+gmond per node in cluster:
+periodically get statistics
+periodically bradcast all stats to other nodes in the same cluster (XDR via UDP)
+
+gmetad(can run anywhere):
+periodically poll the statistics from one of gmonds (XML via TCP)
+</code></pre></div></div> <h5 id="end-to-end-tracing">End-to-end tracing</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Focus of many research efforts, currently used in Google, Bing, etcs
+Traces show causality-related activity
+- Trace: set of events from different threads/machines merged &amp; sorted by causality
+- Flow of indiv reqs
+
+
+A DAG-based request flow
+* time between nodes can be a bit off - clock drift
+same process on same machine -&gt; processing same requests
+timestamp -&gt; order
+put the request ID to another machine, so we can know they are dealing with same requests
+
+* Implementation
+
+Tracing inf tracks trace points touched by individual requests
+- Some start traces (generate unique trace ID)
+- Others propagate ID: Transitivity of request ID
+Traces obtained by stitching together trace points accessed by individual requests
+(This can be done by background processes)
+- Hard to account for async and batched work
+
+If we do this for every request, the log can grow too huge..
+If we use log entry for sampling decisions for storage, Cannot get the while picture of the request
+If we decide based on request ID -&gt; What most systems do
+
+If we decide to sample interestng requests? How do we know? log after crash doesn't help...Dilemma 
+</code></pre></div></div> <h5 id="example-dapper">Example: Dapper</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sigmelman10
+
+Google's impl for e-t-e tracing, since 2008
+Trace records gathered in external system
+- median latency 15s 89% tile &gt; hrs
+</code></pre></div></div> <h5 id="end-to-end-tracing-analysis-tools">End-to-end tracing analysis tools</h5> <h5 id="example-spectroscope">Example: Spectroscope</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Localizes perforamnce degradations
+By ID'ing changed requests flows
+
+
+Output: Groups of before/after request flows
+Some changes automatically ID'd
+
+
+Compare request flows between before and after, and find what changed
+structure, time, ...
+1. Structural change identification(same structure should have same trace points) via heuristics
+2. Response-time only change identification (time between two points grows)
+Then do the ranking
+
+They tell where to look at the code and fix
+
+
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15640/">Distributed Systems Notes - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14741/">Information Security - Currently Updating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/14740/">Fundamentals of Telecommunication Networks - Currently Upating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
