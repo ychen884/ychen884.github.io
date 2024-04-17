@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://ychen884.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://ychen884.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2024-04-04T20:21:38+00:00</updated><id>https://ychen884.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Compiler Design Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15661/" rel="alternate" type="text/html" title="Compiler Design Notes - Currently Upating…"/><published>2024-01-30T11:00:00+00:00</published><updated>2024-01-30T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15661</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15661/"><![CDATA[ <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> <li><a href="#topic-11">Chapter 12: Dataflow Analysis</a></li> <li><a href="#topic-12">Chapter 13: Register allocation optimization</a></li> <li><a href="#topic-13">Chapter 14: Peephole optimization</a></li> <li><a href="#topic-14">Chapter 15: Memory optimization</a></li> <li><a href="#topic-15">Chapter 16: Loop optimization</a></li> <li><a href="#topic-16">Chapter 17: Garbage Collection</a></li> <li><a href="#topic-17">Chapter 18: More advanced features</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a></h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a></h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://ychen884.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://ychen884.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2024-04-17T05:15:45+00:00</updated><id>https://ychen884.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Compiler Design Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15661/" rel="alternate" type="text/html" title="Compiler Design Notes - Currently Upating…"/><published>2024-01-30T11:00:00+00:00</published><updated>2024-01-30T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15661</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15661/"><![CDATA[ <h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Compiler Design</a></li> <li><a href="#topic-1.1">Chapter 2: Instruction Selection</a></li> <li><a href="#topic-2">Chapter 3: Register Allocation</a></li> <li><a href="#topic-3">Chapter 4: Elaboration(after par/lex..)</a></li> <li><a href="#topic-4">Chapter 5: Static Semantics</a></li> <li><a href="#topic-5">Chapter 6: Grammars</a></li> <li><a href="#topic-6">Chapter 7: Lexical Analysis</a></li> <li><a href="#topic-7">Chapter 8: Function calls</a></li> <li><a href="#topic-8">Chapter 9: SSA</a></li> <li><a href="#topic-9">Chapter 10: Dynamic Semantics</a></li> <li><a href="#topic-10">Chapter 11: Mutable</a></li> <li><a href="#topic-11">Chapter 12: Dataflow Analysis</a></li> <li><a href="#topic-12">Chapter 13: Register allocation optimization</a></li> <li><a href="#topic-13">Chapter 14: Peephole optimization</a></li> <li><a href="#topic-14">Chapter 15: Memory optimization</a></li> <li><a href="#topic-15">Chapter 16: Loop optimization</a></li> <li><a href="#topic-16">Chapter 17: Garbage Collection</a></li> <li><a href="#topic-17">Chapter 18: More advanced features</a></li> </ol> <h2 id="chapter-1-overview-of-compiler-design--">**Chapter 1: Overview of Compiler Design ** <a name="topic-1"></a></h2> <h3 id="what-makes-a-good-compiler-metrics">What makes a good Compiler: metrics</h3> <ul> <li>correctness</li> <li>code quality: compiled code runs fast</li> <li>efficiency: compilation runs fast</li> <li>usability: provides errors/warnings, …</li> </ul> <h3 id="compiler-design">Compiler Design</h3> <ul> <li>structure compilers</li> <li>applied alg &amp; data structures</li> <li>focus on sequential imperative programming languages</li> <li> <ul> <li>not functional, parallel, distributed, OOP…</li> </ul> </li> <li>code generation and optimization</li> </ul> <h3 id="organizing-a-compiler">Organizing a compiler</h3> <h4 id="front">Front</h4> <ul> <li>split work into different phases</li> <li>Lexical analysis -&gt; Token stream</li> <li>Parsing -&gt; Abstract syntax tree (mark body of while loop…)</li> <li>Sementic analysis (type check, variable initialization)</li> </ul> <h4 id="middle">Middle</h4> <ul> <li>IR(intermediate representation) Generation -&gt; Intermediate representations</li> <li>Optimize (most challenging)</li> </ul> <h4 id="back">Back</h4> <ul> <li>Instruction selection -&gt; Abstract assembly</li> <li>Register allocation -&gt; ASM Middle and Back has unclear distinctions</li> </ul> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-11-instruction-selection--">**Chapter 1.1: Instruction Selection ** <a name="topic-1.1"></a></h2> <ul> <li>Compiler phase</li> <li>IR tree -&gt; abstract assembly</li> </ul> <p>Example:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 5
 return x+x+x*2
 
 -&gt;&gt;&gt; Instruction selection
@@ -1927,7 +1927,7 @@ move reachable to the other space
 Can be done incrementally:
 Copy some parts of A to B
 
-</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-18-overview-of-compiler-design--">**Chapter 18: Overview of Compiler Design ** <a name="topic-17"></a></h2> <h5 id="function-pointers">Function pointers</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="chapter-18-more-advanced-features--">**Chapter 18: More advanced features ** <a name="topic-17"></a></h2> <h5 id="function-pointers">Function pointers</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 typedef int optype(int, int);
 
 typedef int (*optype_pt)(int, int);
@@ -1947,7 +1947,52 @@ int main(){
 rewrite local f2 by linking... 
 similar idea to xz Utils Backdoor, function hooking with broken dynamic linking semantics
 
-</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Compiler Design Notes - SCS]]></summary></entry><entry><title type="html">Distributed Systems Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15640/" rel="alternate" type="text/html" title="Distributed Systems Notes - Currently Upating…"/><published>2024-01-18T11:00:00+00:00</published><updated>2024-01-18T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15640</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15640/"><![CDATA[<h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Remote Procedure Call (RPC)</a></li> <li><a href="#topic-2">Chapter 2: Caching</a></li> <li><a href="#topic-3">Chapter 3: Scalability</a></li> <li><a href="#topic-4">Chapter 4: Failure Resiliency</a></li> <li><a href="#topic-5">Chapter 5: Paxos</a></li> <li><a href="#topic-6">Chapter 6: Datacenter storage</a></li> <li><a href="#topic-7">Chapter 7: </a></li> </ol> <h2 id="-chapter-1-remote-procedure-call-rpc--">** Chapter 1: Remote Procedure Call (RPC) ** <a name="topic-1"></a></h2> <ul> <li>Try to fake procedure call to local programming</li> <li>Why? bring down programming complexity for distributed systems</li> <li>client-server model, per interface</li> <li>two aspects: control flow, invocation syntax</li> <li>with network delays (theoretically best at speed of light)</li> </ul> <h5 id="limitations-of-rpc">limitations of RPC</h5> <ul> <li>No address space sharing between client and server, can’t sharing pointers(call by reference), can’t share global data..</li> <li>Delayed binding in RPC</li> </ul> <h5 id="failure-independence">Failure independence</h5> <ul> <li>caller and callee live and die together in local setup</li> <li>we can witness failure case but hard to do in local</li> <li>failure handling consider visibility of failure</li> <li>Security: different domains</li> </ul> <h5 id="typical-rpc">Typical RPC</h5> <ul> <li>client: makerpc(request_packet, &amp;reply_packet): blocks until reply or failure</li> <li>server: getrequest(&amp;request_packet) blocks until receives request, sendresponse(reply_packet)</li> </ul> <h5 id="stub-routines">Stub routines</h5> <ul> <li>generated by stub generator</li> <li>sit between high level purpose and low level network packing/unpacking send/recv..</li> </ul> <h5 id="procedure">procedure:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div> <h6 id="static-resource-analysis">Static resource analysis</h6> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Info about resources comsumption at dev time
+- Upper and lower bounds, security..
+
+Why not testing:
+- doesn't provide guarantees, doesn't show the worst case like quick sort
+
+Resource Usage in Safety-Critical Systems
+Memory Usage -&gt; Toyota cars
+Timing -&gt; ICE 3 Velaro D delivery delay 
+Cloud computing, job scheduling if we know the resource usage
+
+Software Security
+- side channels: meltdown, spectre..
+- Algorithmic complexity attacks: worse-case input for low bdw DOS atks
+
+Analysis of Alg: 
+Big-O
+Abstracts from low level details 
+Disconnected from actual code
+Asymptotic bounds not useful
+
+
+Automatic Amortized Resource Analysis
+- Given program, worse-case resource consumption of P as a function of the 
+size of the input?
+- potential functions p(before) &gt;= p(after) + cost --&gt; p(init state) &gt;= sum(cost)
+
+
+Example:
+append(x,y)
+Heap-space usage is 2n if n is len of x
+
+f(x,y,z)
+let t = append(x,y) in append(t,z)
+
+Heap usage of f(x,y,z) is 2n + 2(n+m)
+
+Evaluator
+= Emult 2, Einc 1, Econst 0
+Bound: 2n where n is the number of nodes in e
+Better boundL 2m + k (m: Emult nodes, l: Einc nodes)
+
+
+
+
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Compiler Design Notes - SCS]]></summary></entry><entry><title type="html">Distributed Systems Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15640/" rel="alternate" type="text/html" title="Distributed Systems Notes - Currently Upating…"/><published>2024-01-18T11:00:00+00:00</published><updated>2024-01-18T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15640</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15640/"><![CDATA[<h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Remote Procedure Call (RPC)</a></li> <li><a href="#topic-2">Chapter 2: Caching</a></li> <li><a href="#topic-3">Chapter 3: Scalability</a></li> <li><a href="#topic-4">Chapter 4: Failure Resiliency</a></li> <li><a href="#topic-5">Chapter 5: Paxos</a></li> <li><a href="#topic-6">Chapter 6: Datacenter storage</a></li> <li><a href="#topic-7">Chapter 7: Cluster computation</a></li> </ol> <h2 id="-chapter-1-remote-procedure-call-rpc--">** Chapter 1: Remote Procedure Call (RPC) ** <a name="topic-1"></a></h2> <ul> <li>Try to fake procedure call to local programming</li> <li>Why? bring down programming complexity for distributed systems</li> <li>client-server model, per interface</li> <li>two aspects: control flow, invocation syntax</li> <li>with network delays (theoretically best at speed of light)</li> </ul> <h5 id="limitations-of-rpc">limitations of RPC</h5> <ul> <li>No address space sharing between client and server, can’t sharing pointers(call by reference), can’t share global data..</li> <li>Delayed binding in RPC</li> </ul> <h5 id="failure-independence">Failure independence</h5> <ul> <li>caller and callee live and die together in local setup</li> <li>we can witness failure case but hard to do in local</li> <li>failure handling consider visibility of failure</li> <li>Security: different domains</li> </ul> <h5 id="typical-rpc">Typical RPC</h5> <ul> <li>client: makerpc(request_packet, &amp;reply_packet): blocks until reply or failure</li> <li>server: getrequest(&amp;request_packet) blocks until receives request, sendresponse(reply_packet)</li> </ul> <h5 id="stub-routines">Stub routines</h5> <ul> <li>generated by stub generator</li> <li>sit between high level purpose and low level network packing/unpacking send/recv..</li> </ul> <h5 id="procedure">procedure:</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 --: network communication
 
         Client                                             Server
@@ -2871,8 +2916,93 @@ Client sends request to "closest" chunkserver with replica
 Chunkserver replies with actual data
 </code></pre></div></div> <h5 id="clien-write-operation">Clien Write Operation</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3 replicas for each chunk -&gt; must write to all 
 
+Key points:
+• Data pushed linearly along a chain
+• Flow of data decoupled from flow of
+control
+Why?
+Helps to
+• fully utilize each machine’s network
+bandwidth
+• avoid network bottlenecks and highlatency links
+• minimize the latency to push through
+all the data. 
 
-</code></pre></div></div> <h5 id="hdfs">HDFS</h5> <p><a href="#blog-chapters">Back to Blog Chapters</a></p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Distributed Systems Notes - SCS]]></summary></entry><entry><title type="html">Advanced Cloud Computing Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15719/" rel="alternate" type="text/html" title="Advanced Cloud Computing Notes - Currently Upating…"/><published>2024-01-16T11:00:00+00:00</published><updated>2024-01-16T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15719</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15719/"><![CDATA[<h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Cloud Computing</a></li> <li><a href="#topic-2">Chapter 2: Building a Cloud</a></li> <li><a href="#topic-3">Chapter 3: Encapsulation</a></li> <li><a href="#topic-4">Chapter 4: Programming Models and Frameworks</a></li> <li><a href="#topic-5">Chapter 5: Cloud Storage</a></li> <li><a href="#topic-6">Chapter 6: Scheduling Computation</a></li> <li><a href="#topic-7">Chapter 7: </a></li> </ol> <h2 id="-chapter-1-overview-of-cloud-computing--">** Chapter 1: Overview of Cloud Computing ** <a name="topic-1"></a></h2> <h4 id="definitions">Definitions</h4> <h5 id="properties">Properties:</h5> <ul> <li>Computing utility, always available, accessible through the networks</li> <li>Simplified interface</li> <li>Statistical multiplexing, sharing resources</li> <li>Economies of scale from consolidation, costs lower</li> <li>Capital costs converted to operating costs</li> <li>Rapid and easy variation of usage</li> <li>Appearance of infinite resources with small users</li> <li>Pay only for what you use</li> <li>Cost conservation: 1 unit for 1000 hours == 1000 units for 1 hour</li> </ul> <h5 id="consolidation-sharing-elasticity">Consolidation, sharing, elasticity</h5> <ul> <li>CLT theory</li> <li>users with widely varying needs apply a considerably less variable load on a huge provider, allowing providers to do less overprovisioning.</li> <li> <ul> <li>Because of CLT, it is predictable for the overall load which causes less overprovisioning.</li> </ul> </li> <li>Users perceive exactly what they need all the time, if their needs are “small”(so the accessed resources are appearing as infinite)</li> </ul> <h5 id="saas-paas-iaas">SaaS, PaaS, IaaS</h5> <ul> <li>SaaS: service as application (Salesforce)</li> <li> <ul> <li>consumer does not manage or control the underlying cloud infrastructure including network, servers, operating systems, storage &amp; minimum deployed applications configurations settings.</li> </ul> </li> <li>PaaS: high-level programming model for cloud computer, Turing complete but resource management hidden. (Google AppEngine)</li> <li> <ul> <li>Only App and data are controlled by user</li> </ul> </li> <li> <ul> <li>consumer does not manage or control the underlying cloud infrastructure including network, servers, operating systems, storage but with control over the deployed applications and possibly configuration settings for the application-hosting environment.</li> </ul> </li> <li>IaaS: low-level computing model for cloud computer (AWS)</li> <li> <ul> <li>The consumer does not manage or control the underlying cloud infrastructure but has control over operating systems, storage, and deployed application</li> </ul> </li> <li> <ul> <li>Can manage App, Data, Runtime, Middleware, OS, Cannot manage Virtualization, servers, storage, networking</li> </ul> </li> </ul> <h5 id="xxx-as-a-service">XXX as a Service</h5> <ul> <li>Data as a Service, Network as a Service, Communication as a Service(No hardware private VOIP switching), IT as a Service(IT providing services)..</li> </ul> <h5 id="deployment-models">Deployment models</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public cloud: provider sells computing to unrelated consumers
+</code></pre></div></div> <h5 id="gfs-ft">GFS FT</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>High Availability
+- Chunk replication
+        - Each chunk is replicated on multiple chunkservers
+- Master (i.e., state of the master) replication
+        - Operation log and checkpoints replicated on multiple machines
+
+Data Integrity
+- Checksum checks
+        - Each chunk has checksums
+        - Checksum verified for every read and write
+        - Checksum also verified periodically for inactive chunks
+
+
+What if master node down?
+- replays logs from disk
+- - recover namespace(dirs) and file-to-chunk-ID mapping(but not location of chunks)
+- asks chunkservers for what chunks they have
+- - recover chunk-ID-to-chunkserver mapping
+- If a chunk server has newer chunk, adopt its version number
+- - master may have failed granting lease
+
+Logs cannot be too long -&gt; master uses log to rebuild the fs state
+- How to avoid too long? Checkpoints
+</code></pre></div></div> <h5 id="gfs-consistency-model">GFS Consistency Model</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Changes to namespace(ie metadata) are atomic
+- file creation
+- Due to mamespace lock(granular) + operation log
+
+Changes to data are ordered by a primary
+- concurrent writes can be overwritten
+- record appends complete at least once, at offset of GFS's choosing
+-&gt; Applications must cope with possible duplicates
+
+
+- Failed operations can cause incosist
+- concurrent successful writes to the same region
+- ..
+
+Replication vs erasure codes
+3-replication: 
+a
+a
+a
+b
+b
+b
+
+Storage overhead: 3x
+
+erasure code:
+a
+b
+a+b
+a+2b
+Storage overhead 2x
+
+Erasure codes:
+10 data chunks, 4 parity chunks
+</code></pre></div></div> <h5 id="hdfs">HDFS</h5> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> <h2 id="-chapter-7-cluster-computation--">** Chapter 7: Cluster Computation ** <a name="topic-7"></a></h2> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. HPC: MPI
+Characteristics: 
+- Long-lived interdependent processes
+- Paritioning problem space: exploit spatial locality
++: High utilization of resources, effective for scientific analysis
+-: intolerant, 
+
+MPI framework:
+- Virtual topology, Synchronization, Communication
+
+Tightly coupled processes
+-&gt; Failure of one processes prevents all others from processing
+
+
+2. Cluster computing: MapReduce
+
+
+</code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Distributed Systems Notes - SCS]]></summary></entry><entry><title type="html">Advanced Cloud Computing Notes - Currently Upating…</title><link href="https://ychen884.github.io/blog/2024/15719/" rel="alternate" type="text/html" title="Advanced Cloud Computing Notes - Currently Upating…"/><published>2024-01-16T11:00:00+00:00</published><updated>2024-01-16T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2024/15719</id><content type="html" xml:base="https://ychen884.github.io/blog/2024/15719/"><![CDATA[<h3 id="course-evaluation-final-grade-na">Course Evaluation (Final grade: N/A)</h3> <p>I will add my course evaluation at the end of this semester.</p> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Overview of Cloud Computing</a></li> <li><a href="#topic-2">Chapter 2: Building a Cloud</a></li> <li><a href="#topic-3">Chapter 3: Encapsulation</a></li> <li><a href="#topic-4">Chapter 4: Programming Models and Frameworks</a></li> <li><a href="#topic-5">Chapter 5: Cloud Storage</a></li> <li><a href="#topic-6">Chapter 6: Scheduling Computation</a></li> <li><a href="#topic-7">Chapter 7: </a></li> </ol> <h2 id="-chapter-1-overview-of-cloud-computing--">** Chapter 1: Overview of Cloud Computing ** <a name="topic-1"></a></h2> <h4 id="definitions">Definitions</h4> <h5 id="properties">Properties:</h5> <ul> <li>Computing utility, always available, accessible through the networks</li> <li>Simplified interface</li> <li>Statistical multiplexing, sharing resources</li> <li>Economies of scale from consolidation, costs lower</li> <li>Capital costs converted to operating costs</li> <li>Rapid and easy variation of usage</li> <li>Appearance of infinite resources with small users</li> <li>Pay only for what you use</li> <li>Cost conservation: 1 unit for 1000 hours == 1000 units for 1 hour</li> </ul> <h5 id="consolidation-sharing-elasticity">Consolidation, sharing, elasticity</h5> <ul> <li>CLT theory</li> <li>users with widely varying needs apply a considerably less variable load on a huge provider, allowing providers to do less overprovisioning.</li> <li> <ul> <li>Because of CLT, it is predictable for the overall load which causes less overprovisioning.</li> </ul> </li> <li>Users perceive exactly what they need all the time, if their needs are “small”(so the accessed resources are appearing as infinite)</li> </ul> <h5 id="saas-paas-iaas">SaaS, PaaS, IaaS</h5> <ul> <li>SaaS: service as application (Salesforce)</li> <li> <ul> <li>consumer does not manage or control the underlying cloud infrastructure including network, servers, operating systems, storage &amp; minimum deployed applications configurations settings.</li> </ul> </li> <li>PaaS: high-level programming model for cloud computer, Turing complete but resource management hidden. (Google AppEngine)</li> <li> <ul> <li>Only App and data are controlled by user</li> </ul> </li> <li> <ul> <li>consumer does not manage or control the underlying cloud infrastructure including network, servers, operating systems, storage but with control over the deployed applications and possibly configuration settings for the application-hosting environment.</li> </ul> </li> <li>IaaS: low-level computing model for cloud computer (AWS)</li> <li> <ul> <li>The consumer does not manage or control the underlying cloud infrastructure but has control over operating systems, storage, and deployed application</li> </ul> </li> <li> <ul> <li>Can manage App, Data, Runtime, Middleware, OS, Cannot manage Virtualization, servers, storage, networking</li> </ul> </li> </ul> <h5 id="xxx-as-a-service">XXX as a Service</h5> <ul> <li>Data as a Service, Network as a Service, Communication as a Service(No hardware private VOIP switching), IT as a Service(IT providing services)..</li> </ul> <h5 id="deployment-models">Deployment models</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public cloud: provider sells computing to unrelated consumers
 private cloud: largely unrelated components and divisions as consumers
 community cloud: providers and consumers are different organizations with strong shared concerns
 Hybrid cloud: private plus public resources combined by same consumer. Better availability, overflow from private to public, load balancing to increase elasticity
@@ -3792,6 +3922,30 @@ structure, time, ...
 Then do the ranking
 
 They tell where to look at the code and fix
+
+
+</code></pre></div></div> <h5 id="guest-lecture-practical-use-of-machine-learning-in-amazon-redshift">Guest lecture Practical use of machine Learning in Amazon Redshift</h5> <h5 id="guest-lecture-building-a-cloud-native-platform-for-the-future-of-ai">Guest lecture Building a Cloud-Native Platform for the Future of AI</h5> <h5 id="cloud-co-location-and-attacks-on-public-cloud">Cloud Co-location and Attacks on Public Cloud</h5> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Sandbox: run untrusted code
+Confinement
+- Hardware isolation, complex with more users
+- VM
+- Process: System call interposition, Containers
+
+Thread Model
+
+AWS - Cloud Cartography
+WHOIS-&gt; IP to Instance mapping across accounts
+How to prevent? 
+
+
+Paper
+zen hypervisor
+
+
+Now - Side channels
+
+- Securing the cloud with sandbox: gVisor
+
+Privileged instrs: manage page tables, IO
 
 
 </code></pre></div></div> <p><a href="#blog-chapters">Back to Blog Chapters</a></p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Advanced Cloud Computing Notes - SCS]]></summary></entry><entry><title type="html">Information Security - Currently Updating…</title><link href="https://ychen884.github.io/blog/2023/14741/" rel="alternate" type="text/html" title="Information Security - Currently Updating…"/><published>2023-08-29T11:00:00+00:00</published><updated>2023-08-29T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2023/14741</id><content type="html" xml:base="https://ychen884.github.io/blog/2023/14741/"><![CDATA[<h3 id="course-evaluation-final-grade-a">Course Evaluation (Final grade: A)</h3> <p>This course is structured for those who have minimal or some previous experience in computer security. It covers a broad spectrum of topics and also delves deeply into each area. The exams present a considerable challenge, and the lab requires effort, depending on the student’s prior knowledge in security. Despite having studied information security and software security during my undergraduate studies, I found the labs in this course particularly engaging. Some topics, like cryptocurrency, privacy, and security management, were especially intriguing and somewhat new to me, adding a fresh perspective to my learning experience.</p> <h3 id="reference-book">Reference Book</h3> <h4 id="security-engineering-a-guide-to-building-dependable-systems-by-ross-j-anderson">Security Engineering: A Guide to Building Dependable Systems, by Ross J. Anderson</h4>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Info Sec - INI]]></summary></entry><entry><title type="html">Computer Systems - Currently Updating…</title><link href="https://ychen884.github.io/blog/2023/15513/" rel="alternate" type="text/html" title="Computer Systems - Currently Updating…"/><published>2023-08-29T11:00:00+00:00</published><updated>2023-08-29T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2023/15513</id><content type="html" xml:base="https://ychen884.github.io/blog/2023/15513/"><![CDATA[<h3 id="course-evaluation-final-grade-a">Course Evaluation (Final grade: A)</h3> <p>This course is exceptional, thoroughly covering computer systems with engaging labs. The material is comprehensive yet manageable, ensuring exams and labs are not overwhelming. Highly recommended.</p>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[Computer Science - 213/513]]></summary></entry><entry><title type="html">Fundamentals of Telecommunication Networks - Currently Upating…</title><link href="https://ychen884.github.io/blog/2023/14740/" rel="alternate" type="text/html" title="Fundamentals of Telecommunication Networks - Currently Upating…"/><published>2023-08-28T11:00:00+00:00</published><updated>2023-08-28T11:00:00+00:00</updated><id>https://ychen884.github.io/blog/2023/14740</id><content type="html" xml:base="https://ychen884.github.io/blog/2023/14740/"><![CDATA[<h3 id="course-evaluation-final-grade-a">Course Evaluation (Final grade: A)</h3> <p>This course is designed for individuals with minimal or no prior knowledge of computer networks. It delves into the intricate details of various protocols. The exams are generally easy to manage, but the labs may demand a significant amount of effort. Students should be aware that they will be sharing server resources with many others, leading to potential issues with resource contention. It also includes reviews of some state-of-the-art papers in the field.</p> <h3 id="paper-reviews">Paper reviews</h3> <p>I will upload my paper reviews here later.</p> <h3 id="reference-book">Reference Book</h3> <h4 id="computer-networking-7th-edition-james-kurose-and-keith-ross">Computer Networking 7th Edition, James Kurose, and Keith Ross</h4>]]></content><author><name></name></author><category term="Study"/><category term="CMU"/><summary type="html"><![CDATA[computer networks - INI]]></summary></entry><entry><title type="html">Link to our Game Development Project - TimeOut</title><link href="https://ychen884.github.io/blog/2023/gameDev/" rel="alternate" type="text/html" title="Link to our Game Development Project - TimeOut"/><published>2023-08-27T18:37:00+00:00</published><updated>2023-08-27T18:37:00+00:00</updated><id>https://ychen884.github.io/blog/2023/gameDev</id><content type="html" xml:base="https://ychen884.github.io/blog/2023/gameDev/"><![CDATA[<p>Check this out: https://rod233.itch.io/timeout I worked as a member of the SE team - Graphics.</p>]]></content><author><name></name></author><category term="Study"/><category term="Dev"/><summary type="html"><![CDATA[:) An interesting game dev project.]]></summary></entry><entry><title type="html">My Courses &amp;amp; Grades in UW-Madison</title><link href="https://ychen884.github.io/blog/2023/undergradCourses/" rel="alternate" type="text/html" title="My Courses &amp;amp; Grades in UW-Madison"/><published>2023-08-20T18:37:00+00:00</published><updated>2023-08-20T18:37:00+00:00</updated><id>https://ychen884.github.io/blog/2023/undergradCourses</id><content type="html" xml:base="https://ychen884.github.io/blog/2023/undergradCourses/"><![CDATA[ <p>The University of Wisconsin-Madison offers an exceptional Computer Science track for undergraduate students, enabling them to delve into various fields within the discipline. During my undergraduate studies, I concentrated on system courses, which allowed me to gain valuable insights into this specialized area.</p> <p>Below is a breakdown of the courses I undertook at UW-Madison. The advanced courses have been highlighted at the beginning of the list for emphasis. I am profoundly grateful to my instructors, whose dedication and passion have significantly shaped my academic journey. Their guidance, coupled with my relentless hard work and consistent efforts, has truly made a difference in my education.</p> <p>The courses at UW-Madison are categorized into three distinct levels:</p> <p>Elementary (E): Typically, entry-level courses designed for freshmen and sophomores. Intermediate (I): These courses are aimed at students in their sophomore to junior years. Advanced (A): Targeted at students in their junior to senior years, these courses focus on more specialized and complex topics. The education I received at UW-Madison has not only broadened my knowledge but also laid a solid foundation for my future pursuits in the field of Computer Science.</p> <p>Above 100%: Extra credits given in that course</p> <table data-toggle="table" data-url="/assets/json/table_data.json"> <thead> <tr> <th data-field="Courses">Courses</th> <th data-field="Description">Description</th> <th data-field="Final Grade">Final Grade</th> </tr> </thead> </table> <p></p> ]]></content><author><name></name></author><category term="Study"/><category term="UW-Madison"/><summary type="html"><![CDATA[:) I enjoy all the courses I took in UW-Madison.]]></summary></entry></feed>
