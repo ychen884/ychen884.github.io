@@ -110,4 +110,122 @@ Workloads with Poor Cleaning Efficiency: Need a cleaning strategy compatible wit
 
 
 Even wear:  algorithm tracks the erase count of each block and proposes managing blocks based on their remaining lifetime relative to the average. Blocks that fall below certain thresholds are either recycled at a lower rate or have cold data migrated into them to balance wear.Rate-limiting Worn Blocks, Cold data is migrated into worn-out blocks before they hit critical wear thresholds.this approach incurs a small performance overhead due to the additional operations involved in data migration.
+</code></pre></div></div> <h4 id="scheduling-algorithms-for-modern-disk-drives">Scheduling Algorithms for Modern Disk Drives</h4> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>examines how dynamically ordering pending disk requests can improve disk subsystem performance, particularly in the presence of complex logical-to-physical mappings and large prefetching caches.
+
+Incorporating complex mapping information into the scheduler provides only a marginal improvement (less than 2%) in response times for seek-reducing algorithms.
+
+Algorithms that utilize prefetching disk caches effectively can significantly improve performance for workloads with read sequentiality, with the cyclical scan algorithm (C-LOOK) showing the highest performance among such algorithms.
+
+The highest performance is achieved by algorithms that reduce overall positioning delays while recognizing and exploiting a prefetching cache.
+
+
+Disk Scheduler Role: The disk scheduler is responsible for ordering pending requests to minimize mechanical positioning delays and optimize overall performance, particularly in environments with intense bursts of disk activity.
+
+Structure and Functionality:
+
+A disk drive consists of rotating platters with magnetic media, where data is stored in circular tracks. The basic storage unit is a sector, typically holding 512 bytes of data.
+Tracks on different surfaces but at the same distance from the disk’s center form a cylinder. Data location on the disk is defined by the cylinder, surface, and sector.
+The disk arm, which holds the read/write heads, moves to position the heads over the correct cylinder to access data.
+
+Accessing data involves mechanical delays such as the disk arm moving to the target cylinder (seek time) and waiting for the target sector to reach the read/write head (rotational latency).
+Additional delays can occur if the requested data spans multiple tracks or cylinders.
+
+Modern disk drives have evolved to be more self-contained, with features that can affect scheduling accuracy. These include the host interface, data layout, and on-board cache.
+
+The actual media access details are typically hidden from the host, reducing the host's management overhead but also limiting the external scheduler's knowledge of data layout, cache status, and overhead delays.
+
+
+Many systems use LBN-based approximations to reduce seek times, relying on the sequential mapping of logical to physical blocks.
+
+Disk drives now include large on-board caches that can automatically prefetch data, significantly speeding up sequential read operations. Prefetched data in the cache can be accessed much faster than data on the media, influencing scheduling decisions. Aggressive prefetching complicates scheduling because the read/write head's position may not be predictable based on the most recent request location and length.
+
+3. Disk Scheduling Algorithms
+FCFS (First Come First Served):
+Simple but often leads to suboptimal performance.
+Numerous alternative algorithms have been proposed to improve performance by considering individual request details and the disk subsystem's current state.
+3.1 Seek Delay Reduction
+SSTF (Shortest Seek Time First):
+
+Overview: Prioritizes the request that requires the shortest seek distance, approximating the shortest seek time.
+Advantages: Reduces average response time across various workloads.
+Drawbacks: Can lead to starvation, particularly under heavy workloads, as the disk arm may hover over a subset of cylinders, neglecting requests from other regions.
+SCAN (Elevator Algorithm):
+
+Overview: The disk arm moves back and forth across the cylinder range, servicing all requests in its path, changing direction only at the disk's innermost and outermost cylinders.
+Advantages: Provides lower response time variance compared to SSTF with only a slight increase in average response time. Central cylinders receive better service due to more frequent passes.
+Drawbacks: Can still marginally favor requests in the middle of the disk over those at the edges.
+Variations of SCAN:
+
+C-SCAN (Cyclical SCAN):
+
+Moves the arm in one direction only; after reaching the last cylinder, it performs a full-stroke seek back to the first cylinder without servicing requests on the return.
+Treats all cylinders equally, reducing bias towards central cylinders.
+LOOK:
+
+Changes direction if no pending requests exist in the current direction, avoiding unnecessary scans.
+C-LOOK:
+
+A combination of C-SCAN and LOOK, combining their advantages.
+VSCAN(R):
+
+Overview: Introduces a continuum of algorithms between SSTF and LOOK, controlled by the R parameter.
+Advantages: Balances average response time and starvation resistance.
+Example: VSCAN(0.2) is suggested as an optimal balance.
+3.2 Positioning Delay Reduction
+SPTF (Shortest Positioning Time First):
+
+Overview: Considers both seek delay and rotational latency by choosing the request with the minimum overall positioning delay.
+Names: Also known as STF (Shortest Time First) and SATF (Shortest Access Time First) in other studies.
+Drawbacks: Like SSTF, SPTF can suffer from starvation issues.
+Mitigating Starvation in SPTF:
+
+Priority Adjustments: Priority can be given to requests that have waited too long in the queue, either by gradually increasing priority with age or by setting a time limit after which requests are prioritized.
+Summary
+The section discusses various disk scheduling algorithms aimed at reducing seek delay and positioning delay. While SSTF and its variations focus on minimizing seek times, algorithms like SPTF also consider rotational latency for a more holistic reduction in access times. However, many of these algorithms face challenges related to starvation, especially under heavy workloads. Variants like SCAN, C-SCAN, and VSCAN(R) attempt to balance performance with starvation resistance, providing different trade-offs based on workload characteristics.
+
+
+Primary Metrics:
+The average response time across all disks is the primary metric used to compare scheduling algorithms.
+The squared coefficient of variation is also used to measure the variance in response times, with a lower coefficient indicating better starvation resistance.
+
+
+6.1 Scheduling by Logical Block Number (LBN)
+Performance Insights:
+
+C-LOOK consistently outperforms other algorithms (LOOK, VSCAN(0.2), SSTF) in most traced workloads, particularly when a prefetching cache is enabled. This is because C-LOOK maintains logically ascending order, which aligns well with the sequential data prefetching behavior of modern disks.
+Cello Trace Exception: In the Cello environment, which is dominated by large bursts of write requests and has a low fraction of sequential reads, C-LOOK does not perform as well as other seek-reducing algorithms. This is due to its reduced benefit from the prefetching cache.
+Cache's Role: The performance advantage of C-LOOK diminishes significantly when the disk cache is used only as a speed-matching buffer rather than for prefetching, indicating the importance of prefetching in these algorithms.
+Key Observations:
+
+The advantage of algorithms like LOOK and VSCAN(0.2) over SSTF is due to their ability to maintain sequential requests in logically ascending order during part of the scan cycle.
+When requests are scheduled in a descending logical order, the performance gains from the prefetching cache are negated.
+
+
+6.2 Scheduling with Known Mapping
+Impact of Full Mapping Knowledge:
+
+Using full LBN-to-PBN mapping information results in performance improvements for LOOK, VSCAN(0.2), and SSTF under most workloads, except for Cello. The improvement is not due to better seek time prediction but rather the use of C-LOOK within cylinders to exploit the prefetching cache more effectively.
+The complexity of maintaining a full LBN-to-PBN mapping is generally not justified for seek-reducing algorithms, as the performance gains are minimal (less than 1%).
+Starvation Resistance:
+
+Algorithms that satisfy all requests within a cylinder before moving to another one are slightly less resistant to starvation, but the overall starvation characteristics of the full-map algorithms align closely with their LBN-based counterparts
+
+
+6.3 Scheduling with Full Knowledge
+SPTF-Based Algorithms:
+
+SPTF and Cache Awareness: SPTF-based algorithms, which include rotational latency information, have the potential to provide more accurate positioning delay predictions. However, they do not inherently preserve sequential read order, reducing their effectiveness in utilizing the prefetching cache.
+Performance Trade-offs: For workloads like Cello, SPTF-based algorithms outperform seek-reducing algorithms, especially when cache knowledge is incorporated. For other workloads, SPTF and its variants may saturate more quickly than C-LOOK but can provide better performance under certain conditions.
+Cache Utilization: Incorporating cache knowledge into SPTF-based algorithms (SPCTF, ASPCTF) widens the performance advantage over C-LOOK in some cases.
+Starvation and Performance:
+
+The aging factor in algorithms like ASPCTF can improve both starvation resistance and performance, especially for workloads with a significant fraction of sequential reads.
+
+The traced workload analysis highlights the strengths and limitations of different disk scheduling algorithms under real-world conditions. 
+
+C-LOOK, with its alignment to sequential read patterns and effective cache utilization, generally performs well across most workloads. 
+
+SPTF-based algorithms, while offering more precise positioning delay predictions, struggle with cache utilization unless specifically adapted to recognize and optimize for on-board disk caches.
+
+The study emphasizes the importance of considering disk cache behavior in scheduling decisions and suggests that the complexity of full LBN-to-PBN mappings may not be worth the marginal performance gains for most algorithms. 
 </code></pre></div></div> <h2 id="blog-chapters"><strong>Blog Chapters</strong></h2> <ol> <li><a href="#topic-1">Chapter 1: Introduction </a></li> </ol> <h2 id="-chapter-1-introduction--">** Chapter 1: Introduction ** <a name="topic-1"></a> </h2> <h4 id="definitions">Definitions</h4> <p><a href="#blog-chapters">Back to Blog Chapters</a></p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/10714/">Deep Learning Systems - Currently Upating...</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15661/">Compiler Design Notes</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15640/">Distributed Systems Notes</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/15719/">Advanced Cloud Computing Notes</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/15513/">Computer Systems - Currently Updating...</a> </li> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Yizhou Chen. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
